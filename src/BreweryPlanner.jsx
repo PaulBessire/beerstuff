@@ -9,95 +9,49 @@ const STEP_TYPES = ["mash", "boil", "ferment", "condition", "carbonate", "packag
 const EQUIP_TYPES = { MASH: "mash_tun", KETTLE: "brew_kettle", FERM: "fermenter", BRITE: "brite_tank", CANNER: "canning_line", KEGGING: "kegging_line" };
 
 const SAMPLE_RECIPES = [
-  { id: "R01", name: "Bavarian", type: RECIPE_TYPES.CORE, style: "Lager", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R02", name: "Storm", type: RECIPE_TYPES.CORE, style: "IPA", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R03", name: "Switch", type: RECIPE_TYPES.CORE, style: "Pale Ale", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R04", name: "Tropic Flare", type: RECIPE_TYPES.CORE, style: "IPA", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R05", name: "Haven Hefeweizen", type: RECIPE_TYPES.CORE, style: "Wheat", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 20 }, { materialId: "M06", qtyPerBbl: 15 }, { materialId: "M03", qtyPerBbl: 1.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R06", name: "Dead Blow", type: RECIPE_TYPES.CORE, style: "DIPA", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R07", name: "Spur Amber Lager", type: RECIPE_TYPES.CORE, style: "Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R08", name: "Birdie", type: RECIPE_TYPES.CORE, style: "Session IPA", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R09", name: "Scooter", type: RECIPE_TYPES.CORE, style: "Lager", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R10", name: "Larosa's Lager", type: RECIPE_TYPES.CORE, style: "Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R11", name: "3:28 Coffee Stout", type: RECIPE_TYPES.SEASONAL, style: "Stout", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M02", qtyPerBbl: 38 }, { materialId: "M06", qtyPerBbl: 8 }, { materialId: "M04", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R12", name: "Oktober Fuel", type: RECIPE_TYPES.SEASONAL, style: "Marzen", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R13", name: "Opera Cream", type: RECIPE_TYPES.SEASONAL, style: "Cream Ale", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 26 }, { materialId: "M06", qtyPerBbl: 6 }, { materialId: "M03", qtyPerBbl: 1.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R14", name: "Hop Ridge", type: RECIPE_TYPES.SEASONAL, style: "IPA", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R15", name: "Margarita Gose", type: RECIPE_TYPES.SEASONAL, style: "Sour", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 25 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 3.0 }, { materialId: "M12", qtyPerBbl: 0.005 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 240, cleanHrs: 6 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R16", name: "Paradise Watermelon Gose", type: RECIPE_TYPES.SEASONAL, style: "Sour", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 25 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 3.0 }, { materialId: "M12", qtyPerBbl: 0.005 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 240, cleanHrs: 6 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R17", name: "OKI Bourbon Barrel Ale", type: RECIPE_TYPES.SEASONAL, style: "Barrel Aged", channel: "taproom", bblPerBatch: 5, ingredients: [{ materialId: "M02", qtyPerBbl: 50 }, { materialId: "M04", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 336, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 240, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R18", name: "Graeter's BRC Stout", type: RECIPE_TYPES.SEASONAL, style: "Stout", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M02", qtyPerBbl: 38 }, { materialId: "M06", qtyPerBbl: 8 }, { materialId: "M04", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R19", name: "Graeter's Lemon Meringue Pie", type: RECIPE_TYPES.SEASONAL, style: "Sour", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 25 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 3.0 }, { materialId: "M12", qtyPerBbl: 0.005 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 6 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R20", name: "Graeter's Pumpkin Pie", type: RECIPE_TYPES.SEASONAL, style: "Spiced Ale", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M04", qtyPerBbl: 1.2 }, { materialId: "M09", qtyPerBbl: 2.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R21", name: "Italian Pilsner", type: RECIPE_TYPES.SEASONAL, style: "Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R22", name: "Jam Session", type: RECIPE_TYPES.SEASONAL, style: "Session", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R23", name: "Jubilee - Hoppy Holiday IPA", type: RECIPE_TYPES.SEASONAL, style: "IPA", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R24", name: "House Pilsner", type: RECIPE_TYPES.SEASONAL, style: "Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R25", name: "Helles Lager", type: RECIPE_TYPES.SEASONAL, style: "Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R26", name: "Doppelbock", type: RECIPE_TYPES.SEASONAL, style: "Bock", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 336, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R27", name: "Double Hazy IPA", type: RECIPE_TYPES.SEASONAL, style: "IPA", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R28", name: "Fuerte Mexican Lager", type: RECIPE_TYPES.SEASONAL, style: "Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R29", name: "Czech This Out, Dad", type: RECIPE_TYPES.SEASONAL, style: "Czech Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R30", name: "Belgian Grand Cru", type: RECIPE_TYPES.SEASONAL, style: "Belgian", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M02", qtyPerBbl: 35 }, { materialId: "M04", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 240, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R31", name: "Berliner Weisse", type: RECIPE_TYPES.SEASONAL, style: "Wheat", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 20 }, { materialId: "M06", qtyPerBbl: 15 }, { materialId: "M03", qtyPerBbl: 1.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R32", name: "Kranz", type: RECIPE_TYPES.SEASONAL, style: "Kolsch", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 20 }, { materialId: "M06", qtyPerBbl: 15 }, { materialId: "M03", qtyPerBbl: 1.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R33", name: "Rally", type: RECIPE_TYPES.SEASONAL, style: "Ale", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R34", name: "Road Trip", type: RECIPE_TYPES.SEASONAL, style: "Berliner Weisse", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 25 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 3.0 }, { materialId: "M12", qtyPerBbl: 0.005 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 6 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R35", name: "Strawberry Rhubarb Saison", type: RECIPE_TYPES.SEASONAL, style: "Saison", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 28 }, { materialId: "M04", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R36", name: "Gingerbread Cookie", type: RECIPE_TYPES.SEASONAL, style: "Spiced Ale", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M04", qtyPerBbl: 1.2 }, { materialId: "M09", qtyPerBbl: 2.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R37", name: "Pride Watermelon Radler", type: RECIPE_TYPES.SEASONAL, style: "Radler", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 22 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 4.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 96, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R38", name: "Blueprint", type: RECIPE_TYPES.SEASONAL, style: "Ale", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R39", name: "Dewey's House Lager", type: RECIPE_TYPES.SEASONAL, style: "Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R40", name: "Dry Hopped Pilsner", type: RECIPE_TYPES.SEASONAL, style: "IPA", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R41", name: "West Coast Lager", type: RECIPE_TYPES.SEASONAL, style: "Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R42", name: "Rye Pale", type: RECIPE_TYPES.SEASONAL, style: "Pale Ale", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R43", name: "Road Trip - Berlinner Weiss", type: RECIPE_TYPES.SEASONAL, style: "Wheat", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 20 }, { materialId: "M06", qtyPerBbl: 15 }, { materialId: "M03", qtyPerBbl: 1.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R44", name: "Split The B", type: RECIPE_TYPES.SEASONAL, style: "Ale", channel: "taproom", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R45", name: "Agave and Rye Epic Lime Lager", type: RECIPE_TYPES.SEASONAL, style: "Lager", channel: "taproom", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R46", name: "Drink Daizy's - Grape", type: RECIPE_TYPES.CONTRACT, style: "Flavored", channel: "contract", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 18 }, { materialId: "M09", qtyPerBbl: 8.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
-  { id: "R47", name: "Drink Daizy's - Passion Fruit", type: RECIPE_TYPES.CONTRACT, style: "Flavored", channel: "contract", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 18 }, { materialId: "M09", qtyPerBbl: 8.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
-  { id: "R48", name: "Drink Daizy's - Strawberry Lemonade", type: RECIPE_TYPES.CONTRACT, style: "Sour", channel: "contract", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 25 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 3.0 }, { materialId: "M12", qtyPerBbl: 0.005 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 6 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
-  { id: "R49", name: "Drink Daizy's - Tropical Punch", type: RECIPE_TYPES.CONTRACT, style: "Flavored", channel: "contract", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 18 }, { materialId: "M09", qtyPerBbl: 8.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
-  { id: "R50", name: "Drink Daizy's - Watermelon Lime", type: RECIPE_TYPES.CONTRACT, style: "Sour", channel: "contract", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 25 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 3.0 }, { materialId: "M12", qtyPerBbl: 0.005 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 6 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
-  { id: "R51", name: "Drink Daizy's - Orange Cream Soda", type: RECIPE_TYPES.CONTRACT, style: "Flavored", channel: "contract", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 18 }, { materialId: "M09", qtyPerBbl: 8.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
-  { id: "R52", name: "Ballpark Beer", type: RECIPE_TYPES.CORE, style: "Lager", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R53", name: "Hop Fly", type: RECIPE_TYPES.SEASONAL, style: "IPA", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M05", qtyPerBbl: 3.0 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R54", name: "Kickback Hard Cider", type: RECIPE_TYPES.SEASONAL, style: "Cider", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M09", qtyPerBbl: 20 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 336, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R55", name: "Grand Slamberry", type: RECIPE_TYPES.SEASONAL, style: "Amber", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R56", name: "Drift", type: RECIPE_TYPES.SEASONAL, style: "Ale", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R57", name: "Verano", type: RECIPE_TYPES.SEASONAL, style: "Lager", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R58", name: "Verano with Lime", type: RECIPE_TYPES.SEASONAL, style: "Sour", channel: "distribution", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 25 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 3.0 }, { materialId: "M12", qtyPerBbl: 0.005 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 6 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
-  { id: "R59", name: "Summertrip", type: RECIPE_TYPES.SEASONAL, style: "Ale", channel: "distribution", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.0, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.0, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R01", name: "Flagship IPA", type: RECIPE_TYPES.CORE, style: "IPA", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 35 }, { materialId: "M03", qtyPerBbl: 2.5 }, { materialId: "M07", qtyPerBbl: 0.8 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R02", name: "Amber Lager", type: RECIPE_TYPES.CORE, style: "Lager", bblPerBatch: 15, ingredients: [{ materialId: "M02", qtyPerBbl: 32 }, { materialId: "M04", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 336, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 168, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 3, cleanHrs: 2 }] },
+  { id: "R03", name: "Hazy NEIPA", type: RECIPE_TYPES.CORE, style: "NEIPA", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M05", qtyPerBbl: 4 }, { materialId: "M08", qtyPerBbl: 3 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R04", name: "Oatmeal Stout", type: RECIPE_TYPES.CORE, style: "Stout", bblPerBatch: 10, ingredients: [{ materialId: "M02", qtyPerBbl: 38 }, { materialId: "M06", qtyPerBbl: 8 }, { materialId: "M04", qtyPerBbl: 1.2 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 4, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 3, cleanHrs: 2 }] },
+  { id: "R05", name: "Pilsner", type: RECIPE_TYPES.CORE, style: "Pilsner", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 28 }, { materialId: "M03", qtyPerBbl: 1.8 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R06", name: "Wheat Ale", type: RECIPE_TYPES.CORE, style: "Wheat", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 20 }, { materialId: "M06", qtyPerBbl: 15 }, { materialId: "M04", qtyPerBbl: 1.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 3, cleanHrs: 2 }] },
+  { id: "R07", name: "Double IPA", type: RECIPE_TYPES.CORE, style: "DIPA", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 45 }, { materialId: "M05", qtyPerBbl: 5 }, { materialId: "M07", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 4, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R08", name: "Porter", type: RECIPE_TYPES.CORE, style: "Porter", bblPerBatch: 10, ingredients: [{ materialId: "M02", qtyPerBbl: 36 }, { materialId: "M04", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 3, cleanHrs: 2 }] },
+  { id: "R09", name: "Blonde Ale", type: RECIPE_TYPES.CORE, style: "Blonde", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 26 }, { materialId: "M03", qtyPerBbl: 1.2 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 2.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R10", name: "Session IPA", type: RECIPE_TYPES.CORE, style: "Session IPA", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 24 }, { materialId: "M07", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 2.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 3, cleanHrs: 2 }] },
+  { id: "R11", name: "Pale Ale", type: RECIPE_TYPES.CORE, style: "Pale Ale", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R12", name: "Red Ale", type: RECIPE_TYPES.CORE, style: "Red Ale", bblPerBatch: 10, ingredients: [{ materialId: "M02", qtyPerBbl: 33 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 144, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 3, cleanHrs: 2 }] },
+  { id: "R13", name: "Kolsch", type: RECIPE_TYPES.CORE, style: "Kolsch", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 27 }, { materialId: "M03", qtyPerBbl: 1.0 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 3, cleanHrs: 2 }] },
+  // Contract brews
+  { id: "R14", name: "[Contract] River City Lager", type: RECIPE_TYPES.CONTRACT, style: "Lager", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M03", qtyPerBbl: 1.2 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 336, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
+  { id: "R15", name: "[Contract] Summit Pale Ale", type: RECIPE_TYPES.CONTRACT, style: "Pale Ale", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 32 }, { materialId: "M07", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
+  { id: "R16", name: "[Contract] Bayview IPA", type: RECIPE_TYPES.CONTRACT, style: "IPA", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 36 }, { materialId: "M05", qtyPerBbl: 3.5 }, { materialId: "M08", qtyPerBbl: 1.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
+  { id: "R17", name: "[Contract] Northside Wheat", type: RECIPE_TYPES.CONTRACT, style: "Wheat", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 18 }, { materialId: "M06", qtyPerBbl: 16 }, { materialId: "M03", qtyPerBbl: 1.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 120, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
+  { id: "R18", name: "[Contract] Harbor Stout", type: RECIPE_TYPES.CONTRACT, style: "Stout", bblPerBatch: 20, ingredients: [{ materialId: "M02", qtyPerBbl: 40 }, { materialId: "M06", qtyPerBbl: 6 }, { materialId: "M04", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 4, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 192, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 96, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R19", name: "[Contract] Coastal Pilsner", type: RECIPE_TYPES.CONTRACT, style: "Pilsner", bblPerBatch: 30, ingredients: [{ materialId: "M01", qtyPerBbl: 28 }, { materialId: "M03", qtyPerBbl: 1.5 }, { materialId: "M11", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 288, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 6, cleanHrs: 2 }] },
+  // Seasonal / Specialty
+  { id: "R20", name: "Pumpkin Ale", type: RECIPE_TYPES.SEASONAL, style: "Spiced Ale", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 30 }, { materialId: "M04", qtyPerBbl: 1.2 }, { materialId: "M09", qtyPerBbl: 2.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 4, cleanHrs: 1.5 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 168, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R21", name: "Winter Warmer", type: RECIPE_TYPES.SEASONAL, style: "Strong Ale", bblPerBatch: 10, ingredients: [{ materialId: "M02", qtyPerBbl: 42 }, { materialId: "M04", qtyPerBbl: 2.0 }, { materialId: "M09", qtyPerBbl: 1.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 4, cleanHrs: 1.5 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 2.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 216, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 120, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 3, cleanHrs: 2 }] },
+  { id: "R22", name: "Summer Shandy", type: RECIPE_TYPES.SEASONAL, style: "Shandy", bblPerBatch: 15, ingredients: [{ materialId: "M01", qtyPerBbl: 22 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 3.0 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 2.5, cleanHrs: 1 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 96, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 48, cleanHrs: 3 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
+  { id: "R23", name: "Barrel-Aged Imperial Stout", type: RECIPE_TYPES.SEASONAL, style: "Imperial Stout", bblPerBatch: 5, ingredients: [{ materialId: "M02", qtyPerBbl: 55 }, { materialId: "M04", qtyPerBbl: 2.5 }, { materialId: "M10", qtyPerBbl: 0.01 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 5, cleanHrs: 2 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 3, cleanHrs: 1.5 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 336, cleanHrs: 4 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 240, cleanHrs: 4 }, { step: "package", equipType: EQUIP_TYPES.KEGGING, durationHrs: 2, cleanHrs: 1 }] },
+  { id: "R24", name: "Mango Sour", type: RECIPE_TYPES.SEASONAL, style: "Sour", bblPerBatch: 10, ingredients: [{ materialId: "M01", qtyPerBbl: 25 }, { materialId: "M03", qtyPerBbl: 0.8 }, { materialId: "M09", qtyPerBbl: 5.0 }, { materialId: "M12", qtyPerBbl: 0.005 }], steps: [{ step: "mash", equipType: EQUIP_TYPES.MASH, durationHrs: 3, cleanHrs: 1.5 }, { step: "boil", equipType: EQUIP_TYPES.KETTLE, durationHrs: 1.5, cleanHrs: 1 }, { step: "ferment", equipType: EQUIP_TYPES.FERM, durationHrs: 240, cleanHrs: 6 }, { step: "condition", equipType: EQUIP_TYPES.BRITE, durationHrs: 72, cleanHrs: 4 }, { step: "package", equipType: EQUIP_TYPES.CANNER, durationHrs: 4, cleanHrs: 2 }] },
 ];
 
-
 const SAMPLE_EQUIPMENT = [
-  // Fermenters — 20 BBL (small batches)
-  { id: "FV01", name: "FV #1", type: EQUIP_TYPES.FERM, capacityBbl: 20, notes: "" },
-  { id: "FV02", name: "FV #2", type: EQUIP_TYPES.FERM, capacityBbl: 20, notes: "" },
-  { id: "FV03", name: "FV #3", type: EQUIP_TYPES.FERM, capacityBbl: 20, notes: "" },
-  // Fermenters — 120 BBL
-  { id: "FV04", name: "FV #4", type: EQUIP_TYPES.FERM, capacityBbl: 120, notes: "Dry hop" },
-  { id: "FV05", name: "FV #5", type: EQUIP_TYPES.FERM, capacityBbl: 120, notes: "Dry hop" },
-  { id: "FV06", name: "FV #6", type: EQUIP_TYPES.FERM, capacityBbl: 120, notes: "" },
-  { id: "FV07", name: "FV #7", type: EQUIP_TYPES.FERM, capacityBbl: 120, notes: "" },
-  { id: "FV08", name: "FV #8", type: EQUIP_TYPES.FERM, capacityBbl: 120, notes: "Dry hop" },
-  { id: "FV09", name: "FV #9", type: EQUIP_TYPES.FERM, capacityBbl: 120, notes: "Dry hop" },
-  { id: "FV10", name: "FV #10", type: EQUIP_TYPES.FERM, capacityBbl: 120, notes: "" },
-  { id: "FV11", name: "FV #11", type: EQUIP_TYPES.FERM, capacityBbl: 120, notes: "" },
-  { id: "FV12", name: "FV #12", type: EQUIP_TYPES.FERM, capacityBbl: 120, notes: "" },
-  // Fermenters — 60 BBL
-  { id: "FV13", name: "FV #13", type: EQUIP_TYPES.FERM, capacityBbl: 60, notes: "" },
-  { id: "FV14", name: "FV #14", type: EQUIP_TYPES.FERM, capacityBbl: 60, notes: "" },
-  // Brite Tanks
-  { id: "BBT1", name: "BBT #1", type: EQUIP_TYPES.BRITE, capacityBbl: 120, notes: "" },
-  { id: "BBT2", name: "BBT #2", type: EQUIP_TYPES.BRITE, capacityBbl: 40, notes: "" },
-  { id: "BBT3", name: "BBT #3", type: EQUIP_TYPES.BRITE, capacityBbl: 120, notes: "" },
-  // HOG — large batches only
-  { id: "HOG1", name: "HOG", type: EQUIP_TYPES.BRITE, capacityBbl: 120, notes: "Large batches only" },
-  // Packaging
-  { id: "CAN1", name: "Canning Line", type: EQUIP_TYPES.CANNER, capacityBbl: 200, notes: "" },
-  { id: "KEG1", name: "Kegging Line", type: EQUIP_TYPES.KEGGING, capacityBbl: 200, notes: "" },
+  { id: "E01", name: "Mash Tun A", type: EQUIP_TYPES.MASH, capacityBbl: 20 },
+  { id: "E02", name: "Mash Tun B", type: EQUIP_TYPES.MASH, capacityBbl: 35 },
+  { id: "E03", name: "Brew Kettle A", type: EQUIP_TYPES.KETTLE, capacityBbl: 20 },
+  { id: "E04", name: "Brew Kettle B", type: EQUIP_TYPES.KETTLE, capacityBbl: 35 },
+  { id: "E05", name: "Fermenter 1", type: EQUIP_TYPES.FERM, capacityBbl: 20 },
+  { id: "E06", name: "Fermenter 2", type: EQUIP_TYPES.FERM, capacityBbl: 20 },
+  { id: "E07", name: "Fermenter 3", type: EQUIP_TYPES.FERM, capacityBbl: 30 },
+  { id: "E08", name: "Fermenter 4", type: EQUIP_TYPES.FERM, capacityBbl: 30 },
+  { id: "E09", name: "Fermenter 5", type: EQUIP_TYPES.FERM, capacityBbl: 15 },
+  { id: "E10", name: "Brite Tank 1", type: EQUIP_TYPES.BRITE, capacityBbl: 20 },
+  { id: "E11", name: "Brite Tank 2", type: EQUIP_TYPES.BRITE, capacityBbl: 30 },
+  { id: "E12", name: "Brite Tank 3", type: EQUIP_TYPES.BRITE, capacityBbl: 15 },
+  { id: "E13", name: "Canning Line", type: EQUIP_TYPES.CANNER, capacityBbl: 100 },
+  { id: "E14", name: "Kegging Line", type: EQUIP_TYPES.KEGGING, capacityBbl: 100 },
 ];
 
 const SAMPLE_MATERIALS = [
@@ -124,50 +78,28 @@ const d = (offset) => {
 };
 
 const SAMPLE_SCHEDULE = [
-  // Currently fermenting — projected from 2/2 spreadsheet queue
-  { id: "B001", recipeId: "R02", batchSizeBbl: 30, status: "fermenting", steps: [{ step: "ferment", equipId: "FV05", start: "2026-02-24", end: "2026-03-10" }, { step: "condition", equipId: "BBT1", start: "2026-03-10", end: "2026-03-13" }, { step: "package", equipId: "CAN1", start: "2026-03-13", end: "2026-03-13" }] },
-  { id: "B002", recipeId: "R02", batchSizeBbl: 30, status: "fermenting", steps: [{ step: "ferment", equipId: "FV06", start: "2026-02-26", end: "2026-03-12" }, { step: "condition", equipId: "BBT3", start: "2026-03-12", end: "2026-03-15" }, { step: "package", equipId: "CAN1", start: "2026-03-15", end: "2026-03-15" }] },
-  { id: "B003", recipeId: "R53", batchSizeBbl: 15, status: "fermenting", steps: [{ step: "ferment", equipId: "FV09", start: "2026-03-02", end: "2026-03-16" }, { step: "condition", equipId: "BBT2", start: "2026-03-16", end: "2026-03-18" }, { step: "package", equipId: "CAN1", start: "2026-03-18", end: "2026-03-18" }] },
-  { id: "B004", recipeId: "R54", batchSizeBbl: 15, status: "fermenting", steps: [{ step: "ferment", equipId: "FV11", start: "2026-02-18", end: "2026-03-18" }, { step: "condition", equipId: "BBT2", start: "2026-03-18", end: "2026-03-20" }, { step: "package", equipId: "CAN1", start: "2026-03-20", end: "2026-03-20" }] },
-  { id: "B005", recipeId: "R14", batchSizeBbl: 15, status: "fermenting", steps: [{ step: "ferment", equipId: "FV13", start: "2026-02-16", end: "2026-03-09" }, { step: "condition", equipId: "BBT2", start: "2026-03-09", end: "2026-03-11" }, { step: "package", equipId: "CAN1", start: "2026-03-11", end: "2026-03-11" }] },
-  { id: "B006", recipeId: "R56", batchSizeBbl: 15, status: "conditioning", steps: [{ step: "ferment", equipId: "FV10", start: "2026-02-27", end: "2026-03-06" }, { step: "condition", equipId: "BBT1", start: "2026-03-06", end: "2026-03-08" }, { step: "package", equipId: "CAN1", start: "2026-03-09", end: "2026-03-09" }] },
-  // Planned — upcoming batches
-  { id: "B007", recipeId: "R52", batchSizeBbl: 30, status: "planned", steps: [{ step: "ferment", equipId: "FV04", start: d(2), end: d(12) }, { step: "condition", equipId: "BBT1", start: d(12), end: d(16) }, { step: "package", equipId: "CAN1", start: d(16), end: d(16) }] },
-  { id: "B008", recipeId: "R46", batchSizeBbl: 30, status: "planned", steps: [{ step: "ferment", equipId: "FV07", start: d(3), end: d(8) }, { step: "condition", equipId: "BBT3", start: d(8), end: d(10) }, { step: "package", equipId: "CAN1", start: d(10), end: d(10) }] },
-  { id: "B009", recipeId: "R01", batchSizeBbl: 30, status: "planned", steps: [{ step: "ferment", equipId: "FV08", start: d(4), end: d(16) }, { step: "condition", equipId: "BBT3", start: d(16), end: d(21) }, { step: "package", equipId: "CAN1", start: d(21), end: d(21) }] },
-  { id: "B010", recipeId: "R49", batchSizeBbl: 30, status: "planned", steps: [{ step: "ferment", equipId: "FV10", start: d(5), end: d(10) }, { step: "condition", equipId: "HOG1", start: d(10), end: d(12) }, { step: "package", equipId: "CAN1", start: d(12), end: d(12) }] },
-  { id: "B011", recipeId: "R59", batchSizeBbl: 15, status: "planned", steps: [{ step: "ferment", equipId: "FV01", start: d(3), end: d(9) }, { step: "condition", equipId: "BBT2", start: d(11), end: d(13) }, { step: "package", equipId: "CAN1", start: d(13), end: d(13) }] },
-  { id: "B012", recipeId: "R03", batchSizeBbl: 15, status: "planned", steps: [{ step: "ferment", equipId: "FV02", start: d(3), end: d(9) }, { step: "condition", equipId: "BBT2", start: d(13), end: d(15) }, { step: "package", equipId: "CAN1", start: d(15), end: d(15) }] },
-  { id: "B013", recipeId: "R47", batchSizeBbl: 30, status: "planned", steps: [{ step: "ferment", equipId: "FV12", start: d(6), end: d(11) }, { step: "condition", equipId: "BBT3", start: d(11), end: d(13) }, { step: "package", equipId: "CAN1", start: d(13), end: d(13) }] },
-  { id: "B014", recipeId: "R57", batchSizeBbl: 15, status: "planned", steps: [{ step: "ferment", equipId: "FV14", start: d(4), end: d(12) }, { step: "condition", equipId: "BBT2", start: d(15), end: d(18) }, { step: "package", equipId: "CAN1", start: d(18), end: d(18) }] },
-  { id: "B015", recipeId: "R48", batchSizeBbl: 30, status: "planned", steps: [{ step: "ferment", equipId: "FV05", start: d(8), end: d(16) }, { step: "condition", equipId: "HOG1", start: d(16), end: d(19) }, { step: "package", equipId: "CAN1", start: d(19), end: d(19) }] },
-  { id: "B016", recipeId: "R38", batchSizeBbl: 15, status: "planned", steps: [{ step: "ferment", equipId: "FV03", start: d(5), end: d(11) }, { step: "condition", equipId: "BBT2", start: d(18), end: d(20) }, { step: "package", equipId: "CAN1", start: d(20), end: d(20) }] },
+  { id: "B001", recipeId: "R01", batchSizeBbl: 15, status: "fermenting", steps: [{ step: "mash", equipId: "E01", start: d(-5), end: d(-5) }, { step: "boil", equipId: "E03", start: d(-5), end: d(-5) }, { step: "ferment", equipId: "E05", start: d(-4), end: d(3) }, { step: "condition", equipId: "E10", start: d(3), end: d(6) }, { step: "package", equipId: "E13", start: d(6), end: d(6) }] },
+  { id: "B002", recipeId: "R14", batchSizeBbl: 30, status: "fermenting", steps: [{ step: "mash", equipId: "E02", start: d(-8), end: d(-8) }, { step: "boil", equipId: "E04", start: d(-8), end: d(-8) }, { step: "ferment", equipId: "E07", start: d(-7), end: d(7) }, { step: "condition", equipId: "E11", start: d(7), end: d(12) }, { step: "package", equipId: "E13", start: d(12), end: d(12) }] },
+  { id: "B003", recipeId: "R03", batchSizeBbl: 15, status: "conditioning", steps: [{ step: "mash", equipId: "E01", start: d(-10), end: d(-10) }, { step: "boil", equipId: "E03", start: d(-10), end: d(-10) }, { step: "ferment", equipId: "E06", start: d(-9), end: d(-3) }, { step: "condition", equipId: "E12", start: d(-3), end: d(-1) }, { step: "package", equipId: "E13", start: d(-1), end: d(-1) }] },
+  { id: "B004", recipeId: "R16", batchSizeBbl: 30, status: "planned", steps: [{ step: "mash", equipId: "E02", start: d(2), end: d(2) }, { step: "boil", equipId: "E04", start: d(2), end: d(2) }, { step: "ferment", equipId: "E08", start: d(3), end: d(10) }, { step: "condition", equipId: "E11", start: d(13), end: d(16) }, { step: "package", equipId: "E13", start: d(16), end: d(16) }] },
+  { id: "B005", recipeId: "R05", batchSizeBbl: 15, status: "planned", steps: [{ step: "mash", equipId: "E01", start: d(4), end: d(4) }, { step: "boil", equipId: "E03", start: d(4), end: d(4) }, { step: "ferment", equipId: "E09", start: d(5), end: d(17) }, { step: "condition", equipId: "E12", start: d(17), end: d(22) }, { step: "package", equipId: "E14", start: d(22), end: d(22) }] },
+  { id: "B006", recipeId: "R15", batchSizeBbl: 30, status: "planned", steps: [{ step: "mash", equipId: "E02", start: d(6), end: d(6) }, { step: "boil", equipId: "E04", start: d(6), end: d(6) }, { step: "ferment", equipId: "E07", start: d(8), end: d(15) }, { step: "condition", equipId: "E10", start: d(15), end: d(18) }, { step: "package", equipId: "E13", start: d(18), end: d(18) }] },
+  { id: "B007", recipeId: "R04", batchSizeBbl: 10, status: "planned", steps: [{ step: "mash", equipId: "E01", start: d(8), end: d(8) }, { step: "boil", equipId: "E03", start: d(8), end: d(8) }, { step: "ferment", equipId: "E05", start: d(4), end: d(12) }, { step: "condition", equipId: "E12", start: d(22), end: d(26) }, { step: "package", equipId: "E14", start: d(26), end: d(26) }] },
+  { id: "B008", recipeId: "R20", batchSizeBbl: 10, status: "planned", steps: [{ step: "mash", equipId: "E01", start: d(10), end: d(10) }, { step: "boil", equipId: "E03", start: d(10), end: d(10) }, { step: "ferment", equipId: "E06", start: d(11), end: d(18) }, { step: "condition", equipId: "E10", start: d(19), end: d(22) }, { step: "package", equipId: "E13", start: d(22), end: d(22) }] },
 ];
-
 
 const SAMPLE_DEMAND = [
-  { id: "D001", recipeId: "R02", volumeBbl: 60, shipDate: d(14), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D002", recipeId: "R46", volumeBbl: 30, shipDate: d(11), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "contract" },
-  { id: "D003", recipeId: "R49", volumeBbl: 30, shipDate: d(13), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "contract" },
-  { id: "D004", recipeId: "R52", volumeBbl: 30, shipDate: d(17), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D005", recipeId: "R01", volumeBbl: 30, shipDate: d(22), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D006", recipeId: "R53", volumeBbl: 15, shipDate: d(19), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D007", recipeId: "R14", volumeBbl: 15, shipDate: d(12), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D008", recipeId: "R56", volumeBbl: 15, shipDate: d(10), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D009", recipeId: "R54", volumeBbl: 15, shipDate: d(21), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D010", recipeId: "R47", volumeBbl: 30, shipDate: d(14), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "contract" },
-  { id: "D011", recipeId: "R48", volumeBbl: 30, shipDate: d(20), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "contract" },
-  { id: "D012", recipeId: "R59", volumeBbl: 15, shipDate: d(14), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D013", recipeId: "R03", volumeBbl: 15, shipDate: d(16), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D014", recipeId: "R38", volumeBbl: 15, shipDate: d(21), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D015", recipeId: "R57", volumeBbl: 15, shipDate: d(19), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
-  { id: "D016", recipeId: "R04", volumeBbl: 5, shipDate: d(10), channel: CHANNELS.TAPROOM, format: FORMATS.DRAFT, source: "forecast" },
-  { id: "D017", recipeId: "R05", volumeBbl: 4, shipDate: d(12), channel: CHANNELS.TAPROOM, format: FORMATS.DRAFT, source: "forecast" },
-  { id: "D018", recipeId: "R06", volumeBbl: 3, shipDate: d(8), channel: CHANNELS.TAPROOM, format: FORMATS.DRAFT, source: "forecast" },
-  { id: "D019", recipeId: "R10", volumeBbl: 3, shipDate: d(7), channel: CHANNELS.TAPROOM, format: FORMATS.DRAFT, source: "forecast" },
-  { id: "D020", recipeId: "R08", volumeBbl: 4, shipDate: d(14), channel: CHANNELS.TAPROOM, format: FORMATS.DRAFT, source: "forecast" },
+  { id: "D001", recipeId: "R01", volumeBbl: 15, shipDate: d(7), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
+  { id: "D002", recipeId: "R14", volumeBbl: 30, shipDate: d(13), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "contract" },
+  { id: "D003", recipeId: "R03", volumeBbl: 5, shipDate: d(2), channel: CHANNELS.TAPROOM, format: FORMATS.DRAFT, source: "forecast" },
+  { id: "D004", recipeId: "R16", volumeBbl: 30, shipDate: d(17), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "contract" },
+  { id: "D005", recipeId: "R05", volumeBbl: 15, shipDate: d(23), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
+  { id: "D006", recipeId: "R15", volumeBbl: 30, shipDate: d(19), channel: CHANNELS.DISTRIBUTION, format: FORMATS.BARREL, source: "contract" },
+  { id: "D007", recipeId: "R01", volumeBbl: 3, shipDate: d(10), channel: CHANNELS.TAPROOM, format: FORMATS.DRAFT, source: "forecast" },
+  { id: "D008", recipeId: "R04", volumeBbl: 10, shipDate: d(27), channel: CHANNELS.DISTRIBUTION, format: FORMATS.BARREL, source: "forecast" },
+  { id: "D009", recipeId: "R20", volumeBbl: 10, shipDate: d(23), channel: CHANNELS.DISTRIBUTION, format: FORMATS.CAN, source: "forecast" },
+  { id: "D010", recipeId: "R06", volumeBbl: 4, shipDate: d(14), channel: CHANNELS.TAPROOM, format: FORMATS.DRAFT, source: "forecast" },
 ];
-
 
 // ─── UTILITIES ──────────────────────────────────────────────────────────────────
 
@@ -177,29 +109,29 @@ const fmtDate = (dateStr) => { const dt = new Date(dateStr + "T00:00:00"); retur
 const today = () => new Date().toISOString().slice(0, 10);
 
 const TYPE_COLORS = {
-  core: { bg: "#1a2d5a", border: "#3c78d8", text: "#8ab4f0" },       // Excel batch blue
-  contract: { bg: "#4a2050", border: "#d98ae0", text: "#f0b8f4" },   // Excel pink/magenta
-  seasonal: { bg: "#2a3d28", border: "#93c47d", text: "#c4e0b8" },   // Excel green
+  core: { bg: "#1e3a5f", border: "#3b82f6", text: "#93c5fd" },
+  contract: { bg: "#5c3d1e", border: "#d97706", text: "#fbbf24" },
+  seasonal: { bg: "#1e4d3a", border: "#10b981", text: "#6ee7b7" },
 };
 
 const STATUS_COLORS = {
   planned: "#64748b",
-  mashing: "#ffe599",
-  boiling: "#ffe599",
-  fermenting: "#d98ae0",   // pink/magenta
-  conditioning: "#7bafd4", // light blue
-  carbonating: "#b4a7d6",  // lavender
-  packaging: "#7dab6e",    // green
-  complete: "#93c47d",     // Excel green
+  mashing: "#f59e0b",
+  boiling: "#ef4444",
+  fermenting: "#8b5cf6",
+  conditioning: "#3b82f6",
+  carbonating: "#06b6d4",
+  packaging: "#10b981",
+  complete: "#22c55e",
 };
 
 const STEP_COLORS = {
-  mash: "#ffe599",       // Excel yellow headers
-  boil: "#ffe599",       // Excel yellow headers
-  ferment: "#d98ae0",    // Excel pink/magenta (#FDA7FF)
-  condition: "#7bafd4",  // Excel light blue (#CFE2F3)
-  carbonate: "#b4a7d6",  // Excel lavender (#B4A7D6)
-  package: "#7dab6e",    // Excel light green (#D9EAD3)
+  mash: "#f59e0b",
+  boil: "#ef4444",
+  ferment: "#8b5cf6",
+  condition: "#3b82f6",
+  carbonate: "#06b6d4",
+  package: "#10b981",
 };
 
 // ─── STYLES ──────────────────────────────────────────────────────────────────────
@@ -259,172 +191,100 @@ function Stat({ label, value, sub, color = "#c8854a" }) {
 
 // ─── GANTT CHART ────────────────────────────────────────────────────────────────
 
-function GanttChart({ schedule, equipment, recipes, onEditBatch, dayRange = 42 }) {
+function GanttChart({ schedule, equipment, recipes, onEditBatch, dayRange = 35 }) {
   const todayStr = today();
   const startDate = addDays(todayStr, -7);
-  const totalDays = dayRange;
-  const dayWidth = 28;
-  const subRowH = 20;
-  const rowH = subRowH * 3 + 1; // 3 sub-rows + border
-  const labelWidth = 160;
-  const headerH = 52;
+  const endDate = addDays(todayStr, dayRange - 7);
+  const totalDays = daysBetween(startDate, endDate);
+  const dayWidth = 32;
+  const rowHeight = 36;
+  const labelWidth = 140;
 
-  const equipRows = equipment.filter(e => [EQUIP_TYPES.FERM, EQUIP_TYPES.BRITE].includes(e.type));
+  const equipRows = equipment.filter(e => [EQUIP_TYPES.FERM, EQUIP_TYPES.BRITE, EQUIP_TYPES.MASH, EQUIP_TYPES.KETTLE].includes(e.type));
 
-  // Build date info
-  const days = Array.from({ length: totalDays }, (_, i) => {
-    const ds = addDays(startDate, i);
-    const dt = new Date(ds + "T00:00:00");
-    return { date: ds, day: dt.getDate(), dow: ["Su","M","T","W","Th","F","S"][dt.getDay()], month: dt.toLocaleDateString("en-US",{month:"short"}), isWeekend: dt.getDay()%6===0, isToday: ds===todayStr, monthStart: dt.getDate()===1 };
-  });
-
-  // Month spans
-  const months = [];
-  let cur = null;
-  days.forEach((d,i) => {
-    if(!cur || cur.month !== d.month) { cur = {month:d.month, start:i, span:1}; months.push(cur); } else { cur.span++; }
-  });
-
-  // Phase colors — matched to brewery's Excel: pink=ferment, blue=testing, lavender=centrifuge, green=packaging, blue=transfer
-  const PHASE = {
-    ferment: { bg: "#4a2050", border: "#d98ae0", text: "#f0b8f4", label: "BEER" },       // Excel: #FDA7FF pink/magenta
-    condition: { bg: "#1c3454", border: "#7bafd4", text: "#cfe2f3", label: "TESTING" },   // Excel: #CFE2F3 light blue
-    package_can: { bg: "#2a3d28", border: "#7dab6e", text: "#d9ead3", label: "CAN" },     // Excel: #D9EAD3 light green
-    package_keg: { bg: "#2a3d28", border: "#7dab6e", text: "#d9ead3", label: "KEG" },     // Excel: #D9EAD3 same green
-    transfer: { bg: "#1a2d5a", border: "#3c78d8", text: "#ffffff", label: "THC" },        // Excel: #3C78D8 blue, white text
-  };
-
-  // Build blocks per equipment row
   const getBlocks = () => {
     const blocks = [];
     schedule.forEach(batch => {
       const recipe = recipes.find(r => r.id === batch.recipeId);
       if (!recipe) return;
-      const isKeg = recipe.channel === "taproom";
+      const tc = TYPE_COLORS[recipe.type] || TYPE_COLORS.core;
       batch.steps.forEach(step => {
         const eqIdx = equipRows.findIndex(e => e.id === step.equipId);
         if (eqIdx === -1) return;
-        const s = daysBetween(startDate, step.start);
-        const e2 = daysBetween(startDate, step.end) + 1;
-        if (e2 < 0 || s > totalDays) return;
-        const left = Math.max(0, s) * dayWidth;
-        const width = Math.max(1, (Math.min(e2, totalDays) - Math.max(0, s))) * dayWidth - 1;
-
-        let subRow = 0, phase = PHASE.ferment, label = recipe.name;
-        const durDays = daysBetween(step.start, step.end) + 1;
-        if (step.step === "ferment") {
-          subRow = 0; phase = PHASE.ferment;
-          label = recipe.name;
-        } else if (step.step === "condition") {
-          subRow = 1; phase = PHASE.condition;
-          label = `${durDays}D TESTING`;
-        } else if (step.step === "package") {
-          subRow = 2; phase = isKeg ? PHASE.package_keg : PHASE.package_can;
-          label = isKeg ? "KEG" : "CAN";
-        }
-        blocks.push({ batchId: batch.id, eqIdx, subRow, left, width, phase, label, batch, recipe, step: step.step });
+        const startOff = daysBetween(startDate, step.start);
+        const endOff = daysBetween(startDate, step.end) + 1;
+        if (endOff < 0 || startOff > totalDays) return;
+        blocks.push({
+          batchId: batch.id, step: step.step, equipIdx: eqIdx,
+          left: Math.max(0, startOff) * dayWidth,
+          width: Math.max(1, (Math.min(endOff, totalDays) - Math.max(0, startOff))) * dayWidth - 2,
+          color: STEP_COLORS[step.step] || tc.border,
+          label: `${recipe.name.replace("[Contract] ", "").slice(0, 12)} · ${step.step}`,
+          recipe, batch, tc
+        });
       });
     });
     return blocks;
   };
-  const blocks = getBlocks();
-  const chartWidth = totalDays * dayWidth;
-  const chartHeight = equipRows.length * rowH;
-  const todayOff = daysBetween(startDate, todayStr);
 
-  const gridBg = "#0d1117";
-  const gridLine = "#1b2230";
-  const gridLineLight = "#151d28";
+  const blocks = getBlocks();
+  const todayOff = daysBetween(startDate, todayStr);
+  const chartWidth = totalDays * dayWidth;
+  const chartHeight = equipRows.length * rowHeight;
 
   return (
-    <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "70vh", border: "1px solid #1e293b", borderRadius: 6 }}>
+    <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "65vh" }}>
       <div style={{ display: "flex", minWidth: labelWidth + chartWidth }}>
-        {/* Equipment labels */}
-        <div style={{ width: labelWidth, flexShrink: 0, position: "sticky", left: 0, zIndex: 3, background: gridBg, borderRight: `2px solid ${gridLine}` }}>
-          <div style={{ height: headerH, background: "#111820", borderBottom: `2px solid ${gridLine}`, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "0 6px 4px" }}>
-            <div style={{ fontSize: "0.6rem", color: "#475569", textTransform: "uppercase", letterSpacing: "0.08em" }}>Equipment</div>
-          </div>
-          {equipRows.map((eq, i) => (
-            <div key={eq.id} style={{ height: rowH, borderBottom: `1px solid ${gridLine}`, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 6px", background: i % 2 === 0 ? gridBg : "#0f151d" }}>
-              <div style={{ fontSize: "0.75rem", fontWeight: 600, color: eq.capacityBbl <= 20 ? "#ffff00" : eq.capacityBbl <= 60 ? "#ff9900" : eq.type === EQUIP_TYPES.BRITE ? "#d9ead3" : "#93c47d", lineHeight: 1.2 }}>{eq.name}</div>
-              <div style={{ fontSize: "0.6rem", color: "#475569", fontFamily: "'JetBrains Mono', monospace" }}>{eq.capacityBbl}BBL{eq.notes ? ` · ${eq.notes}` : ""}</div>
+        {/* Labels */}
+        <div style={{ width: labelWidth, flexShrink: 0, position: "sticky", left: 0, zIndex: 2, background: "#111820" }}>
+          <div style={{ height: 28, borderBottom: "1px solid #1e293b", padding: "4px 8px", fontSize: "0.65rem", color: "#64748b" }}>Equipment</div>
+          {equipRows.map(eq => (
+            <div key={eq.id} style={{ height: rowHeight, borderBottom: "1px solid #1e293b11", display: "flex", alignItems: "center", padding: "0 8px", fontSize: "0.75rem", color: "#94a3b8" }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: eq.type === EQUIP_TYPES.FERM ? "#8b5cf6" : eq.type === EQUIP_TYPES.BRITE ? "#3b82f6" : eq.type === EQUIP_TYPES.MASH ? "#f59e0b" : "#ef4444", marginRight: 8, flexShrink: 0 }} />
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{eq.name}</span>
             </div>
           ))}
         </div>
-        {/* Chart area */}
+        {/* Chart */}
         <div style={{ position: "relative", width: chartWidth }}>
-          {/* Stacked headers: Month → Weekday → Day */}
-          <div style={{ height: headerH, background: "#111820", borderBottom: `2px solid ${gridLine}`, position: "relative" }}>
-            {/* Month row */}
-            <div style={{ display: "flex", height: 16, borderBottom: `1px solid ${gridLineLight}` }}>
-              {months.map((m, i) => (
-                <div key={i} style={{ width: m.span * dayWidth, flexShrink: 0, fontSize: "0.6rem", fontWeight: 700, color: "#ffe599", padding: "1px 4px", borderLeft: i > 0 ? `1px solid ${gridLine}` : "none", textTransform: "uppercase", letterSpacing: "0.08em" }}>{m.month}</div>
-              ))}
-            </div>
-            {/* Weekday row */}
-            <div style={{ display: "flex", height: 16, borderBottom: `1px solid ${gridLineLight}` }}>
-              {days.map((d, i) => (
-                <div key={i} style={{ width: dayWidth, flexShrink: 0, textAlign: "center", fontSize: "0.55rem", fontWeight: d.isToday ? 700 : 400, color: d.isToday ? "#ffe599" : d.isWeekend ? "#333d4d" : "#475569", fontFamily: "'JetBrains Mono', monospace", lineHeight: "16px" }}>{d.dow}</div>
-              ))}
-            </div>
-            {/* Day number row */}
-            <div style={{ display: "flex", height: 20 }}>
-              {days.map((d, i) => (
-                <div key={i} style={{ width: dayWidth, flexShrink: 0, textAlign: "center", fontSize: "0.65rem", fontWeight: d.isToday ? 700 : 500, color: d.isToday ? "#ffe599" : d.isWeekend ? "#333d4d" : "#94a3b8", fontFamily: "'JetBrains Mono', monospace", lineHeight: "20px", borderLeft: d.monthStart ? `1px solid ${gridLine}` : "none" }}>{d.day}</div>
-              ))}
-            </div>
+          {/* Date headers */}
+          <div style={{ display: "flex", height: 28, borderBottom: "1px solid #1e293b" }}>
+            {Array.from({ length: totalDays }, (_, i) => {
+              const dt = addDays(startDate, i);
+              const isToday = dt === todayStr;
+              const isWeekend = new Date(dt + "T00:00:00").getDay() % 6 === 0;
+              return (
+                <div key={i} style={{ width: dayWidth, flexShrink: 0, textAlign: "center", fontSize: "0.55rem", padding: "6px 0", color: isToday ? "#c8854a" : isWeekend ? "#475569" : "#64748b", fontWeight: isToday ? 700 : 400, fontFamily: "'JetBrains Mono', monospace" }}>
+                  {fmtDate(dt)}
+                </div>
+              );
+            })}
           </div>
-          {/* Grid + blocks */}
+          {/* Grid rows */}
           <div style={{ position: "relative", height: chartHeight }}>
-            {/* Row backgrounds */}
             {equipRows.map((_, i) => (
-              <div key={`row-${i}`} style={{ position: "absolute", top: i * rowH, left: 0, right: 0, height: rowH, background: i % 2 === 0 ? gridBg : "#0f151d", borderBottom: `1px solid ${gridLine}` }}>
-                {/* Sub-row lines */}
-                <div style={{ position: "absolute", top: subRowH, left: 0, right: 0, height: 1, background: gridLineLight + "66" }} />
-                <div style={{ position: "absolute", top: subRowH * 2, left: 0, right: 0, height: 1, background: gridLineLight + "66" }} />
-              </div>
-            ))}
-            {/* Vertical day lines */}
-            {days.map((d, i) => d.monthStart && (
-              <div key={`vl-${i}`} style={{ position: "absolute", left: i * dayWidth, top: 0, bottom: 0, width: 1, background: gridLine }} />
-            ))}
-            {/* Weekend shading */}
-            {days.map((d, i) => d.isWeekend && (
-              <div key={`we-${i}`} style={{ position: "absolute", left: i * dayWidth, top: 0, bottom: 0, width: dayWidth, background: "#ffffff03" }} />
+              <div key={i} style={{ position: "absolute", top: i * rowHeight, left: 0, right: 0, height: rowHeight, borderBottom: "1px solid #1e293b08" }} />
             ))}
             {/* Today line */}
-            {todayOff >= 0 && todayOff < totalDays && (
-              <div style={{ position: "absolute", left: todayOff * dayWidth, top: 0, bottom: 0, width: dayWidth, background: "#ffe59908", borderLeft: "2px solid #ffe59966", zIndex: 1 }} />
+            {todayOff >= 0 && todayOff <= totalDays && (
+              <div style={{ position: "absolute", left: todayOff * dayWidth + dayWidth / 2, top: 0, bottom: 0, width: 2, background: "#c8854a88", zIndex: 1 }} />
             )}
-            {/* Batch blocks */}
+            {/* Blocks */}
             {blocks.map((b, i) => (
-              <div key={i} onClick={() => onEditBatch(b.batch)} title={`${b.recipe.name} (${b.batch.id}) — ${b.step}`} style={{
-                position: "absolute",
-                top: b.eqIdx * rowH + b.subRow * subRowH + 2,
-                left: b.left + 1, width: b.width - 1, height: subRowH - 3,
-                background: b.phase.bg, border: `1px solid ${b.phase.border}`,
-                borderRadius: 2, display: "flex", alignItems: "center", padding: "0 4px",
-                overflow: "hidden", cursor: "pointer", zIndex: 2,
-                fontSize: "0.55rem", fontWeight: 600, color: b.phase.text,
-                whiteSpace: "nowrap", transition: "filter 0.1s",
+              <div key={i} onClick={() => onEditBatch(b.batch)} style={{
+                position: "absolute", top: b.equipIdx * rowHeight + 4, left: b.left, width: b.width, height: rowHeight - 8,
+                background: b.color + "33", border: `1px solid ${b.color}88`, borderRadius: 4,
+                display: "flex", alignItems: "center", padding: "0 6px", overflow: "hidden", cursor: "pointer",
+                fontSize: "0.6rem", fontWeight: 500, color: b.color, whiteSpace: "nowrap", transition: "all 0.1s"
               }}
-              onMouseEnter={e => { e.currentTarget.style.filter = "brightness(1.4)"; e.currentTarget.style.zIndex = "10"; }}
-              onMouseLeave={e => { e.currentTarget.style.filter = "brightness(1)"; e.currentTarget.style.zIndex = "2"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = b.color + "55"; e.currentTarget.style.zIndex = 10; }}
+              onMouseLeave={e => { e.currentTarget.style.background = b.color + "33"; e.currentTarget.style.zIndex = 0; }}
               >
-                {b.width > 50 ? b.label : b.width > 30 ? b.label.slice(0, 6) : ""}
+                {b.width > 60 ? b.label : b.step}
               </div>
             ))}
           </div>
         </div>
-      </div>
-      {/* Sub-row legend */}
-      <div style={{ display: "flex", gap: 16, padding: "6px 12px", background: "#111820", borderTop: `1px solid ${gridLine}`, fontSize: "0.6rem", color: "#64748b" }}>
-        <span>Row 1: <span style={{ color: "#f0b8f4" }}>Fermenting/Aging</span></span>
-        <span>Row 2: <span style={{ color: "#cfe2f3" }}>Testing/Conditioning</span></span>
-        <span>Row 3: <span style={{ color: "#d9ead3" }}>CAN / KEG</span></span>
-        <span style={{ color: "#b4a7d6" }}>◆ Centrifuge</span>
-        <span style={{ color: "#ffffff" }}>◆ <span style={{ color: "#7ba8d4" }}>THC</span></span>
-        <span style={{ marginLeft: "auto" }}>Click blocks to edit</span>
       </div>
     </div>
   );
@@ -513,15 +373,12 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand }
 
       {/* Legend */}
       <div style={{ display: "flex", gap: 16, marginBottom: 12, flexWrap: "wrap" }}>
-        {[["Fermenting","#d98ae0"],["Testing","#7bafd4"],["CAN","#7dab6e"],["KEG","#7dab6e"],["THC","#3c78d8"]].map(([k, c]) => (
+        {Object.entries(STEP_COLORS).map(([k, c]) => (
           <div key={k} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.7rem", color: "#94a3b8" }}>
             <span style={{ width: 10, height: 10, borderRadius: 2, background: c + "66", border: `1px solid ${c}` }} />
             {k}
           </div>
         ))}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "0.65rem", color: "#64748b", marginLeft: 8, borderLeft: "1px solid #1e293b", paddingLeft: 12 }}>
-          Tanks: <span style={{ color: "#ffff00" }}>20BBL</span> <span style={{ color: "#93c47d" }}>120BBL</span> <span style={{ color: "#ff9900" }}>60BBL</span>
-        </div>
       </div>
 
       <div style={baseStyles.card}>
@@ -1127,7 +984,7 @@ function RecipeBrowser({ recipes, materials }) {
   return (
     <div>
       <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#f8fafc", margin: "0 0 4px 0" }}>Recipe Library</h2>
-      <div style={{ fontSize: "0.75rem", color: "#64748b", marginBottom: 16 }}>{recipes.length} recipes · 11 core · 6 contract · {recipes.length - 17} seasonal/specialty</div>
+      <div style={{ fontSize: "0.75rem", color: "#64748b", marginBottom: 16 }}>{recipes.length} recipes · 13 core · 6 contract · {recipes.length - 19} seasonal/specialty</div>
 
       <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
         {Object.entries(counts).map(([k, v]) => (
