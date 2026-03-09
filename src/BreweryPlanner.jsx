@@ -1708,9 +1708,6 @@ export default function BreweryPlanner() {
   const [scenarios, setScenarios] = useState([]);
   const [activeScenario, setActiveScenario] = useState(null);
   const [sensitivity, setSensitivity] = useState(1.0);
-  const [scenarios, setScenarios] = useState([]);
-  const [activeScenario, setActiveScenario] = useState(null);
-  const [sensitivity, setSensitivity] = useState(1.0);
 
   return (
     <div style={baseStyles.app}>
