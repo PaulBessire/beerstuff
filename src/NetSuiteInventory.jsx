@@ -109,7 +109,7 @@ const NS = { type:"url", url:"https://8311319.suitetalk.api.netsuite.com/service
 async function queryNS(sql, log) {
   try {
     log("Calling API...");
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
+    const r = await fetch("/api/netsuite", {
       method:"POST", headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:8000, system:"Run the SuiteQL. Return JSON only.", messages:[{role:"user",content:"Run: "+sql}], mcp_servers:[NS] })
     });
