@@ -1935,17 +1935,25 @@ const TABS = [
   { id: "recipes", label: "Recipes", icon: "🍺" },
   { id: "netsuite", label: "NetSuite Sync", icon: "🔗" },
 ];
-
+function loadState(key, fallback) {
+  try { const v = localStorage.getItem("bp_" + key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
+}
+function saveState(key, value) {
+  try { localStorage.setItem("bp_" + key, JSON.stringify(value)); } catch { }
+}
 export default function BreweryPlanner() {
   const [tab, setTab] = useState("schedule");
   const [recipes] = useState(SAMPLE_RECIPES);
   const [equipment] = useState(SAMPLE_EQUIPMENT);
   const [materials] = useState(SAMPLE_MATERIALS);
-  const [schedule, setSchedule] = useState(SAMPLE_SCHEDULE);
-  const [demand, setDemand] = useState(SAMPLE_DEMAND);
-  const [scenarios, setScenarios] = useState([]);
+  const [schedule, setSchedule] = useState(() => loadState("schedule", SAMPLE_SCHEDULE));
+  const [demand, setDemand] = useState(() => loadState("demand", SAMPLE_DEMAND));
+  const [scenarios, setScenarios] = useState(() => loadState("scenarios", []));
   const [activeScenario, setActiveScenario] = useState(null);
   const [sensitivity, setSensitivity] = useState(1.0);
+  useEffect(() => { saveState("schedule", schedule); }, [schedule]);
+  useEffect(() => { saveState("demand", demand); }, [demand]);
+  useEffect(() => { saveState("scenarios", scenarios); }, [scenarios]);
 
   return (
     <div style={baseStyles.app}>
