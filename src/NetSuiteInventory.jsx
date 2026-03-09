@@ -108,30 +108,23 @@ const NS = { type:"url", url:"https://8311319.suitetalk.api.netsuite.com/service
 
 async function queryNS(sql, log) {
   try {
-    log("Calling API...");
+    log("Querying NetSuite via backend...");
     const r = await fetch("/api/netsuite", {
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:8000, system:"Run the SuiteQL. Return JSON only.", messages:[{role:"user",content:"Run: "+sql}], mcp_servers:[NS] })
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sql })
     });
-    if (!r.ok) throw new Error("HTTP " + r.status);
-    const d = await r.json();
-    log("Got " + ((d.content||[]).length) + " blocks");
-    for (const b of (d.content||[])) {
-      if (b.type === "mcp_tool_result") {
-        const subs = Array.isArray(b.content) ? b.content : [b.content];
-        for (const s of subs) {
-          const t = typeof s === "string" ? s : (s && s.text ? s.text : "");
-          if (!t) continue;
-          try { const p = JSON.parse(t); if (p.data) { log(p.data.length+" rows","success"); return p.data; } if (Array.isArray(p)) { log(p.length+" rows","success"); return p; } } catch {}
-        }
-      }
-      if (b.type === "text" && b.text) {
-        const match = b.text.match(/\[[\s\S]*?\]/);
-        if (match) try { const a = JSON.parse(match[0]); log(a.length+" rows from text","success"); return a; } catch {}
-      }
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({ error: "HTTP " + r.status }));
+      throw new Error(err.error || "HTTP " + r.status);
     }
-    throw new Error("Could not parse response");
-  } catch (e) { log("Error: "+e.message,"error"); return null; }
+    const d = await r.json();
+    if (d.ok && Array.isArray(d.data)) {
+      log(d.count + " rows from NetSuite", "success");
+      return d.data;
+    }
+    throw new Error(d.error || "No data returned");
+  } catch (e) { log("Error: " + e.message, "error"); return null; }
 }
 
 function Badge({cat}) {
