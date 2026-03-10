@@ -1708,15 +1708,6 @@ export default function BreweryPlanner() {
   const [scenarios, setScenarios] = useState([]);
   const [activeScenario, setActiveScenario] = useState(null);
   const [sensitivity, setSensitivity] = useState(1.0);
-  const [scenarios, setScenarios] = useState([]);
-  const [activeScenario, setActiveScenario] = useState(null);
-  const [sensitivity, setSensitivity] = useState(1.0);
-
-  return (
-    <div style={baseStyles.app}>
-      <style>{fonts}</style>
-      <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #111820; }
         ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 3px; }
