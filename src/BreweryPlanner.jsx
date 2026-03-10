@@ -101,67 +101,149 @@ const SAMPLE_EQUIPMENT = [
 ];
 
 const SAMPLE_MATERIALS = [
-  // ─── Malts (from NetSuite InvtPart) ───
-  { id: "M01", name: "SILO 1 Rahr Pale Ale Bulk", category: "malt", onHand: 0, unit: "lb", leadTimeDays: 7, costPerUnit: 0.42 },
-  { id: "M02", name: "SILO 2 Rahr Pilsner Bulk", category: "malt", onHand: 21217, unit: "lb", leadTimeDays: 7, costPerUnit: 0.39 },
-  { id: "M03", name: "Weyermann - Pale Wheat", category: "malt", onHand: 1870, unit: "lb", leadTimeDays: 14, costPerUnit: 0.86 },
-  { id: "M04", name: "Weyermann - Caramunich 1", category: "malt", onHand: 935, unit: "lb", leadTimeDays: 14, costPerUnit: 0.99 },
-  { id: "M05", name: "Weyermann - Munich Lt Type 1", category: "malt", onHand: 935, unit: "lb", leadTimeDays: 14, costPerUnit: 0.94 },
-  { id: "M06", name: "Simpsons - Caramalt", category: "malt", onHand: 1307.9, unit: "lb", leadTimeDays: 14, costPerUnit: 1.20 },
-  { id: "M07", name: "Grain Millers Flaked Oats", category: "malt", onHand: 1000, unit: "lb", leadTimeDays: 5, costPerUnit: 0.83 },
-  { id: "M08", name: "Flaked Maize OIO", category: "malt", onHand: 2400, unit: "lb", leadTimeDays: 5, costPerUnit: 1.77 },
-  { id: "M09", name: "Corn Sugar (Dextrose)", category: "malt", onHand: 2810, unit: "lb", leadTimeDays: 5, costPerUnit: 1.00 },
-  { id: "M10", name: "Rice Hulls", category: "malt", onHand: 659, unit: "lb", leadTimeDays: 5, costPerUnit: 0.74 },
-  { id: "M11", name: "Rice Syrup Solids", category: "malt", onHand: 750, unit: "lb", leadTimeDays: 7, costPerUnit: 3.25 },
-  { id: "M12", name: "Lactose", category: "adjunct", onHand: 6545, unit: "lb", leadTimeDays: 7, costPerUnit: 0.13 },
-  // ─── Hops ───
-  { id: "H01", name: "Citra", category: "hops", onHand: 357.96, unit: "lb", leadTimeDays: 7, costPerUnit: 14.02 },
-  { id: "H02", name: "Mosaic", category: "hops", onHand: 289.52, unit: "lb", leadTimeDays: 7, costPerUnit: 14.00 },
-  { id: "H03", name: "Simcoe", category: "hops", onHand: 26.5, unit: "lb", leadTimeDays: 7, costPerUnit: 13.28 },
-  { id: "H04", name: "Cascade", category: "hops", onHand: 145, unit: "lb", leadTimeDays: 5, costPerUnit: 9.00 },
-  { id: "H05", name: "Centennial", category: "hops", onHand: 22, unit: "lb", leadTimeDays: 7, costPerUnit: 11.00 },
-  { id: "H06", name: "Amarillo", category: "hops", onHand: 55, unit: "lb", leadTimeDays: 7, costPerUnit: 14.69 },
-  { id: "H07", name: "Magnum", category: "hops", onHand: 50, unit: "lb", leadTimeDays: 7, costPerUnit: 11.06 },
-  { id: "H08", name: "Hallertau Mittelfruh", category: "hops", onHand: 330.6, unit: "lb", leadTimeDays: 10, costPerUnit: 13.09 },
-  { id: "H09", name: "Galaxy", category: "hops", onHand: 217, unit: "lb", leadTimeDays: 14, costPerUnit: 18.17 },
-  { id: "H10", name: "Azacca", category: "hops", onHand: 242, unit: "lb", leadTimeDays: 7, costPerUnit: 14.94 },
-  { id: "H11", name: "CTZ (Zeus)", category: "hops", onHand: 5, unit: "lb", leadTimeDays: 7, costPerUnit: 7.55 },
-  { id: "H12", name: "East Kent Golding", category: "hops", onHand: 25.4, unit: "lb", leadTimeDays: 10, costPerUnit: 13.03 },
-  { id: "H13", name: "Idaho 7", category: "hops", onHand: 77, unit: "lb", leadTimeDays: 7, costPerUnit: 11.76 },
-  // ─── Chemistry ───
-  { id: "C01", name: "Calcium Chloride", category: "chemistry", onHand: 82.16, unit: "lb", leadTimeDays: 5, costPerUnit: 1.08 },
-  { id: "C02", name: "Gypsum (Calcium Sulfate)", category: "chemistry", onHand: 119.28, unit: "lb", leadTimeDays: 5, costPerUnit: 0.46 },
-  { id: "C03", name: "Calcium Carbonate", category: "chemistry", onHand: 168.35, unit: "lb", leadTimeDays: 5, costPerUnit: 0.89 },
-  { id: "C04", name: "Phosphoric Acid", category: "chemistry", onHand: 52996, unit: "oz", leadTimeDays: 7, costPerUnit: 0.03 },
-  { id: "C05", name: "Whirlfloc T", category: "chemistry", onHand: 7428.5, unit: "tab", leadTimeDays: 5, costPerUnit: 0.15 },
-  { id: "C06", name: "Fermcap AT", category: "chemistry", onHand: 123.46, unit: "oz", leadTimeDays: 7, costPerUnit: 1.90 },
-  { id: "C07", name: "Yeastex 82", category: "chemistry", onHand: 66.68, unit: "oz", leadTimeDays: 7, costPerUnit: 0.98 },
-  { id: "C08", name: "Sinamar - Weyermann", category: "chemistry", onHand: 112.5, unit: "oz", leadTimeDays: 10, costPerUnit: 7.97 },
-  { id: "C09", name: "WLN4000 Clarity Ferm", category: "chemistry", onHand: 0, unit: "oz", leadTimeDays: 7, costPerUnit: 56.86 },
-  { id: "C10", name: "Attenuzyme Pro", category: "chemistry", onHand: 250000, unit: "ml", leadTimeDays: 7, costPerUnit: 0.005 },
-  // ─── Yeast ───
-  { id: "Y01", name: "Omega OYL-114 Bayern Lager", category: "yeast", onHand: 0, unit: "pitch", leadTimeDays: 5, costPerUnit: 121.00 },
-  { id: "Y02", name: "Fermentis SafAle US-05", category: "yeast", onHand: 0, unit: "brick", leadTimeDays: 3, costPerUnit: 0.14 },
-  { id: "Y03", name: "Lallemand BRY-97", category: "yeast", onHand: 500, unit: "brick", leadTimeDays: 3, costPerUnit: 0.33 },
-  { id: "Y04", name: "Lallemand CBC-1", category: "yeast", onHand: 2500, unit: "brick", leadTimeDays: 3, costPerUnit: 0.30 },
-  { id: "Y05", name: "Lallemand Sourvisiae", category: "yeast", onHand: 0, unit: "brick", leadTimeDays: 5, costPerUnit: 0.40 },
-  // ─── Adjunct / Flavor ───
-  { id: "A01", name: "Focus IRC Beer Base 21%", category: "adjunct", onHand: 350.43, unit: "lb", leadTimeDays: 7, costPerUnit: 7.87 },
-  { id: "A02", name: "Citric Acid", category: "adjunct", onHand: 1995, unit: "lb", leadTimeDays: 5, costPerUnit: 2.46 },
-  { id: "A03", name: "Sucralose DR400", category: "adjunct", onHand: 107.25, unit: "lb", leadTimeDays: 10, costPerUnit: 29.32 },
-  { id: "A04", name: "Ghirardelli Chocolate Sauce", category: "adjunct", onHand: 512, unit: "oz", leadTimeDays: 5, costPerUnit: 0.27 },
-  { id: "A05", name: "Exberry Shade Purple Mist", category: "adjunct", onHand: 27.5, unit: "gal", leadTimeDays: 14, costPerUnit: 14.46 },
-  { id: "A06", name: "Lemon Juice Concentrate", category: "adjunct", onHand: 308.04, unit: "lb", leadTimeDays: 10, costPerUnit: 5.04 },
-  // ─── Packaging ───
-  { id: "P01", name: "Can End Silver/Silver", category: "packaging", onHand: 232416, unit: "ea", leadTimeDays: 14, costPerUnit: 0.042 },
-  { id: "P02", name: "PakTech 6Pak Black", category: "packaging", onHand: 1106700, unit: "ea", leadTimeDays: 14, costPerUnit: 0 },
-  { id: "P03", name: "Keg Collar", category: "packaging", onHand: 8923, unit: "ea", leadTimeDays: 7, costPerUnit: 0.18 },
-  { id: "P04", name: "Keg Cap Vented White", category: "packaging", onHand: 3112, unit: "ea", leadTimeDays: 7, costPerUnit: 0.08 },
-  { id: "P05", name: "Barrel Bourbon Buffalo Trace 53G", category: "packaging", onHand: 41, unit: "ea", leadTimeDays: 30, costPerUnit: 72.05 },
+  // ─── Malts & Grain (from NetSuite 3/9/2026) ───
+  { id: "M01", name: "SILO 1 Rahr Pale Ale Bulk", category: "malt", onHand: 0, unit: "lb", costPerUnit: 0.42 },
+  { id: "M02", name: "SILO 2 Rahr Pilsner Bulk", category: "malt", onHand: 21217, unit: "lb", costPerUnit: 0.39 },
+  { id: "M03", name: "SILO 1 Prairie 2 Row Bulk", category: "malt", onHand: 6473, unit: "lb", costPerUnit: 0.30 },
+  { id: "M04", name: "Weyermann - Pale Wheat", category: "malt", onHand: 1870, unit: "lb", costPerUnit: 0.86 },
+  { id: "M05", name: "Weyermann - Caramunich 1", category: "malt", onHand: 935, unit: "lb", costPerUnit: 0.99 },
+  { id: "M06", name: "Weyermann - Munich Lt Type 1", category: "malt", onHand: 935, unit: "lb", costPerUnit: 0.94 },
+  { id: "M07", name: "Simpsons - Caramalt", category: "malt", onHand: 1307.9, unit: "lb", costPerUnit: 1.20 },
+  { id: "M08", name: "Grain Millers Flaked Oats", category: "malt", onHand: 1000, unit: "lb", costPerUnit: 0.83 },
+  { id: "M09", name: "Flaked Maize OIO", category: "malt", onHand: 2400, unit: "lb", costPerUnit: 1.77 },
+  { id: "M10", name: "Corn Sugar (Dextrose)", category: "malt", onHand: 2810, unit: "lb", costPerUnit: 1.00 },
+  { id: "M11", name: "Rice Hulls", category: "malt", onHand: 659, unit: "lb", costPerUnit: 0.74 },
+  { id: "M12", name: "Rice Syrup Solids", category: "malt", onHand: 750, unit: "lb", costPerUnit: 3.25 },
+  { id: "M13", name: "Lactose", category: "adjunct", onHand: 6545, unit: "lb", costPerUnit: 0.13 },
+  { id: "M14", name: "Carolina Malt Pilsner", category: "malt", onHand: 6700, unit: "lb", costPerUnit: 0.85 },
+  { id: "M15", name: "Rahr White Wheat", category: "malt", onHand: 2200, unit: "lb", costPerUnit: 0.74 },
+  { id: "M16", name: "OIO Toasted Flaked Rice", category: "malt", onHand: 2525, unit: "lb", costPerUnit: 1.45 },
+  { id: "M17", name: "Rahr Standard 2-Row", category: "malt", onHand: 1265, unit: "lb", costPerUnit: 0.71 },
+  { id: "M18", name: "Weyermann - Vienna", category: "malt", onHand: 715, unit: "lb", costPerUnit: 0.91 },
+  { id: "M19", name: "Simpsons - Pale Chocolate", category: "malt", onHand: 935, unit: "lb", costPerUnit: 1.04 },
+  { id: "M20", name: "Malt - Biscuit Dingemans", category: "malt", onHand: 922, unit: "lb", costPerUnit: 1.04 },
+  { id: "M21", name: "Chocolate Malt Simpsons", category: "malt", onHand: 1013, unit: "lb", costPerUnit: 1.03 },
+  { id: "M22", name: "Crisp Naked Oat Malt", category: "malt", onHand: 605, unit: "lb", costPerUnit: 1.09 },
+  // ─── Hops (from NetSuite 3/9/2026) ───
+  { id: "H01", name: "Citra", category: "hops", onHand: 357.96, unit: "lb", costPerUnit: 14.02 },
+  { id: "H02", name: "Mosaic", category: "hops", onHand: 289.52, unit: "lb", costPerUnit: 14.00 },
+  { id: "H03", name: "Simcoe", category: "hops", onHand: 26.5, unit: "lb", costPerUnit: 13.28 },
+  { id: "H04", name: "Cascade", category: "hops", onHand: 145, unit: "lb", costPerUnit: 9.00 },
+  { id: "H05", name: "Centennial", category: "hops", onHand: 22, unit: "lb", costPerUnit: 11.00 },
+  { id: "H06", name: "Amarillo", category: "hops", onHand: 55, unit: "lb", costPerUnit: 14.69 },
+  { id: "H07", name: "Magnum", category: "hops", onHand: 50, unit: "lb", costPerUnit: 11.06 },
+  { id: "H08", name: "Hallertau Mittelfruh", category: "hops", onHand: 330.6, unit: "lb", costPerUnit: 13.09 },
+  { id: "H09", name: "Galaxy", category: "hops", onHand: 217, unit: "lb", costPerUnit: 18.17 },
+  { id: "H10", name: "Azacca", category: "hops", onHand: 242, unit: "lb", costPerUnit: 14.94 },
+  { id: "H11", name: "CTZ (Zeus)", category: "hops", onHand: 5, unit: "lb", costPerUnit: 7.55 },
+  { id: "H12", name: "East Kent Golding", category: "hops", onHand: 25.4, unit: "lb", costPerUnit: 13.03 },
+  { id: "H13", name: "Idaho 7", category: "hops", onHand: 77, unit: "lb", costPerUnit: 11.76 },
+  { id: "H14", name: "Loral", category: "hops", onHand: 297, unit: "lb", costPerUnit: 9.95 },
+  { id: "H15", name: "Barbe Rouge", category: "hops", onHand: 57.5, unit: "lb", costPerUnit: 11.00 },
+  { id: "H16", name: "Czech Saaz", category: "hops", onHand: 132.44, unit: "lb", costPerUnit: 14.10 },
+  { id: "H17", name: "Cashmere", category: "hops", onHand: 132, unit: "lb", costPerUnit: 11.26 },
+  { id: "H18", name: "Chinook", category: "hops", onHand: 44, unit: "lb", costPerUnit: 8.86 },
+  { id: "H19", name: "Sabro", category: "hops", onHand: 66, unit: "lb", costPerUnit: 14.36 },
+  { id: "H20", name: "Warrior Resinate 300g", category: "hops", onHand: 3600, unit: "ea", costPerUnit: 0.16 },
+  { id: "H21", name: "Challenger", category: "hops", onHand: 44, unit: "lb", costPerUnit: 0 },
+  { id: "H22", name: "Spalter Select", category: "hops", onHand: 88, unit: "lb", costPerUnit: 9.07 },
+  // ─── Chemistry (from NetSuite 3/9/2026) ───
+  { id: "C01", name: "Calcium Chloride", category: "chemistry", onHand: 82.16, unit: "lb", costPerUnit: 1.08 },
+  { id: "C02", name: "Gypsum (Calcium Sulfate)", category: "chemistry", onHand: 119.28, unit: "lb", costPerUnit: 0.46 },
+  { id: "C03", name: "Calcium Carbonate", category: "chemistry", onHand: 168.35, unit: "lb", costPerUnit: 0.89 },
+  { id: "C04", name: "Phosphoric Acid", category: "chemistry", onHand: 52996, unit: "ml", costPerUnit: 0.03 },
+  { id: "C05", name: "Whirlfloc T", category: "chemistry", onHand: 7428.5, unit: "tab", costPerUnit: 0.15 },
+  { id: "C06", name: "Whirlfloc T (new)", category: "chemistry", onHand: 9900, unit: "tab", costPerUnit: 0.07 },
+  { id: "C07", name: "Fermcap AT", category: "chemistry", onHand: 123.46, unit: "oz", costPerUnit: 1.90 },
+  { id: "C08", name: "Yeastex 82", category: "chemistry", onHand: 66.68, unit: "oz", costPerUnit: 0.98 },
+  { id: "C09", name: "Sinamar - Weyermann", category: "chemistry", onHand: 112.5, unit: "oz", costPerUnit: 7.97 },
+  { id: "C10", name: "Attenuzyme Pro", category: "chemistry", onHand: 250000, unit: "ml", costPerUnit: 0.005 },
+  { id: "C11", name: "Lactic Acid", category: "chemistry", onHand: 200000, unit: "ml", costPerUnit: 0.001 },
+  { id: "C12", name: "Sodium Chloride", category: "chemistry", onHand: 141, unit: "lb", costPerUnit: 0.58 },
+  { id: "C13", name: "Malic Acid", category: "chemistry", onHand: 172.5, unit: "lb", costPerUnit: 4.34 },
+  { id: "C14", name: "Citric Acid", category: "chemistry", onHand: 1995, unit: "lb", costPerUnit: 2.46 },
+  // ─── Yeast (from NetSuite 3/9/2026) ───
+  { id: "Y01", name: "Omega OYL-114 Bayern Lager", category: "yeast", onHand: 0, unit: "pitch", costPerUnit: 121.00 },
+  { id: "Y02", name: "Fermentis SafAle US-05", category: "yeast", onHand: 16500, unit: "g", costPerUnit: 0.13 },
+  { id: "Y03", name: "Fermentis SafLager W-34/70", category: "yeast", onHand: 14000, unit: "g", costPerUnit: 0.22 },
+  { id: "Y04", name: "Lallemand BRY-97", category: "yeast", onHand: 500, unit: "g", costPerUnit: 0.33 },
+  { id: "Y05", name: "Lallemand CBC-1", category: "yeast", onHand: 2500, unit: "g", costPerUnit: 0.30 },
+  { id: "Y06", name: "Lallemand Diamond Lager", category: "yeast", onHand: 5000, unit: "g", costPerUnit: 0.33 },
+  { id: "Y07", name: "Fermentis SafAle WB-06", category: "yeast", onHand: 1000, unit: "g", costPerUnit: 0.21 },
+  { id: "Y08", name: "Fermentis SafAle S-04", category: "yeast", onHand: 4000, unit: "g", costPerUnit: 0.14 },
+  { id: "Y09", name: "Fermentis SafAle E-30", category: "yeast", onHand: 6000, unit: "g", costPerUnit: 0.22 },
+  { id: "Y10", name: "Lallemand Philly Sour", category: "yeast", onHand: 2000, unit: "g", costPerUnit: 0.39 },
+  { id: "Y11", name: "Lalbrew Farmhouse", category: "yeast", onHand: 1000, unit: "g", costPerUnit: 0.44 },
+  // ─── Adjunct / Flavor (from NetSuite 3/9/2026) ───
+  { id: "A01", name: "Focus IRC Beer Base 21%", category: "adjunct", onHand: 350.43, unit: "lb", costPerUnit: 7.87 },
+  { id: "A02", name: "SUCRALOSE DR400", category: "adjunct", onHand: 107.25, unit: "lb", costPerUnit: 29.32 },
+  { id: "A03", name: "Ghirardelli Chocolate Sauce", category: "adjunct", onHand: 512, unit: "oz", costPerUnit: 0.27 },
+  { id: "A04", name: "Exberry Shade Purple Mist", category: "adjunct", onHand: 27.5, unit: "gal", costPerUnit: 14.46 },
+  { id: "A05", name: "Exberry Shade Red", category: "adjunct", onHand: 27.5, unit: "gal", costPerUnit: 10.75 },
+  { id: "A06", name: "Exberry Shade Vivid Red", category: "adjunct", onHand: 55, unit: "gal", costPerUnit: 15.09 },
+  { id: "A07", name: "Lemon Juice Concentrate", category: "adjunct", onHand: 308.04, unit: "lb", costPerUnit: 5.04 },
+  { id: "A08", name: "Natural Flavor Blender V18", category: "adjunct", onHand: 259.92, unit: "lb", costPerUnit: 10.79 },
+  { id: "A09", name: "Lime Flavor FAQS014", category: "adjunct", onHand: 341.6, unit: "lb", costPerUnit: 18.80 },
+  { id: "A10", name: "Apple Juice Concentrate", category: "adjunct", onHand: 784, unit: "lb", costPerUnit: 2.91 },
+  { id: "A11", name: "Strawberry Juice Concentrate", category: "adjunct", onHand: 220, unit: "lb", costPerUnit: 8.15 },
+  { id: "A12", name: "Orange Peel Bitter (Seville)", category: "adjunct", onHand: 70, unit: "lb", costPerUnit: 10.31 },
+  { id: "A13", name: "Coriander Seed", category: "adjunct", onHand: 55, unit: "lb", costPerUnit: 8.44 },
+  { id: "A14", name: "Coconut Toasted", category: "adjunct", onHand: 45, unit: "lb", costPerUnit: 4.66 },
+  { id: "A15", name: "Coffee Cold Brew", category: "adjunct", onHand: 10, unit: "lb", costPerUnit: 9.00 },
+  { id: "A16", name: "Extra Fine Granulated Sugar", category: "adjunct", onHand: 49008, unit: "lb", costPerUnit: 0.77 },
+  // ─── Packaging (from NetSuite 3/9/2026) ───
+  { id: "P01", name: "Can End Silver/Silver", category: "packaging", onHand: 232416, unit: "ea", costPerUnit: 0.042 },
+  { id: "P02", name: "Can End Gold/Gold", category: "packaging", onHand: 88823, unit: "ea", costPerUnit: 0.045 },
+  { id: "P03", name: "PakTech 6Pak Black", category: "packaging", onHand: 1106700, unit: "ea", costPerUnit: 0 },
+  { id: "P04", name: "PakTech 6Pak Yellow", category: "packaging", onHand: 464100, unit: "ea", costPerUnit: 0 },
+  { id: "P05", name: "PakTech 6Pak Steel Blue", category: "packaging", onHand: 1500, unit: "ea", costPerUnit: 0 },
+  { id: "P06", name: "PakTech 6Pak Red", category: "packaging", onHand: 1001, unit: "ea", costPerUnit: 0.21 },
+  { id: "P07", name: "Keg Collar", category: "packaging", onHand: 8923, unit: "ea", costPerUnit: 0.18 },
+  { id: "P08", name: "Keg Cap Vented White", category: "packaging", onHand: 3112, unit: "ea", costPerUnit: 0.08 },
+  { id: "P09", name: "Can Shell - Storm (NEW)", category: "packaging", onHand: 22951, unit: "ea", costPerUnit: 0.13 },
+  { id: "P10", name: "Can Shell - Switch (NEW)", category: "packaging", onHand: 21784, unit: "ea", costPerUnit: 0.14 },
+  { id: "P11", name: "Can Shell - Scooter (NEW)", category: "packaging", onHand: 83146, unit: "ea", costPerUnit: 0.20 },
+  { id: "P12", name: "Can Shell - Bavarian", category: "packaging", onHand: 52904, unit: "ea", costPerUnit: 0.12 },
+  { id: "P13", name: "Can Shell - Birdie (Shrink)", category: "packaging", onHand: 25285, unit: "ea", costPerUnit: 0.29 },
+  { id: "P14", name: "Can Shell - Hop Ridge", category: "packaging", onHand: 18672, unit: "ea", costPerUnit: 0.29 },
+  { id: "P15", name: "Can Shell - Blueprint", category: "packaging", onHand: 55524, unit: "ea", costPerUnit: 0.18 },
+  { id: "P16", name: "Can Shell - Oktober Fuel", category: "packaging", onHand: 11670, unit: "ea", costPerUnit: 0.12 },
+  { id: "P17", name: "Can Shell - Tropic Flare", category: "packaging", onHand: 6613, unit: "ea", costPerUnit: 0.16 },
+  { id: "P18", name: "Can Shell - Dead Blow", category: "packaging", onHand: 53293, unit: "ea", costPerUnit: 0.08 },
+  { id: "P19", name: "Can Shell - Daizy Watermelon", category: "packaging", onHand: 360917, unit: "ea", costPerUnit: 0 },
+  { id: "P20", name: "Can Shell - Daizy Grape", category: "packaging", onHand: 190242, unit: "ea", costPerUnit: 0 },
+  { id: "P21", name: "Can Shell - Daizy Tropical Punch", category: "packaging", onHand: 153298, unit: "ea", costPerUnit: 0 },
+  { id: "P22", name: "Can Shell - Daizy Passion Fruit", category: "packaging", onHand: 94878, unit: "ea", costPerUnit: 0 },
+  { id: "P23", name: "Can Shell - Daizy Strawberry Lem", category: "packaging", onHand: 78322, unit: "ea", costPerUnit: 0 },
+  { id: "P24", name: "Can Shell - Margarita Gose", category: "packaging", onHand: 50181, unit: "ea", costPerUnit: 0.05 },
+  { id: "P25", name: "Can Shell - OKI BA Ale (Shrink)", category: "packaging", onHand: 10892, unit: "ea", costPerUnit: 0.26 },
+  { id: "P26", name: "Can Shell - Opera Cream (Shrink)", category: "packaging", onHand: 10503, unit: "ea", costPerUnit: 0.26 },
+  { id: "P27", name: "Can Shell - Flurry", category: "packaging", onHand: 8947, unit: "ea", costPerUnit: 0.34 },
+  { id: "P28", name: "Barrel Bourbon Buffalo Trace 53G", category: "packaging", onHand: 41, unit: "ea", costPerUnit: 72.05 },
+  { id: "P29", name: "Barrel Bourbon New Riff 53G", category: "packaging", onHand: 18, unit: "ea", costPerUnit: 97.33 },
+  { id: "P30", name: "Bottle 500mL Celebration", category: "packaging", onHand: 2539, unit: "ea", costPerUnit: 0.88 },
+  { id: "P31", name: "Bottle Crown Braxton", category: "packaging", onHand: 134942, unit: "ea", costPerUnit: 0 },
+  { id: "P32", name: "Daizy's End Silver XO", category: "packaging", onHand: 285120, unit: "ea", costPerUnit: 0 },
+  { id: "P33", name: "Daizy's Box 24pk SLEEK", category: "packaging", onHand: 37360, unit: "ea", costPerUnit: 0 },
+  { id: "P34", name: "Carton Ballpark Beer 12pk", category: "packaging", onHand: 26407, unit: "ea", costPerUnit: 0.47 },
+  { id: "P35", name: "Carton Switch 15pk", category: "packaging", onHand: 9675, unit: "ea", costPerUnit: 0.68 },
+  { id: "P36", name: "Carton Spur 15pk", category: "packaging", onHand: 11925, unit: "ea", costPerUnit: 0.60 },
+  { id: "P37", name: "Carton Blueprint 15pk", category: "packaging", onHand: 700, unit: "ea", costPerUnit: 0.85 },
 ];
 
+// ─── DEFAULT LEAD TIMES (editable in app) ────────────────────────────────────────
+const DEFAULT_LEAD_TIMES = {
+  malt: 7,        // Base malts, specialty grains
+  hops: 7,        // Pellet hops, cryo hops
+  yeast: 5,       // Dry yeast, liquid yeast
+  adjunct: 7,     // Flavors, fruit, sugar, lactose
+  chemistry: 5,   // Water salts, fining agents, enzymes
+  packaging: 14,  // Cans, ends, PakTech, cartons
+  barrel: 30,     // New barrels, used barrels
+};
+
 // ─── REAL NETSUITE BOMs ─────────────────────────────────────────────────────────
-// Pulled from NetSuite assemblyItemBom → bomRevisionComponentMember on 3/9/2026
+// All brewing-level BOMs from NetSuite assemblyItemBom (pulled 3/9/2026)
 const NS_BOMS = {
   "Bavarian": [
     { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 36.75, onHand: 0, cost: 0.42 },
@@ -180,18 +262,15 @@ const NS_BOMS = {
     { ingredient: "Rice Hulls", qty: 2.5, onHand: 659, cost: 0.74 },
     { ingredient: "Centennial", qty: 0.995, onHand: 22, cost: 11 },
     { ingredient: "Simcoe", qty: 0.6, onHand: 26.5, cost: 13.28 },
-    { ingredient: "Cascade", qty: 0.5, onHand: 145, cost: 9 },
+    { ingredient: "Warrior Resinate", qty: 15, onHand: 3600, cost: 0.16 },
   ],
   "Tropic Flare": [
     { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 57.5, onHand: 21217, cost: 0.39 },
     { ingredient: "Rice Hulls", qty: 2.5, onHand: 659, cost: 0.74 },
     { ingredient: "Calcium Chloride", qty: 42.5, onHand: 82.16, cost: 1.08 },
     { ingredient: "Citra", qty: 1.89, onHand: 357.96, cost: 14.02 },
-    { ingredient: "Mosaic", qty: 1.845, onHand: 289.52, cost: 14 },
     { ingredient: "Galaxy", qty: 0.035, onHand: 217, cost: 18.17 },
     { ingredient: "Amarillo", qty: 0.21, onHand: 55, cost: 14.69 },
-    { ingredient: "LauterFlow Pro", qty: 5.75, onHand: 0, cost: 135.32 },
-    { ingredient: "Low Tempase", qty: 0.75, onHand: 1, cost: 113.86 },
   ],
   "Haven Hefeweizen": [
     { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 29.5, onHand: 0, cost: 0.42 },
@@ -203,7 +282,6 @@ const NS_BOMS = {
   ],
   "Spur Amber Lager": [
     { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 31.125, onHand: 21217, cost: 0.39 },
-    { ingredient: "Weyermann - Caramunich 1", qty: 2.75, onHand: 935, cost: 0.99 },
     { ingredient: "Rice Hulls", qty: 0.5, onHand: 659, cost: 0.74 },
     { ingredient: "Magnum", qty: 0.1125, onHand: 50, cost: 11.06 },
     { ingredient: "Sinamar - Weyermann", qty: 0.19, onHand: 112.5, cost: 7.97 },
@@ -211,7 +289,6 @@ const NS_BOMS = {
     { ingredient: "Calcium Carbonate", qty: 3.75, onHand: 168.35, cost: 0.89 },
     { ingredient: "Phosphoric Acid", qty: 8.75, onHand: 52996, cost: 0.03 },
     { ingredient: "Attenuzyme Pro", qty: 6.25, onHand: 250000, cost: 0.005 },
-    { ingredient: "WLN4000 Clarity Ferm", qty: 12.8, onHand: 0, cost: 56.86 },
     { ingredient: "Omega OYL-114 Bayern Lager", qty: 0.025, onHand: 0, cost: 121 },
   ],
   "Birdie": [
@@ -220,11 +297,6 @@ const NS_BOMS = {
     { ingredient: "Grape Juice Concentrate", qty: 2.145, onHand: 1, cost: 4.43 },
     { ingredient: "Citric Acid", qty: 0.466, onHand: 1995, cost: 2.46 },
     { ingredient: "Exberry Shade Purple Mist", qty: 0.274, onHand: 27.5, cost: 14.46 },
-  ],
-  "Scooter": [
-    { ingredient: "Focus IRC Beer Base 21%", qty: 4.093, onHand: 350.43, cost: 7.87 },
-    { ingredient: "Can Shell - Scooter", qty: 24.5, onHand: 83146, cost: 0.20 },
-    { ingredient: "Can End Silver/Silver", qty: 24, onHand: 232416, cost: 0.042 },
   ],
   "OKI Bourbon Barrel Ale": [
     { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 53.5, onHand: 0, cost: 0.42 },
@@ -237,13 +309,13 @@ const NS_BOMS = {
     { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 37.5, onHand: 21217, cost: 0.39 },
     { ingredient: "Rice Hulls", qty: 0.875, onHand: 659, cost: 0.74 },
     { ingredient: "Magnum", qty: 0.055, onHand: 50, cost: 11.06 },
+    { ingredient: "Saaz", qty: 0.65, onHand: 132.44, cost: 14.10 },
     { ingredient: "Hallertau Mittelfruh", qty: 0.5, onHand: 330.6, cost: 13.09 },
   ],
   "Double Hazy IPA": [
     { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 65, onHand: 21217, cost: 0.39 },
     { ingredient: "Rice Hulls", qty: 2.5, onHand: 659, cost: 0.74 },
     { ingredient: "Citra", qty: 2.785, onHand: 357.96, cost: 14.02 },
-    { ingredient: "Cryo Simcoe", qty: 0.059, onHand: 0, cost: 25 },
     { ingredient: "Calcium Chloride", qty: 0.986, onHand: 82.16, cost: 1.08 },
     { ingredient: "Phosphoric Acid", qty: 43, onHand: 52996, cost: 0.03 },
   ],
@@ -268,8 +340,6 @@ const NS_BOMS = {
     { ingredient: "Rice Hulls", qty: 0.875, onHand: 659, cost: 0.74 },
     { ingredient: "Calcium Chloride", qty: 8.65, onHand: 82.16, cost: 1.08 },
     { ingredient: "Hallertau Mittelfruh", qty: 0.3, onHand: 330.6, cost: 13.09 },
-    { ingredient: "Sea Salt", qty: 0.3, onHand: 0, cost: 2.50 },
-    { ingredient: "Lallemand Sourvisiae", qty: 50, onHand: 0, cost: 0.40 },
   ],
   "Dark Charge": [
     { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 86.67, onHand: 0, cost: 0.42 },
@@ -277,8 +347,60 @@ const NS_BOMS = {
     { ingredient: "Calcium Carbonate", qty: 0.307, onHand: 168.35, cost: 0.89 },
     { ingredient: "East Kent Golding", qty: 1.178, onHand: 25.4, cost: 13.03 },
   ],
+  "Hoppy Blonde": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 42, onHand: 0, cost: 0.42 },
+    { ingredient: "Rice Hulls", qty: 0.875, onHand: 659, cost: 0.74 },
+    { ingredient: "Citra", qty: 0.3, onHand: 357.96, cost: 14.02 },
+    { ingredient: "Amarillo", qty: 0.2, onHand: 55, cost: 14.69 },
+    { ingredient: "Calcium Chloride", qty: 8.25, onHand: 82.16, cost: 1.08 },
+  ],
+  "House Pilsner": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 86.67, onHand: 0, cost: 0.42 },
+    { ingredient: "Rice Hulls", qty: 2.174, onHand: 659, cost: 0.74 },
+    { ingredient: "Calcium Carbonate", qty: 0.307, onHand: 168.35, cost: 0.89 },
+    { ingredient: "Centennial", qty: 0.56, onHand: 22, cost: 11 },
+    { ingredient: "Calcium Chloride", qty: 6, onHand: 82.16, cost: 1.08 },
+  ],
+  "Italian Pilsner": [
+    { ingredient: "Calcium Chloride", qty: 15.06, onHand: 82.16, cost: 1.08 },
+    { ingredient: "Hallertau Mittelfruh", qty: 0.42, onHand: 330.6, cost: 13.09 },
+  ],
+  "Dan's West Coast IPA": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 48.54, onHand: 0, cost: 0.42 },
+    { ingredient: "CTZ (Zeus)", qty: 0.161, onHand: 5, cost: 7.55 },
+    { ingredient: "Centennial", qty: 0.15, onHand: 22, cost: 11 },
+    { ingredient: "Calcium Chloride", qty: 8.5, onHand: 82.16, cost: 1.08 },
+  ],
+  "Garage Beer Lime": [
+    { ingredient: "Lime Flavor FAQS014", qty: 0.4375, onHand: 341.6, cost: 18.80 },
+  ],
+  "Rally": [
+    { ingredient: "Cranberry Juice Concentrate", qty: 2.145, onHand: 0, cost: 5 },
+    { ingredient: "Citric Acid", qty: 0.466, onHand: 1995, cost: 2.46 },
+    { ingredient: "Exberry Shade Red", qty: 0.274, onHand: 27.5, cost: 10.75 },
+  ],
 };
 
+// ─── DEFAULT PROCESS DURATIONS (hrs, editable per recipe in app) ─────────────────
+// These are style-based defaults. Override per recipe in the Process Duration editor.
+const DEFAULT_PROCESS_DURATIONS = {
+  // style → { fermentHrs, conditionHrs, packageHrs }
+  "Lager":        { fermentHrs: 288, conditionHrs: 120, packageHrs: 4 },
+  "IPA":          { fermentHrs: 168, conditionHrs: 72, packageHrs: 4 },
+  "DIPA":         { fermentHrs: 192, conditionHrs: 72, packageHrs: 4 },
+  "Session IPA":  { fermentHrs: 120, conditionHrs: 48, packageHrs: 4 },
+  "Pale Ale":     { fermentHrs: 144, conditionHrs: 48, packageHrs: 4 },
+  "Wheat":        { fermentHrs: 120, conditionHrs: 48, packageHrs: 4 },
+  "Stout":        { fermentHrs: 192, conditionHrs: 96, packageHrs: 4 },
+  "Cream Ale":    { fermentHrs: 144, conditionHrs: 72, packageHrs: 4 },
+  "Marzen":       { fermentHrs: 288, conditionHrs: 120, packageHrs: 4 },
+  "Sour":         { fermentHrs: 240, conditionHrs: 72, packageHrs: 4 },
+  "Barrel Aged":  { fermentHrs: 336, conditionHrs: 240, packageHrs: 4 },
+  "Spiced Ale":   { fermentHrs: 168, conditionHrs: 72, packageHrs: 4 },
+  "Session":      { fermentHrs: 120, conditionHrs: 48, packageHrs: 4 },
+  "Radler":       { fermentHrs: 96, conditionHrs: 48, packageHrs: 4 },
+  "default":      { fermentHrs: 168, conditionHrs: 72, packageHrs: 4 },
+};
 // Helper to create dates relative to today
 const d = (offset) => {
   const dt = new Date();
@@ -2068,6 +2190,7 @@ const TABS = [
   { id: "inventory", label: "Inventory", icon: "📊" },
   { id: "demand", label: "Demand", icon: "📈" },
   { id: "recipes", label: "Recipes", icon: "🍺" },
+  { id: "settings", label: "Settings", icon: "⚙" },
   { id: "netsuite", label: "NetSuite Sync", icon: "🔗" },
 ];
 
@@ -2090,12 +2213,16 @@ export default function BreweryPlanner() {
   const [activeScenario, setActiveScenario] = useState(null);
   const [sensitivity, setSensitivity] = useState(1.0);
   const [weights, setWeights] = useState(() => loadState("weights", DEFAULT_WEIGHTS));
+  const [leadTimes, setLeadTimes] = useState(() => loadState("leadTimes", DEFAULT_LEAD_TIMES));
+  const [processDurations, setProcessDurations] = useState(() => loadState("processDurations", {}));
 
   // Persist on change
   useEffect(() => { saveState("schedule", schedule); }, [schedule]);
   useEffect(() => { saveState("demand", demand); }, [demand]);
   useEffect(() => { saveState("scenarios", scenarios); }, [scenarios]);
   useEffect(() => { saveState("weights", weights); }, [weights]);
+  useEffect(() => { saveState("leadTimes", leadTimes); }, [leadTimes]);
+  useEffect(() => { saveState("processDurations", processDurations); }, [processDurations]);
 
   return (
     <div style={baseStyles.app}>
@@ -2143,6 +2270,104 @@ export default function BreweryPlanner() {
         {tab === "inventory" && <InventoryDashboard materials={materials} schedule={schedule} recipes={recipes} />}
         {tab === "demand" && <DataManager demand={demand} setDemand={setDemand} recipes={recipes} />}
         {tab === "recipes" && <RecipeBrowser recipes={recipes} materials={materials} />}
+        {tab === "settings" && (
+          <div>
+            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#f8fafc", margin: "0 0 4px 0" }}>Production Settings</h2>
+            <div style={{ fontSize: "0.75rem", color: "#64748b", marginBottom: 16 }}>Lead times, process durations, and data management. Changes persist automatically.</div>
+
+            {/* Lead Times by Category */}
+            <div style={baseStyles.card}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                <div style={baseStyles.cardTitle}>📦 Material Lead Times (days)</div>
+                <button style={{ ...baseStyles.btn(), fontSize: "0.7rem", padding: "3px 10px" }} onClick={() => setLeadTimes(DEFAULT_LEAD_TIMES)}>Reset Defaults</button>
+              </div>
+              <div style={{ fontSize: "0.75rem", color: "#475569", marginBottom: 12 }}>How many days before brew day must you order each category? Used by Material Orders to calculate order-by dates.</div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+                {Object.entries(leadTimes).map(([cat, days]) => (
+                  <div key={cat} style={{ background: "#0b0f14", borderRadius: 6, padding: "10px 12px", border: "1px solid #1e293b" }}>
+                    <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#f8fafc", textTransform: "capitalize", marginBottom: 6 }}>{cat}</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <input type="number" value={days} min={1} max={90} onChange={e => setLeadTimes(prev => ({ ...prev, [cat]: Number(e.target.value) || 1 }))} style={{ ...baseStyles.input, width: 60, textAlign: "right" }} />
+                      <span style={{ ...baseStyles.mono, color: "#64748b", fontSize: "0.75rem" }}>days</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Process Durations per Recipe */}
+            <div style={baseStyles.card}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                <div style={baseStyles.cardTitle}>⏱ Process Durations (hours)</div>
+                <button style={{ ...baseStyles.btn(), fontSize: "0.7rem", padding: "3px 10px" }} onClick={() => setProcessDurations({})}>Reset All to Style Defaults</button>
+              </div>
+              <div style={{ fontSize: "0.75rem", color: "#475569", marginBottom: 12 }}>Override fermentation, conditioning, and packaging times per recipe. Empty fields use the style-based default shown in grey.</div>
+              <div style={{ maxHeight: "50vh", overflow: "auto" }}>
+                <table style={baseStyles.table}>
+                  <thead><tr>
+                    <th style={baseStyles.th}>Recipe</th>
+                    <th style={baseStyles.th}>Style</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right" }}>Ferment (hrs)</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right" }}>Condition (hrs)</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right" }}>Package (hrs)</th>
+                  </tr></thead>
+                  <tbody>
+                    {recipes.map(r => {
+                      const styleDef = DEFAULT_PROCESS_DURATIONS[r.style] || DEFAULT_PROCESS_DURATIONS["default"];
+                      const override = processDurations[r.id] || {};
+                      return (
+                        <tr key={r.id}>
+                          <td style={{ ...baseStyles.td, fontWeight: 500 }}>{r.name}</td>
+                          <td style={baseStyles.td}><span style={baseStyles.badge(TYPE_COLORS[r.type]?.border || "#64748b")}>{r.style}</span></td>
+                          {["fermentHrs", "conditionHrs", "packageHrs"].map(field => (
+                            <td key={field} style={{ ...baseStyles.td, textAlign: "right" }}>
+                              <input
+                                type="number"
+                                placeholder={styleDef[field]}
+                                value={override[field] ?? ""}
+                                onChange={e => {
+                                  const val = e.target.value === "" ? undefined : Number(e.target.value);
+                                  setProcessDurations(prev => {
+                                    const cur = { ...prev[r.id] };
+                                    if (val === undefined) delete cur[field]; else cur[field] = val;
+                                    return { ...prev, [r.id]: Object.keys(cur).length > 0 ? cur : undefined };
+                                  });
+                                }}
+                                style={{ ...baseStyles.input, width: 70, textAlign: "right", color: override[field] ? "#c8854a" : "#475569" }}
+                              />
+                            </td>
+                          ))}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <div style={{ fontSize: "0.65rem", color: "#475569", marginTop: 8 }}>Orange values are overrides. Grey placeholder values are style defaults from DEFAULT_PROCESS_DURATIONS.</div>
+            </div>
+
+            {/* Data Info */}
+            <div style={baseStyles.card}>
+              <div style={baseStyles.cardTitle}>📊 Data Snapshot</div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+                {[
+                  ["Raw Materials", materials.length + " items", "From NetSuite 3/9/2026"],
+                  ["Beer BOMs", Object.keys(NS_BOMS).length + " recipes", "Brewing-level ingredient bills"],
+                  ["Finished Goods", "216 SKUs", "Kegs, cases, bottles"],
+                ].map(([l, v, d], i) => (
+                  <div key={i} style={{ background: "#0b0f14", borderRadius: 6, padding: "10px 12px" }}>
+                    <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#f8fafc" }}>{l}</div>
+                    <div style={{ ...baseStyles.mono, color: "#c8854a", fontSize: "1rem" }}>{v}</div>
+                    <div style={{ fontSize: "0.65rem", color: "#475569" }}>{d}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
+                <button style={{ ...baseStyles.btn(), color: "#fca5a5" }} onClick={() => { if (confirm("Reset ALL saved data? Schedule, demand, scenarios, weights, lead times, durations — everything goes back to defaults.")) { ["bp_schedule","bp_demand","bp_scenarios","bp_weights","bp_leadTimes","bp_processDurations"].forEach(k => localStorage.removeItem(k)); window.location.reload(); } }}>↺ Factory Reset Everything</button>
+              </div>
+            </div>
+          </div>
+        )}
         {tab === "netsuite" && <NetSuiteSync schedule={schedule} recipes={recipes} equipment={equipment} />}
       </div>
     </div>
