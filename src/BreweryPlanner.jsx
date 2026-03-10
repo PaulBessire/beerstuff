@@ -362,8 +362,13 @@ const NS_BOMS = {
     { ingredient: "Calcium Chloride", qty: 6, onHand: 82.16, cost: 1.08 },
   ],
   "Italian Pilsner": [
+    { ingredient: "Weyermann - Pilsner", qty: 26.5, onHand: 55, cost: 0.94 },
+    { ingredient: "Rahr White Wheat", qty: 23.2, onHand: 2200, cost: 0.74 },
+    { ingredient: "Grain Millers Flaked Oats", qty: 3.01, onHand: 1000, cost: 0.83 },
+    { ingredient: "Weyermann - Munich Lt Type 1", qty: 1.2, onHand: 935, cost: 0.94 },
     { ingredient: "Calcium Chloride", qty: 15.06, onHand: 82.16, cost: 1.08 },
     { ingredient: "Hallertau Mittelfruh", qty: 0.42, onHand: 330.6, cost: 13.09 },
+    { ingredient: "Coriander Powder", qty: 0.06, onHand: 22, cost: 9.03 },
   ],
   "Dan's West Coast IPA": [
     { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 48.54, onHand: 0, cost: 0.42 },
@@ -378,6 +383,36 @@ const NS_BOMS = {
     { ingredient: "Cranberry Juice Concentrate", qty: 2.145, onHand: 0, cost: 5 },
     { ingredient: "Citric Acid", qty: 0.466, onHand: 1995, cost: 2.46 },
     { ingredient: "Exberry Shade Red", qty: 0.274, onHand: 27.5, cost: 10.75 },
+  ],
+  "House Hazy IPA": [
+    { ingredient: "Rahr Standard 2-Row", qty: 52.57, onHand: 1265, cost: 0.71 },
+    { ingredient: "Rahr White Wheat", qty: 16.17, onHand: 2200, cost: 0.74 },
+    { ingredient: "Grain Millers Flaked Oats", qty: 7.35, onHand: 1000, cost: 0.83 },
+    { ingredient: "Calcium Chloride", qty: 36.76, onHand: 82.16, cost: 1.08 },
+    { ingredient: "Gypsum (Calcium Sulfate)", qty: 4.4, onHand: 119.28, cost: 0.46 },
+    { ingredient: "Simcoe", qty: 0.147, onHand: 26.5, cost: 13.28 },
+    { ingredient: "Mosaic", qty: 0.8, onHand: 289.52, cost: 14.00 },
+  ],
+  "Peach Birdie": [
+    { ingredient: "VIVE Base", qty: 8.381, onHand: 0, cost: 5 },
+    { ingredient: "Tractor Peach Concentrate", qty: 4.25, onHand: 0, cost: 6 },
+    { ingredient: "Citric Acid", qty: 0.466, onHand: 1995, cost: 2.46 },
+    { ingredient: "Exberry Shade Red", qty: 0.025, onHand: 27.5, cost: 10.75 },
+    { ingredient: "Cane Sugar", qty: 2.587, onHand: 49008, cost: 0.77 },
+  ],
+  "Watermelon Birdie": [
+    { ingredient: "VIVE Base", qty: 8.381, onHand: 0, cost: 5 },
+    { ingredient: "Watermelon Concentrate", qty: 2.145, onHand: 0, cost: 6 },
+    { ingredient: "Citric Acid", qty: 0.466, onHand: 1995, cost: 2.46 },
+    { ingredient: "Extra Fine Granulated Sugar", qty: 2.5, onHand: 49008, cost: 0.77 },
+  ],
+  "Slow Pour Pils": [
+    { ingredient: "Weyermann - Barke Pilsner", qty: 41.25, onHand: 0, cost: 1.20 },
+    { ingredient: "Weyermann - Acidulated", qty: 2.75, onHand: 55, cost: 1.28 },
+    { ingredient: "Gypsum (Calcium Sulfate)", qty: 0.015, onHand: 119.28, cost: 0.46 },
+    { ingredient: "Calcium Chloride", qty: 0.012, onHand: 82.16, cost: 1.08 },
+    { ingredient: "Hallertau Mittelfruh", qty: 0.63, onHand: 330.6, cost: 13.09 },
+    { ingredient: "Fermentis SafLager W-34/70", qty: 100, onHand: 14000, cost: 0.22 },
   ],
 };
 
@@ -1053,6 +1088,17 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
     return sched < dm.volumeBbl;
   });
 
+  // Orphaned batches — scheduled but no matching demand at all
+  const demandedRecipeIds = new Set(demand.map(dm => dm.recipeId));
+  const orphanedBatches = schedule.filter(b => !demandedRecipeIds.has(b.recipeId));
+
+  // Over-scheduled — more BBL scheduled than demand requires
+  const demandVolume = {};
+  demand.forEach(dm => { demandVolume[dm.recipeId] = (demandVolume[dm.recipeId] || 0) + dm.volumeBbl; });
+  const overScheduled = Object.entries(scheduledRecipeVolume)
+    .filter(([rid, vol]) => demandedRecipeIds.has(rid) && vol > (demandVolume[rid] || 0))
+    .map(([rid, vol]) => ({ recipeId: rid, scheduled: vol, demanded: demandVolume[rid] || 0, excess: vol - (demandVolume[rid] || 0) }));
+
   // Auto-schedule handler
   const handleAutoSchedule = () => {
     const result = autoSchedule(demand, equipment, recipes, schedule, sensitivity, weights);
@@ -1124,7 +1170,7 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
       {/* Sensitivity + Metrics Row */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: 12, marginBottom: 16 }}>
         <div style={{ ...baseStyles.card, padding: "10px 14px" }}>
-          <div style={{ fontSize: "0.7rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Demand Sensitivity</div>
+          <div style={{ fontSize: "0.7rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Demand Multiplier <span style={{ fontSize: "0.6rem", color: "#475569", textTransform: "none" }}>(applied on next Auto-Schedule)</span></div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <input type="range" min="50" max="200" value={Math.round(sensitivity * 100)} onChange={e => setSensitivity(Number(e.target.value) / 100)} style={{ flex: 1, accentColor: "#c8854a" }} />
             <span style={{ ...baseStyles.mono, color: "#c8854a", fontWeight: 700, minWidth: 40, textAlign: "right" }}>{Math.round(sensitivity * 100)}%</span>
@@ -1258,6 +1304,43 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
               return (
                 <div key={dm.id} style={{ ...baseStyles.badge("#f59e0b"), fontSize: "0.7rem" }}>
                   {r?.name || dm.recipeId}: {dm.volumeBbl} BBL by {fmtDate(dm.shipDate)}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Orphaned Batches — scheduled but no demand */}
+      {orphanedBatches.length > 0 && (
+        <div style={{ ...baseStyles.card, borderColor: "#8b5cf644" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={baseStyles.cardTitle}><span style={{ color: "#8b5cf6" }}>👻</span> Orphaned Batches — No Matching Demand</div>
+            <button style={{ ...baseStyles.btn(), color: "#fca5a5", fontSize: "0.75rem" }} onClick={() => { if (confirm(`Remove ${orphanedBatches.length} orphaned batch(es) with no matching demand?`)) setSchedule(prev => prev.filter(b => demandedRecipeIds.has(b.recipeId))); }}>🗑 Remove {orphanedBatches.length} Orphaned</button>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {orphanedBatches.map(b => {
+              const r = recipes.find(x => x.id === b.recipeId);
+              return (
+                <div key={b.id} style={{ ...baseStyles.badge("#8b5cf6"), fontSize: "0.7rem" }}>
+                  {b.id}: {r?.name || b.recipeId} ({b.batchSizeBbl} BBL)
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Over-Scheduled — more batches than demand */}
+      {overScheduled.length > 0 && (
+        <div style={{ ...baseStyles.card, borderColor: "#3b82f644" }}>
+          <div style={baseStyles.cardTitle}><span style={{ color: "#3b82f6" }}>📊</span> Over-Scheduled — More Than Demand Requires</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {overScheduled.map(os => {
+              const r = recipes.find(x => x.id === os.recipeId);
+              return (
+                <div key={os.recipeId} style={{ ...baseStyles.badge("#3b82f6"), fontSize: "0.7rem" }}>
+                  {r?.name || os.recipeId}: {os.scheduled} BBL scheduled vs {os.demanded} BBL demand (+{os.excess} excess)
                 </div>
               );
             })}
