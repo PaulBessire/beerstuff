@@ -719,7 +719,7 @@ function shuffleArray(arr) {
 }
 
 // Main optimizer: runs N permutations and keeps the best
-function autoSchedule(demand, equipment, recipes, existingSchedule = [], sensitivityMult = 1.0, weights = DEFAULT_WEIGHTS, iterations = 200) {
+function autoSchedule(demand, equipment, recipes, existingSchedule = [], sensitivityMult = 1.0, weights = DEFAULT_WEIGHTS, iterations = 1000) {
   let bestResult = null;
   let bestScore = -Infinity;
   let bestScoreDetail = null;
@@ -1017,15 +1017,12 @@ function GanttChart({ schedule, equipment, recipes, onEditBatch, dayRange = 42 }
 
 // ─── SCHEDULE OPTIMIZER TAB ─────────────────────────────────────────────────────
 
-function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, scenarios, setScenarios, activeScenario, setActiveScenario, sensitivity, setSensitivity, weights, setWeights }) {
+function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, sensitivity, setSensitivity, weights, setWeights }) {
   const [editBatch, setEditBatch] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
   const [newRecipe, setNewRecipe] = useState("");
   const [newStart, setNewStart] = useState(d(5));
   const [autoResult, setAutoResult] = useState(null);
-  const [showScenarioSave, setShowScenarioSave] = useState(false);
-  const [scenarioName, setScenarioName] = useState("");
-  const [compareIdx, setCompareIdx] = useState(null);
   const [showWeights, setShowWeights] = useState(false);
 
   const findConflicts = useCallback(() => {
@@ -1113,25 +1110,7 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
     setAutoResult(null);
   };
 
-  // Scenario handlers
-  const handleSaveScenario = () => {
-    if (!scenarioName.trim()) return;
-    const metrics = calcMetrics(schedule, demand, equipment);
-    setScenarios(prev => [...prev, { name: scenarioName.trim(), schedule: JSON.parse(JSON.stringify(schedule)), demand: JSON.parse(JSON.stringify(demand)), sensitivity, metrics, createdAt: new Date().toLocaleString() }]);
-    setScenarioName("");
-    setShowScenarioSave(false);
-  };
-
-  const handleLoadScenario = (idx) => {
-    const sc = scenarios[idx];
-    if (!sc) return;
-    setSchedule(sc.schedule);
-    setActiveScenario(idx);
-    setAutoResult(null);
-  };
-
   const currentMetrics = calcMetrics(schedule, demand, equipment);
-  const compareMetrics = compareIdx !== null && scenarios[compareIdx] ? scenarios[compareIdx].metrics : null;
 
   return (
     <div>
@@ -1145,7 +1124,18 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
           <button style={{ ...baseStyles.btn(), color: "#d98ae0", borderColor: "#d98ae044" }} onClick={handleAutoSchedule}>⚡ Auto-Schedule</button>
           {schedule.some(b => b.autoScheduled) && <button style={{ ...baseStyles.btn(), color: "#fca5a5", borderColor: "#ef444444" }} onClick={handleClearAuto}>✕ Clear Auto</button>}
           <button style={{ ...baseStyles.btn(), color: showWeights ? "#c8854a" : "#94a3b8", borderColor: showWeights ? "#c8854a44" : "#2d3748" }} onClick={() => setShowWeights(!showWeights)}>⚙ Weights</button>
-          <button style={baseStyles.btn()} onClick={() => setShowScenarioSave(true)}>💾 Save Scenario</button>
+          <button style={baseStyles.btn()} onClick={() => {
+            const rows = [["Batch ID","Beer","Style","BBL","Fermenter","Brew Date","Package Date","Auto-Scheduled"]];
+            schedule.forEach(b => {
+              const r = recipes.find(x => x.id === b.recipeId);
+              const fermStep = b.steps?.find(s => s.step === "ferment");
+              const pkgStep = b.steps?.find(s => s.step === "package");
+              rows.push([b.id, r?.name||b.recipeId, r?.style||"", b.batchSizeBbl, fermStep?.equipId||"", fermStep?.start?.split("T")[0]||"", pkgStep?.end?.split("T")[0]||"", b.autoScheduled?"Y":"N"]);
+            });
+            const csv = rows.map(r => r.map(c => `"${c}"`).join(",")).join("\n");
+            const blob = new Blob([csv], { type: "text/csv" });
+            const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `brew-schedule-${new Date().toISOString().split("T")[0]}.csv`; a.click();
+          }}>📥 Export CSV</button>
           <button style={baseStyles.btn("primary")} onClick={() => setShowAdd(true)}>+ Add Batch</button>
         </div>
       </div>
@@ -1168,14 +1158,7 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
       </div>
 
       {/* Sensitivity + Metrics Row */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: 12, marginBottom: 16 }}>
-        <div style={{ ...baseStyles.card, padding: "10px 14px" }}>
-          <div style={{ fontSize: "0.7rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Demand Multiplier <span style={{ fontSize: "0.6rem", color: "#475569", textTransform: "none" }}>(applied on next Auto-Schedule)</span></div>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <input type="range" min="50" max="200" value={Math.round(sensitivity * 100)} onChange={e => setSensitivity(Number(e.target.value) / 100)} style={{ flex: 1, accentColor: "#c8854a" }} />
-            <span style={{ ...baseStyles.mono, color: "#c8854a", fontWeight: 700, minWidth: 40, textAlign: "right" }}>{Math.round(sensitivity * 100)}%</span>
-          </div>
-        </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12, marginBottom: 16 }}>
         <div style={{ ...baseStyles.card, padding: "10px 14px" }}>
           <div style={{ fontSize: "0.7rem", color: "#94a3b8", textTransform: "uppercase", marginBottom: 2 }}>Total BBL</div>
           <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#c8854a", ...baseStyles.mono }}>{currentMetrics.totalBbl}</div>
@@ -1193,44 +1176,6 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
           <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#8ab4f0", ...baseStyles.mono }}>{currentMetrics.batchCount}</div>
         </div>
       </div>
-
-      {/* Scenarios Panel */}
-      {scenarios.length > 0 && (
-        <div style={{ ...baseStyles.card, marginBottom: 16 }}>
-          <div style={baseStyles.cardTitle}>📊 Saved Scenarios {compareIdx !== null && "— Comparing"}</div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: compareMetrics ? 12 : 0 }}>
-            {scenarios.map((sc, i) => (
-              <div key={i} style={{ background: "#0b0f14", border: `1px solid ${activeScenario === i ? "#c8854a" : "#1e293b"}`, borderRadius: 6, padding: "8px 12px", display: "flex", flexDirection: "column", gap: 4, minWidth: 160 }}>
-                <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#f8fafc" }}>{sc.name}</div>
-                <div style={{ fontSize: "0.65rem", color: "#475569", ...baseStyles.mono }}>{sc.createdAt}</div>
-                <div style={{ fontSize: "0.7rem", color: "#94a3b8" }}>{sc.metrics.totalBbl} BBL · {sc.metrics.batchCount} batches · {sc.metrics.utilization}% util</div>
-                <div style={{ display: "flex", gap: 4, marginTop: 2 }}>
-                  <button style={{ ...baseStyles.btn(), fontSize: "0.65rem", padding: "2px 8px" }} onClick={() => handleLoadScenario(i)}>Load</button>
-                  <button style={{ ...baseStyles.btn(), fontSize: "0.65rem", padding: "2px 8px", color: compareIdx === i ? "#c8854a" : "#94a3b8" }} onClick={() => setCompareIdx(compareIdx === i ? null : i)}>Compare</button>
-                  <button style={{ ...baseStyles.btn(), fontSize: "0.65rem", padding: "2px 8px", color: "#fca5a5" }} onClick={() => setScenarios(prev => prev.filter((_, j) => j !== i))}>✕</button>
-                </div>
-              </div>
-            ))}
-          </div>
-          {compareMetrics && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
-              {[["Total BBL", currentMetrics.totalBbl, compareMetrics.totalBbl], ["Batches", currentMetrics.batchCount, compareMetrics.batchCount], ["Utilization", currentMetrics.utilization + "%", compareMetrics.utilization + "%"], ["On-Time", currentMetrics.onTime + "%", compareMetrics.onTime + "%"]].map(([label, cur, prev], i) => {
-                const diff = typeof cur === "string" ? parseInt(cur) - parseInt(prev) : cur - prev;
-                return (
-                  <div key={i} style={{ background: "#0b0f14", borderRadius: 6, padding: "8px 12px" }}>
-                    <div style={{ fontSize: "0.65rem", color: "#475569", textTransform: "uppercase" }}>{label}</div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                      <span style={{ fontSize: "1rem", fontWeight: 700, color: "#f8fafc", ...baseStyles.mono }}>{cur}</span>
-                      <span style={{ fontSize: "0.75rem", fontWeight: 600, color: diff > 0 ? "#81c784" : diff < 0 ? "#fca5a5" : "#64748b", ...baseStyles.mono }}>{diff > 0 ? "+" : ""}{diff}{typeof cur === "string" ? "" : ""}</span>
-                    </div>
-                    <div style={{ fontSize: "0.7rem", color: "#475569" }}>was: {prev}</div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      )}
 
       {/* Objective Function Weights Editor */}
       {showWeights && (
@@ -1348,6 +1293,145 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
         </div>
       )}
 
+      {/* Cost Dashboard */}
+      {schedule.length > 0 && (() => {
+        const batchCosts = schedule.map(b => {
+          const r = recipes.find(x => x.id === b.recipeId);
+          const bom = r ? NS_BOMS[r.name] : null;
+          let cost = 0;
+          const ingredients = [];
+          if (bom) {
+            bom.forEach(ing => { const c = ing.qty * ing.cost * b.batchSizeBbl; cost += c; ingredients.push({ name: ing.ingredient, cost: c }); });
+          }
+          return { id: b.id, beer: r?.name || b.recipeId, bbl: b.batchSizeBbl, cost, hasBom: !!bom, ingredients };
+        });
+        const totalCost = batchCosts.reduce((s, b) => s + b.cost, 0);
+        const totalBbl = batchCosts.reduce((s, b) => s + b.bbl, 0);
+        const withBom = batchCosts.filter(b => b.hasBom);
+        const noBom = batchCosts.filter(b => !b.hasBom);
+        // Top 10 most expensive ingredients across all batches
+        const ingMap = {};
+        batchCosts.forEach(b => b.ingredients.forEach(i => { ingMap[i.name] = (ingMap[i.name] || 0) + i.cost; }));
+        const topIngs = Object.entries(ingMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
+        return (
+          <div style={baseStyles.card}>
+            <div style={baseStyles.cardTitle}>💰 Cost Dashboard <span style={{ fontSize: "0.65rem", fontWeight: 400, color: "#475569" }}>(based on {withBom.length} batches with real BOMs)</span></div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 16 }}>
+              {[
+                ["Total Raw Material Cost", "$" + totalCost.toFixed(0), "#c8854a"],
+                ["Cost per BBL (avg)", totalBbl > 0 ? "$" + (totalCost / totalBbl).toFixed(2) : "—", "#22c55e"],
+                ["Batches w/ Real BOM", withBom.length + " of " + schedule.length, "#3b82f6"],
+                ["Batches w/o BOM", noBom.length > 0 ? noBom.length + " (no cost data)" : "All covered", noBom.length > 0 ? "#f59e0b" : "#22c55e"],
+              ].map(([l, v, c], i) => (
+                <div key={i} style={{ background: "#0b0f14", borderRadius: 6, padding: "10px 12px", border: "1px solid #1e293b" }}>
+                  <div style={{ fontSize: "0.65rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.03em" }}>{l}</div>
+                  <div style={{ ...baseStyles.mono, fontSize: "1.1rem", fontWeight: 700, color: c }}>{v}</div>
+                </div>
+              ))}
+            </div>
+            {topIngs.length > 0 && (
+              <div>
+                <div style={{ fontSize: "0.7rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.03em", marginBottom: 8 }}>Top Ingredient Spend (across all scheduled batches)</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                  {topIngs.map(([name, cost], i) => {
+                    const pct = topIngs[0][1] > 0 ? (cost / topIngs[0][1]) * 100 : 0;
+                    return (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "0.75rem" }}>
+                        <div style={{ width: 180, color: "#cbd5e1", flexShrink: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{name}</div>
+                        <div style={{ flex: 1, height: 14, background: "#111820", borderRadius: 3, overflow: "hidden" }}>
+                          <div style={{ width: pct + "%", height: "100%", background: "linear-gradient(90deg, #c8854a33, #c8854a88)", borderRadius: 3 }} />
+                        </div>
+                        <div style={{ ...baseStyles.mono, color: "#c8854a", width: 70, textAlign: "right", flexShrink: 0 }}>${cost.toFixed(0)}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            {withBom.length > 0 && (
+              <div style={{ marginTop: 12 }}>
+                <div style={{ fontSize: "0.7rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.03em", marginBottom: 8 }}>Cost by Batch</div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {withBom.sort((a, b) => b.cost - a.cost).map(b => (
+                    <div key={b.id} style={{ background: "#0b0f14", border: "1px solid #1e293b", borderRadius: 4, padding: "4px 8px", fontSize: "0.7rem" }}>
+                      <span style={{ color: "#cbd5e1" }}>{b.beer}</span> <span style={{ ...baseStyles.mono, color: "#c8854a" }}>${b.cost.toFixed(0)}</span> <span style={{ color: "#475569" }}>({b.bbl}BBL · ${(b.bbl > 0 ? b.cost / b.bbl : 0).toFixed(1)}/BBL)</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })()}
+
+      {/* Ingredient Shortfall Report */}
+      {schedule.length > 0 && (() => {
+        // Calculate total ingredient needs from schedule × BOMs
+        const needs = {};
+        schedule.forEach(b => {
+          const r = recipes.find(x => x.id === b.recipeId);
+          const bom = r ? NS_BOMS[r.name] : null;
+          if (!bom) return;
+          bom.forEach(ing => {
+            const key = ing.ingredient;
+            if (!needs[key]) needs[key] = { name: key, needed: 0, onHand: ing.onHand || 0, batches: [] };
+            needs[key].needed += ing.qty * b.batchSizeBbl;
+            needs[key].batches.push({ batch: b.id, beer: r.name, qty: ing.qty * b.batchSizeBbl });
+          });
+        });
+        // Find shortfalls
+        const shortfalls = Object.values(needs)
+          .map(n => ({ ...n, deficit: n.needed - n.onHand, coveragePct: n.onHand > 0 ? Math.min(100, (n.onHand / n.needed) * 100) : 0 }))
+          .filter(n => n.deficit > 0)
+          .sort((a, b) => a.coveragePct - b.coveragePct);
+        const healthy = Object.values(needs).filter(n => n.needed <= n.onHand);
+        if (shortfalls.length === 0 && healthy.length === 0) return null;
+        return (
+          <div style={{ ...baseStyles.card, borderColor: shortfalls.length > 0 ? "#ef444433" : "#22c55e33" }}>
+            <div style={baseStyles.cardTitle}>
+              {shortfalls.length > 0
+                ? <><span style={{ color: "#ef4444" }}>🚨</span> {shortfalls.length} Ingredient Shortfall{shortfalls.length > 1 ? "s" : ""} <span style={{ fontSize: "0.65rem", fontWeight: 400, color: "#475569" }}>(will run out before schedule completes)</span></>
+                : <><span style={{ color: "#22c55e" }}>✅</span> All Ingredients Sufficient</>
+              }
+            </div>
+            {shortfalls.length > 0 && (
+              <table style={{ ...baseStyles.table, marginBottom: 12 }}>
+                <thead><tr>
+                  <th style={baseStyles.th}>Ingredient</th>
+                  <th style={{ ...baseStyles.th, textAlign: "right" }}>On Hand</th>
+                  <th style={{ ...baseStyles.th, textAlign: "right" }}>Needed</th>
+                  <th style={{ ...baseStyles.th, textAlign: "right" }}>Shortfall</th>
+                  <th style={{ ...baseStyles.th, width: 120 }}>Coverage</th>
+                  <th style={baseStyles.th}>Used By</th>
+                </tr></thead>
+                <tbody>
+                  {shortfalls.map((s, i) => (
+                    <tr key={i}>
+                      <td style={{ ...baseStyles.td, fontWeight: 500, color: "#f8fafc" }}>{s.name}</td>
+                      <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{s.onHand.toFixed(1)}</td>
+                      <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{s.needed.toFixed(1)}</td>
+                      <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right", color: "#fca5a5", fontWeight: 600 }}>-{s.deficit.toFixed(1)}</td>
+                      <td style={baseStyles.td}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          <div style={{ flex: 1, height: 10, background: "#1e293b", borderRadius: 3, overflow: "hidden" }}>
+                            <div style={{ width: s.coveragePct + "%", height: "100%", background: s.coveragePct < 30 ? "#ef4444" : s.coveragePct < 70 ? "#f59e0b" : "#22c55e", borderRadius: 3 }} />
+                          </div>
+                          <span style={{ ...baseStyles.mono, fontSize: "0.65rem", color: "#94a3b8", width: 30 }}>{s.coveragePct.toFixed(0)}%</span>
+                        </div>
+                      </td>
+                      <td style={{ ...baseStyles.td, fontSize: "0.65rem", color: "#64748b" }}>{[...new Set(s.batches.map(b => b.beer))].join(", ")}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            {healthy.length > 0 && (
+              <div style={{ fontSize: "0.7rem", color: "#22c55e" }}>✓ {healthy.length} ingredient{healthy.length > 1 ? "s" : ""} fully stocked for the current schedule</div>
+            )}
+          </div>
+        );
+      })()}
+
       {/* Conflicts */}
       {conflicts.length > 0 && (
         <div style={{ ...baseStyles.card, borderColor: "#ef444444" }}>
@@ -1427,21 +1511,6 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
         </div>
       </Modal>
 
-      {/* Save Scenario Modal */}
-      <Modal open={showScenarioSave} onClose={() => setShowScenarioSave(false)} title="Save Current Schedule as Scenario" width={400}>
-        <div style={{ marginBottom: 12 }}>
-          <div style={{ fontSize: "0.75rem", color: "#94a3b8", marginBottom: 4 }}>Scenario Name</div>
-          <input value={scenarioName} onChange={e => setScenarioName(e.target.value)} placeholder="e.g. Baseline Q2, Daizy's 2x, FV7 Down..." style={{ ...baseStyles.input, width: "100%" }} />
-        </div>
-        <div style={{ ...baseStyles.card, padding: "10px 12px", marginBottom: 16, background: "#0b0f14" }}>
-          <div style={{ fontSize: "0.75rem", color: "#475569", marginBottom: 6 }}>This will snapshot:</div>
-          <div style={{ fontSize: "0.8rem", color: "#e2e8f0" }}>{schedule.length} batches · {currentMetrics.totalBbl} BBL · {currentMetrics.utilization}% util · sensitivity {Math.round(sensitivity * 100)}%</div>
-        </div>
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
-          <button style={baseStyles.btn()} onClick={() => setShowScenarioSave(false)}>Cancel</button>
-          <button style={baseStyles.btn("primary")} onClick={handleSaveScenario} disabled={!scenarioName.trim()}>Save Scenario</button>
-        </div>
-      </Modal>
     </div>
   );
 }
@@ -2264,17 +2333,251 @@ function NetSuiteSync({ schedule, recipes, equipment }) {
   );
 }
 
+// ─── SCENARIO PLANNER TAB ────────────────────────────────────────────────────────
+
+function ScenarioPlanner({ demand, equipment, recipes, weights, schedule, setSchedule }) {
+  const [scenarios, setScenarios] = useState(() => loadState("scenarios", []));
+  const [newName, setNewName] = useState("");
+  const [newDesc, setNewDesc] = useState("");
+  const [editIdx, setEditIdx] = useState(null);
+  const [running, setRunning] = useState(null);
+
+  // Persist scenarios
+  useEffect(() => { saveState("scenarios", scenarios); }, [scenarios]);
+
+  // Create a new scenario from current demand
+  const handleCreate = () => {
+    if (!newName.trim()) return;
+    const profile = demand.map(d => ({ ...d, multiplier: 1.0, enabled: true }));
+    setScenarios(prev => [...prev, {
+      name: newName.trim(), desc: newDesc.trim(), demandProfile: profile,
+      result: null, createdAt: new Date().toLocaleString(),
+    }]);
+    setNewName(""); setNewDesc("");
+    setEditIdx(scenarios.length); // open editor on new scenario
+  };
+
+  // Run optimizer for a scenario
+  const handleRun = (idx) => {
+    setRunning(idx);
+    setTimeout(() => {
+      const sc = scenarios[idx];
+      const adjDemand = sc.demandProfile.filter(d => d.enabled).map(d => ({
+        ...d, volumeBbl: Math.round(d.volumeBbl * (d.multiplier || 1.0))
+      }));
+      const result = autoSchedule(adjDemand, equipment, recipes, [], 1.0, weights, 1000);
+      const metrics = calcMetrics(result.newBatches, adjDemand, equipment);
+      setScenarios(prev => prev.map((s, i) => i === idx ? { ...s, result: { schedule: result.newBatches, metrics, ranAt: new Date().toLocaleTimeString() } } : s));
+      setRunning(null);
+    }, 50);
+  };
+
+  // Apply scenario schedule to main schedule
+  const handleApply = (idx) => {
+    const sc = scenarios[idx];
+    if (!sc.result) return;
+    if (confirm(`Replace current schedule with "${sc.name}" scenario (${sc.result.schedule.length} batches)?`)) {
+      setSchedule(sc.result.schedule);
+    }
+  };
+
+  // Current demand baseline metrics
+  const baseResult = useMemo(() => {
+    const result = autoSchedule(demand, equipment, recipes, [], 1.0, weights, 50);
+    return calcMetrics(result.newBatches, demand, equipment);
+  }, [demand, equipment, recipes, weights]);
+
+  const totalDemandBbl = demand.reduce((s, d) => s + d.volumeBbl, 0);
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
+        <div>
+          <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#f8fafc", margin: "0 0 4px 0" }}>Scenario Planner</h2>
+          <div style={{ fontSize: "0.75rem", color: "#64748b" }}>Create demand profiles, run the optimizer, compare outcomes. Each scenario adjusts your base demand with per-beer multipliers.</div>
+        </div>
+      </div>
+
+      {/* Baseline reference */}
+      <div style={{ ...baseStyles.card, borderColor: "#22c55e33", marginBottom: 16 }}>
+        <div style={baseStyles.cardTitle}>📊 Current Baseline <span style={{ fontSize: "0.65rem", fontWeight: 400, color: "#475569" }}>(from your Demand tab — {demand.length} entries, {totalDemandBbl} BBL total)</span></div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+          {[["Total BBL", baseResult.totalBbl, "#c8854a"], ["Batches", baseResult.batchCount, "#8ab4f0"], ["Utilization", baseResult.utilization + "%", "#81c784"], ["On-Time", baseResult.onTime + "%", baseResult.onTime > 90 ? "#81c784" : "#fca5a5"]].map(([l, v, c], i) => (
+            <div key={i} style={{ background: "#0b0f14", borderRadius: 6, padding: "8px 12px" }}>
+              <div style={{ fontSize: "0.65rem", color: "#94a3b8", textTransform: "uppercase" }}>{l}</div>
+              <div style={{ ...baseStyles.mono, fontSize: "1.1rem", fontWeight: 700, color: c }}>{v}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Create new scenario */}
+      <div style={{ ...baseStyles.card, marginBottom: 16 }}>
+        <div style={baseStyles.cardTitle}>+ New Scenario</div>
+        <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: "0.7rem", color: "#94a3b8", marginBottom: 4 }}>Name</div>
+            <input value={newName} onChange={e => setNewName(e.target.value)} placeholder="e.g. Summer Surge, Daizy's 2x, Lose Kroger..." style={{ ...baseStyles.input, width: "100%" }} />
+          </div>
+          <div style={{ flex: 2 }}>
+            <div style={{ fontSize: "0.7rem", color: "#94a3b8", marginBottom: 4 }}>Description</div>
+            <input value={newDesc} onChange={e => setNewDesc(e.target.value)} placeholder="What assumption does this scenario test?" style={{ ...baseStyles.input, width: "100%" }} />
+          </div>
+          <button style={baseStyles.btn("primary")} onClick={handleCreate} disabled={!newName.trim()}>Create from Current Demand</button>
+        </div>
+      </div>
+
+      {/* Scenarios list */}
+      {scenarios.map((sc, idx) => {
+        const isEditing = editIdx === idx;
+        const r = sc.result;
+        const adjBbl = sc.demandProfile.filter(d => d.enabled).reduce((s, d) => s + Math.round(d.volumeBbl * (d.multiplier || 1)), 0);
+        return (
+          <div key={idx} style={{ ...baseStyles.card, marginBottom: 12, borderColor: r ? "#22c55e33" : "#1e293b" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: isEditing ? 12 : 0 }}>
+              <div>
+                <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#f8fafc" }}>{sc.name}</div>
+                {sc.desc && <div style={{ fontSize: "0.7rem", color: "#64748b" }}>{sc.desc}</div>}
+                <div style={{ fontSize: "0.65rem", color: "#475569", ...baseStyles.mono }}>{sc.demandProfile.filter(d => d.enabled).length} active entries · {adjBbl} BBL adjusted demand · created {sc.createdAt}</div>
+              </div>
+              <div style={{ display: "flex", gap: 6 }}>
+                <button style={{ ...baseStyles.btn(), fontSize: "0.75rem", color: isEditing ? "#c8854a" : "#94a3b8" }} onClick={() => setEditIdx(isEditing ? null : idx)}>✏ {isEditing ? "Close" : "Edit Demand"}</button>
+                <button style={{ ...baseStyles.btn(), fontSize: "0.75rem", color: "#d98ae0" }} onClick={() => handleRun(idx)} disabled={running !== null}>{running === idx ? "Running 1000 iterations..." : "⚡ Run Optimizer"}</button>
+                {r && <button style={{ ...baseStyles.btn(), fontSize: "0.75rem", color: "#22c55e" }} onClick={() => handleApply(idx)}>✓ Apply to Schedule</button>}
+                <button style={{ ...baseStyles.btn(), fontSize: "0.75rem", color: "#fca5a5" }} onClick={() => { setScenarios(prev => prev.filter((_, i) => i !== idx)); if (editIdx === idx) setEditIdx(null); }}>✕</button>
+              </div>
+            </div>
+
+            {/* Demand profile editor */}
+            {isEditing && (
+              <div style={{ maxHeight: "40vh", overflow: "auto", marginBottom: 12 }}>
+                <table style={baseStyles.table}>
+                  <thead><tr>
+                    <th style={{ ...baseStyles.th, width: 30 }}>On</th>
+                    <th style={baseStyles.th}>Beer</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right" }}>Base BBL</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right", width: 90 }}>Multiplier</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right" }}>Adjusted BBL</th>
+                    <th style={baseStyles.th}>Ship Date</th>
+                  </tr></thead>
+                  <tbody>
+                    {sc.demandProfile.map((dp, di) => {
+                      const recipe = recipes.find(x => x.id === dp.recipeId);
+                      return (
+                        <tr key={di} style={{ opacity: dp.enabled ? 1 : 0.4 }}>
+                          <td style={baseStyles.td}>
+                            <input type="checkbox" checked={dp.enabled} onChange={e => {
+                              setScenarios(prev => prev.map((s, i) => i === idx ? { ...s, demandProfile: s.demandProfile.map((d, j) => j === di ? { ...d, enabled: e.target.checked } : d), result: null } : s));
+                            }} />
+                          </td>
+                          <td style={{ ...baseStyles.td, fontWeight: 500 }}>{recipe?.name || dp.recipeId}</td>
+                          <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{dp.volumeBbl}</td>
+                          <td style={{ ...baseStyles.td, textAlign: "right" }}>
+                            <input type="number" step="0.1" min="0" max="5" value={dp.multiplier ?? 1} style={{ ...baseStyles.input, width: 60, textAlign: "right", color: (dp.multiplier ?? 1) !== 1 ? "#c8854a" : "#94a3b8" }} onChange={e => {
+                              setScenarios(prev => prev.map((s, i) => i === idx ? { ...s, demandProfile: s.demandProfile.map((d, j) => j === di ? { ...d, multiplier: Number(e.target.value) || 0 } : d), result: null } : s));
+                            }} />
+                          </td>
+                          <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right", color: (dp.multiplier ?? 1) !== 1 ? "#c8854a" : "#94a3b8" }}>{Math.round(dp.volumeBbl * (dp.multiplier ?? 1))}</td>
+                          <td style={{ ...baseStyles.td, ...baseStyles.mono, fontSize: "0.7rem", color: "#475569" }}>{dp.shipDate}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                  <button style={{ ...baseStyles.btn(), fontSize: "0.7rem" }} onClick={() => setScenarios(prev => prev.map((s, i) => i === idx ? { ...s, demandProfile: s.demandProfile.map(d => ({ ...d, multiplier: 1.5 })), result: null } : s))}>All ×1.5</button>
+                  <button style={{ ...baseStyles.btn(), fontSize: "0.7rem" }} onClick={() => setScenarios(prev => prev.map((s, i) => i === idx ? { ...s, demandProfile: s.demandProfile.map(d => ({ ...d, multiplier: 2.0 })), result: null } : s))}>All ×2.0</button>
+                  <button style={{ ...baseStyles.btn(), fontSize: "0.7rem" }} onClick={() => setScenarios(prev => prev.map((s, i) => i === idx ? { ...s, demandProfile: s.demandProfile.map(d => ({ ...d, multiplier: 0.5 })), result: null } : s))}>All ×0.5</button>
+                  <button style={{ ...baseStyles.btn(), fontSize: "0.7rem" }} onClick={() => setScenarios(prev => prev.map((s, i) => i === idx ? { ...s, demandProfile: s.demandProfile.map(d => ({ ...d, multiplier: 1.0 })), result: null } : s))}>Reset All ×1.0</button>
+                </div>
+              </div>
+            )}
+
+            {/* Results */}
+            {r && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8, marginTop: 8 }}>
+                {[
+                  ["Total BBL", r.metrics.totalBbl, baseResult.totalBbl],
+                  ["Batches", r.metrics.batchCount, baseResult.batchCount],
+                  ["Utilization", r.metrics.utilization, baseResult.utilization],
+                  ["On-Time", r.metrics.onTime, baseResult.onTime],
+                ].map(([label, val, base], i) => {
+                  const diff = val - base;
+                  const isPercent = label === "Utilization" || label === "On-Time";
+                  return (
+                    <div key={i} style={{ background: "#0b0f14", borderRadius: 6, padding: "6px 10px" }}>
+                      <div style={{ fontSize: "0.6rem", color: "#475569", textTransform: "uppercase" }}>{label}</div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+                        <span style={{ ...baseStyles.mono, fontSize: "1rem", fontWeight: 700, color: "#f8fafc" }}>{val}{isPercent ? "%" : ""}</span>
+                        <span style={{ ...baseStyles.mono, fontSize: "0.7rem", color: diff > 0 ? "#81c784" : diff < 0 ? "#fca5a5" : "#475569" }}>{diff > 0 ? "+" : ""}{diff}{isPercent ? "%" : ""}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+                <div style={{ background: "#0b0f14", borderRadius: 6, padding: "6px 10px" }}>
+                  <div style={{ fontSize: "0.6rem", color: "#475569", textTransform: "uppercase" }}>Ran At</div>
+                  <div style={{ ...baseStyles.mono, fontSize: "0.8rem", color: "#22c55e", marginTop: 2 }}>{r.ranAt}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {/* Comparison table if multiple results exist */}
+      {scenarios.filter(s => s.result).length >= 2 && (
+        <div style={{ ...baseStyles.card, marginTop: 16 }}>
+          <div style={baseStyles.cardTitle}>📊 Side-by-Side Comparison</div>
+          <table style={baseStyles.table}>
+            <thead><tr>
+              <th style={baseStyles.th}>Scenario</th>
+              <th style={{ ...baseStyles.th, textAlign: "right" }}>Demand BBL</th>
+              <th style={{ ...baseStyles.th, textAlign: "right" }}>Scheduled BBL</th>
+              <th style={{ ...baseStyles.th, textAlign: "right" }}>Batches</th>
+              <th style={{ ...baseStyles.th, textAlign: "right" }}>Utilization</th>
+              <th style={{ ...baseStyles.th, textAlign: "right" }}>On-Time</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td style={{ ...baseStyles.td, fontWeight: 600, color: "#22c55e" }}>Baseline (current demand)</td>
+                <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{totalDemandBbl}</td>
+                <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{baseResult.totalBbl}</td>
+                <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{baseResult.batchCount}</td>
+                <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{baseResult.utilization}%</td>
+                <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{baseResult.onTime}%</td>
+              </tr>
+              {scenarios.filter(s => s.result).map((sc, i) => {
+                const adjBbl = sc.demandProfile.filter(d => d.enabled).reduce((s, d) => s + Math.round(d.volumeBbl * (d.multiplier || 1)), 0);
+                return (
+                  <tr key={i}>
+                    <td style={{ ...baseStyles.td, fontWeight: 500 }}>{sc.name}</td>
+                    <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{adjBbl}</td>
+                    <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{sc.result.metrics.totalBbl}</td>
+                    <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{sc.result.metrics.batchCount}</td>
+                    <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{sc.result.metrics.utilization}%</td>
+                    <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{sc.result.metrics.onTime}%</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── MAIN APP ───────────────────────────────────────────────────────────────────
 
 const TABS = [
   { id: "schedule", label: "Schedule", icon: "📅" },
+  { id: "scenarios", label: "Scenarios", icon: "🔀" },
   { id: "materials", label: "Materials", icon: "📦" },
   { id: "production", label: "Production", icon: "🏭" },
   { id: "inventory", label: "Inventory", icon: "📊" },
   { id: "demand", label: "Demand", icon: "📈" },
   { id: "recipes", label: "Recipes", icon: "🍺" },
   { id: "settings", label: "Settings", icon: "⚙" },
-  { id: "netsuite", label: "NetSuite Sync", icon: "🔗" },
 ];
 
 // localStorage helpers
@@ -2292,8 +2595,6 @@ export default function BreweryPlanner() {
   const [materials] = useState(SAMPLE_MATERIALS);
   const [schedule, setSchedule] = useState(() => loadState("schedule", SAMPLE_SCHEDULE));
   const [demand, setDemand] = useState(() => loadState("demand", SAMPLE_DEMAND));
-  const [scenarios, setScenarios] = useState(() => loadState("scenarios", []));
-  const [activeScenario, setActiveScenario] = useState(null);
   const [sensitivity, setSensitivity] = useState(1.0);
   const [weights, setWeights] = useState(() => loadState("weights", DEFAULT_WEIGHTS));
   const [leadTimes, setLeadTimes] = useState(() => loadState("leadTimes", DEFAULT_LEAD_TIMES));
@@ -2302,7 +2603,6 @@ export default function BreweryPlanner() {
   // Persist on change
   useEffect(() => { saveState("schedule", schedule); }, [schedule]);
   useEffect(() => { saveState("demand", demand); }, [demand]);
-  useEffect(() => { saveState("scenarios", scenarios); }, [scenarios]);
   useEffect(() => { saveState("weights", weights); }, [weights]);
   useEffect(() => { saveState("leadTimes", leadTimes); }, [leadTimes]);
   useEffect(() => { saveState("processDurations", processDurations); }, [processDurations]);
@@ -2347,7 +2647,8 @@ export default function BreweryPlanner() {
 
       {/* Main Content */}
       <div style={baseStyles.main}>
-        {tab === "schedule" && <ScheduleOptimizer schedule={schedule} setSchedule={setSchedule} equipment={equipment} recipes={recipes} demand={demand} scenarios={scenarios} setScenarios={setScenarios} activeScenario={activeScenario} setActiveScenario={setActiveScenario} sensitivity={sensitivity} setSensitivity={setSensitivity} weights={weights} setWeights={setWeights} />}
+        {tab === "schedule" && <ScheduleOptimizer schedule={schedule} setSchedule={setSchedule} equipment={equipment} recipes={recipes} demand={demand} sensitivity={sensitivity} setSensitivity={setSensitivity} weights={weights} setWeights={setWeights} />}
+        {tab === "scenarios" && <ScenarioPlanner demand={demand} equipment={equipment} recipes={recipes} weights={weights} schedule={schedule} setSchedule={setSchedule} />}
         {tab === "materials" && <MaterialOrders schedule={schedule} recipes={recipes} materials={materials} equipment={equipment} />}
         {tab === "production" && <ProductionStatus schedule={schedule} equipment={equipment} recipes={recipes} />}
         {tab === "inventory" && <InventoryDashboard materials={materials} schedule={schedule} recipes={recipes} />}
