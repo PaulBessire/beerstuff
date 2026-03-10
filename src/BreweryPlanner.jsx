@@ -101,19 +101,183 @@ const SAMPLE_EQUIPMENT = [
 ];
 
 const SAMPLE_MATERIALS = [
-  { id: "M01", name: "2-Row Pale Malt", category: "malt", onHand: 5000, unit: "lb", leadTimeDays: 7, costPerUnit: 0.65 },
-  { id: "M02", name: "Maris Otter Malt", category: "malt", onHand: 3000, unit: "lb", leadTimeDays: 14, costPerUnit: 0.85 },
-  { id: "M03", name: "Cascade Hops", category: "hops", onHand: 200, unit: "lb", leadTimeDays: 5, costPerUnit: 12.00 },
-  { id: "M04", name: "East Kent Goldings", category: "hops", onHand: 120, unit: "lb", leadTimeDays: 10, costPerUnit: 15.00 },
-  { id: "M05", name: "Citra Hops", category: "hops", onHand: 150, unit: "lb", leadTimeDays: 7, costPerUnit: 18.00 },
-  { id: "M06", name: "Flaked Oats", category: "grain", onHand: 800, unit: "lb", leadTimeDays: 5, costPerUnit: 0.55 },
-  { id: "M07", name: "Simcoe Hops", category: "hops", onHand: 100, unit: "lb", leadTimeDays: 7, costPerUnit: 16.00 },
-  { id: "M08", name: "Mosaic Hops", category: "hops", onHand: 80, unit: "lb", leadTimeDays: 7, costPerUnit: 19.00 },
-  { id: "M09", name: "Fruit/Flavor Add", category: "adjunct", onHand: 300, unit: "lb", leadTimeDays: 3, costPerUnit: 3.50 },
-  { id: "M10", name: "US-05 Ale Yeast", category: "yeast", onHand: 50, unit: "pkg", leadTimeDays: 3, costPerUnit: 8.00 },
-  { id: "M11", name: "W-34/70 Lager Yeast", category: "yeast", onHand: 30, unit: "pkg", leadTimeDays: 5, costPerUnit: 9.50 },
-  { id: "M12", name: "Lactobacillus Culture", category: "yeast", onHand: 10, unit: "pkg", leadTimeDays: 7, costPerUnit: 22.00 },
+  // ─── Malts (from NetSuite InvtPart) ───
+  { id: "M01", name: "SILO 1 Rahr Pale Ale Bulk", category: "malt", onHand: 0, unit: "lb", leadTimeDays: 7, costPerUnit: 0.42 },
+  { id: "M02", name: "SILO 2 Rahr Pilsner Bulk", category: "malt", onHand: 21217, unit: "lb", leadTimeDays: 7, costPerUnit: 0.39 },
+  { id: "M03", name: "Weyermann - Pale Wheat", category: "malt", onHand: 1870, unit: "lb", leadTimeDays: 14, costPerUnit: 0.86 },
+  { id: "M04", name: "Weyermann - Caramunich 1", category: "malt", onHand: 935, unit: "lb", leadTimeDays: 14, costPerUnit: 0.99 },
+  { id: "M05", name: "Weyermann - Munich Lt Type 1", category: "malt", onHand: 935, unit: "lb", leadTimeDays: 14, costPerUnit: 0.94 },
+  { id: "M06", name: "Simpsons - Caramalt", category: "malt", onHand: 1307.9, unit: "lb", leadTimeDays: 14, costPerUnit: 1.20 },
+  { id: "M07", name: "Grain Millers Flaked Oats", category: "malt", onHand: 1000, unit: "lb", leadTimeDays: 5, costPerUnit: 0.83 },
+  { id: "M08", name: "Flaked Maize OIO", category: "malt", onHand: 2400, unit: "lb", leadTimeDays: 5, costPerUnit: 1.77 },
+  { id: "M09", name: "Corn Sugar (Dextrose)", category: "malt", onHand: 2810, unit: "lb", leadTimeDays: 5, costPerUnit: 1.00 },
+  { id: "M10", name: "Rice Hulls", category: "malt", onHand: 659, unit: "lb", leadTimeDays: 5, costPerUnit: 0.74 },
+  { id: "M11", name: "Rice Syrup Solids", category: "malt", onHand: 750, unit: "lb", leadTimeDays: 7, costPerUnit: 3.25 },
+  { id: "M12", name: "Lactose", category: "adjunct", onHand: 6545, unit: "lb", leadTimeDays: 7, costPerUnit: 0.13 },
+  // ─── Hops ───
+  { id: "H01", name: "Citra", category: "hops", onHand: 357.96, unit: "lb", leadTimeDays: 7, costPerUnit: 14.02 },
+  { id: "H02", name: "Mosaic", category: "hops", onHand: 289.52, unit: "lb", leadTimeDays: 7, costPerUnit: 14.00 },
+  { id: "H03", name: "Simcoe", category: "hops", onHand: 26.5, unit: "lb", leadTimeDays: 7, costPerUnit: 13.28 },
+  { id: "H04", name: "Cascade", category: "hops", onHand: 145, unit: "lb", leadTimeDays: 5, costPerUnit: 9.00 },
+  { id: "H05", name: "Centennial", category: "hops", onHand: 22, unit: "lb", leadTimeDays: 7, costPerUnit: 11.00 },
+  { id: "H06", name: "Amarillo", category: "hops", onHand: 55, unit: "lb", leadTimeDays: 7, costPerUnit: 14.69 },
+  { id: "H07", name: "Magnum", category: "hops", onHand: 50, unit: "lb", leadTimeDays: 7, costPerUnit: 11.06 },
+  { id: "H08", name: "Hallertau Mittelfruh", category: "hops", onHand: 330.6, unit: "lb", leadTimeDays: 10, costPerUnit: 13.09 },
+  { id: "H09", name: "Galaxy", category: "hops", onHand: 217, unit: "lb", leadTimeDays: 14, costPerUnit: 18.17 },
+  { id: "H10", name: "Azacca", category: "hops", onHand: 242, unit: "lb", leadTimeDays: 7, costPerUnit: 14.94 },
+  { id: "H11", name: "CTZ (Zeus)", category: "hops", onHand: 5, unit: "lb", leadTimeDays: 7, costPerUnit: 7.55 },
+  { id: "H12", name: "East Kent Golding", category: "hops", onHand: 25.4, unit: "lb", leadTimeDays: 10, costPerUnit: 13.03 },
+  { id: "H13", name: "Idaho 7", category: "hops", onHand: 77, unit: "lb", leadTimeDays: 7, costPerUnit: 11.76 },
+  // ─── Chemistry ───
+  { id: "C01", name: "Calcium Chloride", category: "chemistry", onHand: 82.16, unit: "lb", leadTimeDays: 5, costPerUnit: 1.08 },
+  { id: "C02", name: "Gypsum (Calcium Sulfate)", category: "chemistry", onHand: 119.28, unit: "lb", leadTimeDays: 5, costPerUnit: 0.46 },
+  { id: "C03", name: "Calcium Carbonate", category: "chemistry", onHand: 168.35, unit: "lb", leadTimeDays: 5, costPerUnit: 0.89 },
+  { id: "C04", name: "Phosphoric Acid", category: "chemistry", onHand: 52996, unit: "oz", leadTimeDays: 7, costPerUnit: 0.03 },
+  { id: "C05", name: "Whirlfloc T", category: "chemistry", onHand: 7428.5, unit: "tab", leadTimeDays: 5, costPerUnit: 0.15 },
+  { id: "C06", name: "Fermcap AT", category: "chemistry", onHand: 123.46, unit: "oz", leadTimeDays: 7, costPerUnit: 1.90 },
+  { id: "C07", name: "Yeastex 82", category: "chemistry", onHand: 66.68, unit: "oz", leadTimeDays: 7, costPerUnit: 0.98 },
+  { id: "C08", name: "Sinamar - Weyermann", category: "chemistry", onHand: 112.5, unit: "oz", leadTimeDays: 10, costPerUnit: 7.97 },
+  { id: "C09", name: "WLN4000 Clarity Ferm", category: "chemistry", onHand: 0, unit: "oz", leadTimeDays: 7, costPerUnit: 56.86 },
+  { id: "C10", name: "Attenuzyme Pro", category: "chemistry", onHand: 250000, unit: "ml", leadTimeDays: 7, costPerUnit: 0.005 },
+  // ─── Yeast ───
+  { id: "Y01", name: "Omega OYL-114 Bayern Lager", category: "yeast", onHand: 0, unit: "pitch", leadTimeDays: 5, costPerUnit: 121.00 },
+  { id: "Y02", name: "Fermentis SafAle US-05", category: "yeast", onHand: 0, unit: "brick", leadTimeDays: 3, costPerUnit: 0.14 },
+  { id: "Y03", name: "Lallemand BRY-97", category: "yeast", onHand: 500, unit: "brick", leadTimeDays: 3, costPerUnit: 0.33 },
+  { id: "Y04", name: "Lallemand CBC-1", category: "yeast", onHand: 2500, unit: "brick", leadTimeDays: 3, costPerUnit: 0.30 },
+  { id: "Y05", name: "Lallemand Sourvisiae", category: "yeast", onHand: 0, unit: "brick", leadTimeDays: 5, costPerUnit: 0.40 },
+  // ─── Adjunct / Flavor ───
+  { id: "A01", name: "Focus IRC Beer Base 21%", category: "adjunct", onHand: 350.43, unit: "lb", leadTimeDays: 7, costPerUnit: 7.87 },
+  { id: "A02", name: "Citric Acid", category: "adjunct", onHand: 1995, unit: "lb", leadTimeDays: 5, costPerUnit: 2.46 },
+  { id: "A03", name: "Sucralose DR400", category: "adjunct", onHand: 107.25, unit: "lb", leadTimeDays: 10, costPerUnit: 29.32 },
+  { id: "A04", name: "Ghirardelli Chocolate Sauce", category: "adjunct", onHand: 512, unit: "oz", leadTimeDays: 5, costPerUnit: 0.27 },
+  { id: "A05", name: "Exberry Shade Purple Mist", category: "adjunct", onHand: 27.5, unit: "gal", leadTimeDays: 14, costPerUnit: 14.46 },
+  { id: "A06", name: "Lemon Juice Concentrate", category: "adjunct", onHand: 308.04, unit: "lb", leadTimeDays: 10, costPerUnit: 5.04 },
+  // ─── Packaging ───
+  { id: "P01", name: "Can End Silver/Silver", category: "packaging", onHand: 232416, unit: "ea", leadTimeDays: 14, costPerUnit: 0.042 },
+  { id: "P02", name: "PakTech 6Pak Black", category: "packaging", onHand: 1106700, unit: "ea", leadTimeDays: 14, costPerUnit: 0 },
+  { id: "P03", name: "Keg Collar", category: "packaging", onHand: 8923, unit: "ea", leadTimeDays: 7, costPerUnit: 0.18 },
+  { id: "P04", name: "Keg Cap Vented White", category: "packaging", onHand: 3112, unit: "ea", leadTimeDays: 7, costPerUnit: 0.08 },
+  { id: "P05", name: "Barrel Bourbon Buffalo Trace 53G", category: "packaging", onHand: 41, unit: "ea", leadTimeDays: 30, costPerUnit: 72.05 },
 ];
+
+// ─── REAL NETSUITE BOMs ─────────────────────────────────────────────────────────
+// Pulled from NetSuite assemblyItemBom → bomRevisionComponentMember on 3/9/2026
+const NS_BOMS = {
+  "Bavarian": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 36.75, onHand: 0, cost: 0.42 },
+    { ingredient: "Rice Hulls", qty: 0.875, onHand: 659, cost: 0.74 },
+    { ingredient: "Calcium Chloride", qty: 8.25, onHand: 82.16, cost: 1.08 },
+    { ingredient: "Hallertau Mittelfruh", qty: 0.285, onHand: 330.6, cost: 13.09 },
+  ],
+  "Storm": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 36.25, onHand: 0, cost: 0.42 },
+    { ingredient: "Flaked Maize OIO", qty: 11, onHand: 2400, cost: 1.77 },
+    { ingredient: "Rice Hulls", qty: 1.25, onHand: 659, cost: 0.74 },
+    { ingredient: "Hallertau Mittelfruh", qty: 0.37, onHand: 330.6, cost: 13.09 },
+  ],
+  "Switch": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 57.1, onHand: 0, cost: 0.42 },
+    { ingredient: "Rice Hulls", qty: 2.5, onHand: 659, cost: 0.74 },
+    { ingredient: "Centennial", qty: 0.995, onHand: 22, cost: 11 },
+    { ingredient: "Simcoe", qty: 0.6, onHand: 26.5, cost: 13.28 },
+    { ingredient: "Cascade", qty: 0.5, onHand: 145, cost: 9 },
+  ],
+  "Tropic Flare": [
+    { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 57.5, onHand: 21217, cost: 0.39 },
+    { ingredient: "Rice Hulls", qty: 2.5, onHand: 659, cost: 0.74 },
+    { ingredient: "Calcium Chloride", qty: 42.5, onHand: 82.16, cost: 1.08 },
+    { ingredient: "Citra", qty: 1.89, onHand: 357.96, cost: 14.02 },
+    { ingredient: "Mosaic", qty: 1.845, onHand: 289.52, cost: 14 },
+    { ingredient: "Galaxy", qty: 0.035, onHand: 217, cost: 18.17 },
+    { ingredient: "Amarillo", qty: 0.21, onHand: 55, cost: 14.69 },
+    { ingredient: "LauterFlow Pro", qty: 5.75, onHand: 0, cost: 135.32 },
+    { ingredient: "Low Tempase", qty: 0.75, onHand: 1, cost: 113.86 },
+  ],
+  "Haven Hefeweizen": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 29.5, onHand: 0, cost: 0.42 },
+    { ingredient: "Weyermann - Pale Wheat", qty: 22, onHand: 1870, cost: 0.86 },
+    { ingredient: "Simpsons - Caramalt", qty: 1, onHand: 1307.9, cost: 1.20 },
+    { ingredient: "Weyermann - Munich Lt Type 1", qty: 0.75, onHand: 935, cost: 0.94 },
+    { ingredient: "Rice Hulls", qty: 0.875, onHand: 659, cost: 0.74 },
+    { ingredient: "Magnum", qty: 0.14, onHand: 50, cost: 11.06 },
+  ],
+  "Spur Amber Lager": [
+    { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 31.125, onHand: 21217, cost: 0.39 },
+    { ingredient: "Weyermann - Caramunich 1", qty: 2.75, onHand: 935, cost: 0.99 },
+    { ingredient: "Rice Hulls", qty: 0.5, onHand: 659, cost: 0.74 },
+    { ingredient: "Magnum", qty: 0.1125, onHand: 50, cost: 11.06 },
+    { ingredient: "Sinamar - Weyermann", qty: 0.19, onHand: 112.5, cost: 7.97 },
+    { ingredient: "Calcium Chloride", qty: 3.75, onHand: 82.16, cost: 1.08 },
+    { ingredient: "Calcium Carbonate", qty: 3.75, onHand: 168.35, cost: 0.89 },
+    { ingredient: "Phosphoric Acid", qty: 8.75, onHand: 52996, cost: 0.03 },
+    { ingredient: "Attenuzyme Pro", qty: 6.25, onHand: 250000, cost: 0.005 },
+    { ingredient: "WLN4000 Clarity Ferm", qty: 12.8, onHand: 0, cost: 56.86 },
+    { ingredient: "Omega OYL-114 Bayern Lager", qty: 0.025, onHand: 0, cost: 121 },
+  ],
+  "Birdie": [
+    { ingredient: "Focus IRC Beer Base 21%", qty: 4.093, onHand: 350.43, cost: 7.87 },
+    { ingredient: "Natural Flavor Blender V18", qty: 0.735, onHand: 259.92, cost: 10.79 },
+    { ingredient: "Grape Juice Concentrate", qty: 2.145, onHand: 1, cost: 4.43 },
+    { ingredient: "Citric Acid", qty: 0.466, onHand: 1995, cost: 2.46 },
+    { ingredient: "Exberry Shade Purple Mist", qty: 0.274, onHand: 27.5, cost: 14.46 },
+  ],
+  "Scooter": [
+    { ingredient: "Focus IRC Beer Base 21%", qty: 4.093, onHand: 350.43, cost: 7.87 },
+    { ingredient: "Can Shell - Scooter", qty: 24.5, onHand: 83146, cost: 0.20 },
+    { ingredient: "Can End Silver/Silver", qty: 24, onHand: 232416, cost: 0.042 },
+  ],
+  "OKI Bourbon Barrel Ale": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 53.5, onHand: 0, cost: 0.42 },
+    { ingredient: "Flaked Maize OIO", qty: 15, onHand: 2400, cost: 1.77 },
+    { ingredient: "Hallertau Mittelfruh", qty: 0.15, onHand: 330.6, cost: 13.09 },
+    { ingredient: "Magnum", qty: 0.1, onHand: 50, cost: 11.06 },
+    { ingredient: "Rice Hulls", qty: 0.875, onHand: 659, cost: 0.74 },
+  ],
+  "Oktober Fuel": [
+    { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 37.5, onHand: 21217, cost: 0.39 },
+    { ingredient: "Rice Hulls", qty: 0.875, onHand: 659, cost: 0.74 },
+    { ingredient: "Magnum", qty: 0.055, onHand: 50, cost: 11.06 },
+    { ingredient: "Hallertau Mittelfruh", qty: 0.5, onHand: 330.6, cost: 13.09 },
+  ],
+  "Double Hazy IPA": [
+    { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 65, onHand: 21217, cost: 0.39 },
+    { ingredient: "Rice Hulls", qty: 2.5, onHand: 659, cost: 0.74 },
+    { ingredient: "Citra", qty: 2.785, onHand: 357.96, cost: 14.02 },
+    { ingredient: "Cryo Simcoe", qty: 0.059, onHand: 0, cost: 25 },
+    { ingredient: "Calcium Chloride", qty: 0.986, onHand: 82.16, cost: 1.08 },
+    { ingredient: "Phosphoric Acid", qty: 43, onHand: 52996, cost: 0.03 },
+  ],
+  "Jam Session": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 30.405, onHand: 0, cost: 0.42 },
+    { ingredient: "Rice Hulls", qty: 0.788, onHand: 659, cost: 0.74 },
+    { ingredient: "Calcium Chloride", qty: 19.82, onHand: 82.16, cost: 1.08 },
+    { ingredient: "Citra", qty: 0.487, onHand: 357.96, cost: 14.02 },
+    { ingredient: "Amarillo", qty: 0.382, onHand: 55, cost: 14.69 },
+  ],
+  "Jubilee - Hoppy Holiday IPA": [
+    { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 35.75, onHand: 21217, cost: 0.39 },
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 35.25, onHand: 0, cost: 0.42 },
+    { ingredient: "CTZ (Zeus)", qty: 0.39, onHand: 5, cost: 7.55 },
+    { ingredient: "Amarillo", qty: 0.355, onHand: 55, cost: 14.69 },
+    { ingredient: "Simcoe", qty: 1.005, onHand: 26.5, cost: 13.28 },
+    { ingredient: "Centennial", qty: 0.05, onHand: 22, cost: 11 },
+    { ingredient: "Lallemand BRY-97", qty: 25, onHand: 500, cost: 0.33 },
+  ],
+  "Paradise Watermelon Gose": [
+    { ingredient: "SILO 2 Rahr Pilsner Bulk", qty: 20.25, onHand: 21217, cost: 0.39 },
+    { ingredient: "Rice Hulls", qty: 0.875, onHand: 659, cost: 0.74 },
+    { ingredient: "Calcium Chloride", qty: 8.65, onHand: 82.16, cost: 1.08 },
+    { ingredient: "Hallertau Mittelfruh", qty: 0.3, onHand: 330.6, cost: 13.09 },
+    { ingredient: "Sea Salt", qty: 0.3, onHand: 0, cost: 2.50 },
+    { ingredient: "Lallemand Sourvisiae", qty: 50, onHand: 0, cost: 0.40 },
+  ],
+  "Dark Charge": [
+    { ingredient: "SILO 1 Rahr Pale Ale Bulk", qty: 86.67, onHand: 0, cost: 0.42 },
+    { ingredient: "Rice Hulls", qty: 2.174, onHand: 659, cost: 0.74 },
+    { ingredient: "Calcium Carbonate", qty: 0.307, onHand: 168.35, cost: 0.89 },
+    { ingredient: "East Kent Golding", qty: 1.178, onHand: 25.4, cost: 13.03 },
+  ],
+};
 
 // Helper to create dates relative to today
 const d = (offset) => {
@@ -202,138 +366,231 @@ const STEP_COLORS = {
   package: "#7dab6e",    // Excel light green (#D9EAD3)
 };
 
-// ─── AUTO-SCHEDULER ENGINE ──────────────────────────────────────────────────────
+// ─── AUTO-SCHEDULER ENGINE (Scored Optimizer) ───────────────────────────────────
 
-function autoSchedule(demand, equipment, recipes, existingSchedule = [], sensitivityMult = 1.0) {
+// Default weights — these are editable in the UI
+const DEFAULT_WEIGHTS = {
+  onTimeDelivery: 100,    // Points per demand entry delivered on time
+  fermUtilization: 2,     // Points per fermenter-day utilized (reduces idle time)
+  tankSizeFit: 5,         // Penalty per BBL of wasted tank capacity (e.g., 15BBL in 120BBL tank = 105 × penalty)
+  briteConflicts: 10,     // Penalty per brite tank conflict (overlapping conditioning)
+  dryHopMatch: 3,         // Bonus for putting hop-forward beers in dry-hop tanks (FV4,5,8,9)
+  ingredientCluster: 1,   // Bonus for same-base-malt beers in same week
+};
+
+const DRY_HOP_TANKS = ["FV04", "FV05", "FV08", "FV09"];
+const HOP_FORWARD_STYLES = ["IPA", "DIPA", "Session IPA", "Pale Ale"];
+
+// Run a single greedy schedule with a given demand ordering
+function runGreedy(demandOrder, equipment, recipes, existingSchedule, sensitivityMult) {
   const fermenters = equipment.filter(e => e.type === EQUIP_TYPES.FERM);
   const brites = equipment.filter(e => e.type === EQUIP_TYPES.BRITE);
   const todayStr = today();
 
-  // Track equipment occupancy from existing schedule
-  const occupancy = {}; // equipId → [{start, end}]
+  const occupancy = {};
   existingSchedule.forEach(b => {
     b.steps.forEach(s => {
       if (!occupancy[s.equipId]) occupancy[s.equipId] = [];
       occupancy[s.equipId].push({ start: s.start, end: s.end });
     });
   });
+  const isAvailable = (eid, s, e) => !(occupancy[eid] || []).some(x => x.start <= e && s <= x.end);
+  const occupy = (eid, s, e) => { if (!occupancy[eid]) occupancy[eid] = []; occupancy[eid].push({ start: s, end: e }); };
 
-  const isAvailable = (equipId, start, end) => {
-    const slots = occupancy[equipId] || [];
-    return !slots.some(s => s.start <= end && start <= s.end);
-  };
-
-  const occupy = (equipId, start, end) => {
-    if (!occupancy[equipId]) occupancy[equipId] = [];
-    occupancy[equipId].push({ start, end });
-  };
-
-  // Apply sensitivity multiplier to demand
-  const adjDemand = demand.map(dm => ({ ...dm, volumeBbl: Math.round(dm.volumeBbl * sensitivityMult) }));
-
-  // Calculate already-scheduled volume per recipe
   const scheduledVol = {};
   existingSchedule.forEach(b => { scheduledVol[b.recipeId] = (scheduledVol[b.recipeId] || 0) + b.batchSizeBbl; });
 
-  // Sort demand by ship date (earliest deadline first)
-  const sorted = [...adjDemand].sort((a, b) => a.shipDate.localeCompare(b.shipDate));
-
   const newBatches = [];
   const unmetDemand = [];
-  let batchCounter = existingSchedule.length;
+  let counter = existingSchedule.length;
 
-  sorted.forEach(dm => {
-    const recipe = recipes.find(r => r.id === dm.recipeId);
-    if (!recipe) { unmetDemand.push({ ...dm, reason: "No recipe found" }); return; }
-
-    const alreadySched = scheduledVol[dm.recipeId] || 0;
-    const stillNeeded = dm.volumeBbl - alreadySched;
-    if (stillNeeded <= 0) return;
-
-    const batchesNeeded = Math.ceil(stillNeeded / recipe.bblPerBatch);
+  demandOrder.forEach(dm => {
+    const adj = { ...dm, volumeBbl: Math.round(dm.volumeBbl * sensitivityMult) };
+    const recipe = recipes.find(r => r.id === adj.recipeId);
+    if (!recipe) { unmetDemand.push({ ...adj, reason: "No recipe" }); return; }
+    const still = adj.volumeBbl - (scheduledVol[adj.recipeId] || 0);
+    if (still <= 0) return;
+    const needed = Math.ceil(still / recipe.bblPerBatch);
     const isKeg = recipe.channel === "taproom";
+    const isHoppy = HOP_FORWARD_STYLES.includes(recipe.style);
 
-    for (let bi = 0; bi < batchesNeeded; bi++) {
-      // Work backward from ship date
-      const shipDate = dm.shipDate;
+    for (let bi = 0; bi < needed; bi++) {
       const fermStep = recipe.steps.find(s => s.step === "ferment");
       const condStep = recipe.steps.find(s => s.step === "condition");
       const pkgStep = recipe.steps.find(s => s.step === "package");
-      if (!fermStep || !condStep) { unmetDemand.push({ ...dm, reason: "Missing process steps" }); continue; }
+      if (!fermStep || !condStep) { unmetDemand.push({ ...adj, reason: "Missing steps" }); continue; }
 
       const pkgDays = pkgStep ? Math.max(1, Math.ceil(pkgStep.durationHrs / 24)) : 1;
       const condDays = Math.max(1, Math.ceil(condStep.durationHrs / 24));
       const fermDays = Math.max(1, Math.ceil(fermStep.durationHrs / 24));
 
-      const pkgEnd = addDays(shipDate, -1);
+      const pkgEnd = addDays(adj.shipDate, -1);
       const pkgStart = addDays(pkgEnd, -(pkgDays - 1));
       const condEnd = addDays(pkgStart, -1);
       const condStart = addDays(condEnd, -(condDays - 1));
       const fermEnd = addDays(condStart, -1);
       const fermStart = addDays(fermEnd, -(fermDays - 1));
 
-      // Don't schedule in the past
-      if (fermStart < todayStr) {
-        unmetDemand.push({ ...dm, reason: `Would need to start ${fermStart} (past)` });
-        continue;
-      }
+      if (fermStart < todayStr) { unmetDemand.push({ ...adj, reason: `Past start: ${fermStart}` }); continue; }
 
-      // Find available fermenter (prefer smallest that fits, respecting dry-hop notes)
+      // Sort fermenters: prefer dry-hop tanks for hoppy beers, then smallest fit
       const suitableFV = fermenters
         .filter(fv => fv.capacityBbl >= recipe.bblPerBatch)
-        .sort((a, b) => a.capacityBbl - b.capacityBbl);
+        .sort((a, b) => {
+          if (isHoppy) {
+            const aHop = DRY_HOP_TANKS.includes(a.id) ? 0 : 1;
+            const bHop = DRY_HOP_TANKS.includes(b.id) ? 0 : 1;
+            if (aHop !== bHop) return aHop - bHop;
+          }
+          return a.capacityBbl - b.capacityBbl;
+        });
 
       let assignedFV = null;
-      for (const fv of suitableFV) {
-        if (isAvailable(fv.id, fermStart, fermEnd)) { assignedFV = fv; break; }
-      }
-      if (!assignedFV) {
-        unmetDemand.push({ ...dm, reason: "No fermenter available" });
-        continue;
-      }
+      for (const fv of suitableFV) { if (isAvailable(fv.id, fermStart, fermEnd)) { assignedFV = fv; break; } }
+      if (!assignedFV) { unmetDemand.push({ ...adj, reason: "No fermenter" }); continue; }
 
-      // Find available brite tank
-      const suitableBT = brites
-        .filter(bt => bt.capacityBbl >= recipe.bblPerBatch)
-        .sort((a, b) => a.capacityBbl - b.capacityBbl);
-
+      const suitableBT = brites.filter(bt => bt.capacityBbl >= recipe.bblPerBatch).sort((a, b) => a.capacityBbl - b.capacityBbl);
       let assignedBT = null;
-      for (const bt of suitableBT) {
-        if (isAvailable(bt.id, condStart, condEnd)) { assignedBT = bt; break; }
-      }
-      if (!assignedBT) {
-        unmetDemand.push({ ...dm, reason: "No brite tank available" });
-        continue;
-      }
+      for (const bt of suitableBT) { if (isAvailable(bt.id, condStart, condEnd)) { assignedBT = bt; break; } }
+      if (!assignedBT) { unmetDemand.push({ ...adj, reason: "No brite tank" }); continue; }
 
-      // Packaging line
-      const pkgEquipType = isKeg ? EQUIP_TYPES.KEGGING : EQUIP_TYPES.CANNER;
-      const pkgEquip = equipment.find(e => e.type === pkgEquipType);
-
-      // Build batch
-      batchCounter++;
+      const pkgEquip = equipment.find(e => e.type === (isKeg ? EQUIP_TYPES.KEGGING : EQUIP_TYPES.CANNER));
+      counter++;
       const batch = {
-        id: `A${String(batchCounter).padStart(3, "0")}`,
-        recipeId: dm.recipeId,
-        batchSizeBbl: recipe.bblPerBatch,
-        status: "planned",
-        autoScheduled: true,
-        demandId: dm.id,
+        id: `A${String(counter).padStart(3, "0")}`,
+        recipeId: adj.recipeId, batchSizeBbl: recipe.bblPerBatch,
+        status: "planned", autoScheduled: true, demandId: adj.id,
         steps: [
           { step: "ferment", equipId: assignedFV.id, start: fermStart, end: fermEnd },
           { step: "condition", equipId: assignedBT.id, start: condStart, end: condEnd },
           { step: "package", equipId: pkgEquip?.id || "", start: pkgStart, end: pkgEnd },
         ],
+        _meta: { fvCapacity: assignedFV.capacityBbl, isHoppy, isDryHopTank: DRY_HOP_TANKS.includes(assignedFV.id), recipe }
       };
-
       occupy(assignedFV.id, fermStart, fermEnd);
       occupy(assignedBT.id, condStart, condEnd);
       newBatches.push(batch);
-      scheduledVol[dm.recipeId] = (scheduledVol[dm.recipeId] || 0) + recipe.bblPerBatch;
+      scheduledVol[adj.recipeId] = (scheduledVol[adj.recipeId] || 0) + recipe.bblPerBatch;
     }
   });
 
-  return { newBatches, unmetDemand, totalBbl: newBatches.reduce((s, b) => s + b.batchSizeBbl, 0) };
+  return { newBatches, unmetDemand };
+}
+
+// Score a candidate schedule
+function scoreSchedule(newBatches, unmetDemand, demand, equipment, recipes, existingSchedule, weights, sensitivityMult) {
+  const allBatches = [...existingSchedule, ...newBatches];
+  const fermenters = equipment.filter(e => e.type === EQUIP_TYPES.FERM);
+  let score = 0;
+
+  // 1. On-time delivery
+  const schedVol = {};
+  allBatches.forEach(b => { schedVol[b.recipeId] = (schedVol[b.recipeId] || 0) + b.batchSizeBbl; });
+  const adjDemand = demand.map(dm => ({ ...dm, volumeBbl: Math.round(dm.volumeBbl * sensitivityMult) }));
+  const metCount = adjDemand.filter(dm => (schedVol[dm.recipeId] || 0) >= dm.volumeBbl).length;
+  score += metCount * weights.onTimeDelivery;
+
+  // 2. Fermenter utilization
+  const t = today(); const horizon = addDays(t, 30);
+  let fermDaysUsed = 0;
+  allBatches.forEach(b => {
+    b.steps.filter(s => s.step === "ferment").forEach(s => {
+      const os = s.start > t ? s.start : t;
+      const oe = s.end < horizon ? s.end : horizon;
+      if (os <= oe) fermDaysUsed += daysBetween(os, oe) + 1;
+    });
+  });
+  score += fermDaysUsed * weights.fermUtilization;
+
+  // 3. Tank size fit penalty
+  let sizePenalty = 0;
+  newBatches.forEach(b => {
+    if (b._meta) sizePenalty += (b._meta.fvCapacity - b.batchSizeBbl) * weights.tankSizeFit;
+  });
+  score -= sizePenalty;
+
+  // 4. Brite conflicts
+  const briteSlots = {};
+  allBatches.forEach(b => {
+    b.steps.filter(s => s.step === "condition").forEach(s => {
+      if (!briteSlots[s.equipId]) briteSlots[s.equipId] = [];
+      briteSlots[s.equipId].push({ start: s.start, end: s.end });
+    });
+  });
+  let conflicts = 0;
+  Object.values(briteSlots).forEach(slots => {
+    for (let i = 0; i < slots.length; i++)
+      for (let j = i + 1; j < slots.length; j++)
+        if (slots[i].start <= slots[j].end && slots[j].start <= slots[i].end) conflicts++;
+  });
+  score -= conflicts * weights.briteConflicts;
+
+  // 5. Dry-hop tank matching
+  newBatches.forEach(b => {
+    if (b._meta && b._meta.isHoppy && b._meta.isDryHopTank) score += weights.dryHopMatch;
+    if (b._meta && !b._meta.isHoppy && b._meta.isDryHopTank) score -= weights.dryHopMatch; // penalty for wasting dry-hop tank on non-hoppy
+  });
+
+  // 6. Ingredient clustering (same base malt in same week = bonus)
+  const weekBuckets = {};
+  newBatches.forEach(b => {
+    const fermStart = b.steps.find(s => s.step === "ferment")?.start;
+    if (!fermStart || !b._meta?.recipe) return;
+    const week = fermStart.slice(0, 7); // YYYY-MM as rough week proxy
+    if (!weekBuckets[week]) weekBuckets[week] = [];
+    const bom = NS_BOMS[b._meta.recipe.name];
+    const baseMalt = bom ? bom[0]?.ingredient : "";
+    weekBuckets[week].push(baseMalt);
+  });
+  Object.values(weekBuckets).forEach(malts => {
+    const counts = {};
+    malts.forEach(m => { if (m) counts[m] = (counts[m] || 0) + 1; });
+    Object.values(counts).forEach(c => { if (c > 1) score += (c - 1) * weights.ingredientCluster; });
+  });
+
+  return { score, metCount, fermDaysUsed, sizePenalty: Math.round(sizePenalty), conflicts };
+}
+
+// Shuffle array (Fisher-Yates)
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Main optimizer: runs N permutations and keeps the best
+function autoSchedule(demand, equipment, recipes, existingSchedule = [], sensitivityMult = 1.0, weights = DEFAULT_WEIGHTS, iterations = 200) {
+  let bestResult = null;
+  let bestScore = -Infinity;
+  let bestScoreDetail = null;
+
+  for (let i = 0; i < iterations; i++) {
+    // First iteration: EDF (earliest deadline first). Rest: random permutations
+    const order = i === 0
+      ? [...demand].sort((a, b) => a.shipDate.localeCompare(b.shipDate))
+      : shuffleArray(demand);
+
+    const result = runGreedy(order, equipment, recipes, existingSchedule, sensitivityMult);
+    const detail = scoreSchedule(result.newBatches, result.unmetDemand, demand, equipment, recipes, existingSchedule, weights, sensitivityMult);
+
+    if (detail.score > bestScore) {
+      bestScore = detail.score;
+      bestResult = result;
+      bestScoreDetail = detail;
+    }
+  }
+
+  return {
+    newBatches: bestResult.newBatches,
+    unmetDemand: bestResult.unmetDemand,
+    totalBbl: bestResult.newBatches.reduce((s, b) => s + b.batchSizeBbl, 0),
+    score: bestScore,
+    scoreDetail: bestScoreDetail,
+    iterations,
+  };
 }
 
 // ─── SCENARIO UTILITIES ─────────────────────────────────────────────────────────
@@ -343,7 +600,6 @@ function calcMetrics(schedule, demand, equipment) {
   const totalBbl = schedule.reduce((s, b) => s + b.batchSizeBbl, 0);
   const batchCount = schedule.length;
 
-  // Utilization: what % of fermenter-days are occupied over next 30 days
   const t = today();
   const horizon = addDays(t, 30);
   let fermDaysUsed = 0, fermDaysAvail = fermenters.length * 30;
@@ -356,7 +612,6 @@ function calcMetrics(schedule, demand, equipment) {
   });
   const utilization = fermDaysAvail > 0 ? Math.round(fermDaysUsed / fermDaysAvail * 100) : 0;
 
-  // On-time: what % of demand has a matching batch completing before ship date
   const schedVol = {};
   schedule.forEach(b => { schedVol[b.recipeId] = (schedVol[b.recipeId] || 0) + b.batchSizeBbl; });
   const metDemand = demand.filter(dm => (schedVol[dm.recipeId] || 0) >= dm.volumeBbl).length;
@@ -464,26 +719,38 @@ function GanttChart({ schedule, equipment, recipes, onEditBatch, dayRange = 42 }
       const recipe = recipes.find(r => r.id === batch.recipeId);
       if (!recipe) return;
       const isKeg = recipe.channel === "taproom";
+      const beerName = recipe.name.replace("[Contract] ", "");
+
+      // Find the brite tank for this batch (so packaging can show on same row)
+      const condStep = batch.steps.find(st => st.step === "condition");
+      const condEqIdx = condStep ? equipRows.findIndex(e => e.id === condStep.equipId) : -1;
+
       batch.steps.forEach(step => {
-        const eqIdx = equipRows.findIndex(e => e.id === step.equipId);
+        let eqIdx = equipRows.findIndex(e => e.id === step.equipId);
+
+        // Package steps use CAN1/KEG1 which aren't on the Gantt — show on brite tank row instead
+        if (step.step === "package" && eqIdx === -1 && condEqIdx !== -1) {
+          eqIdx = condEqIdx;
+        }
         if (eqIdx === -1) return;
+
         const s = daysBetween(startDate, step.start);
         const e2 = daysBetween(startDate, step.end) + 1;
         if (e2 < 0 || s > totalDays) return;
         const left = Math.max(0, s) * dayWidth;
         const width = Math.max(1, (Math.min(e2, totalDays) - Math.max(0, s))) * dayWidth - 1;
 
-        let subRow = 0, phase = PHASE.ferment, label = recipe.name;
+        let subRow = 0, phase = PHASE.ferment, label = beerName;
         const durDays = daysBetween(step.start, step.end) + 1;
         if (step.step === "ferment") {
           subRow = 0; phase = PHASE.ferment;
-          label = recipe.name;
+          label = beerName;
         } else if (step.step === "condition") {
           subRow = 1; phase = PHASE.condition;
-          label = `${durDays}D TESTING`;
+          label = `${beerName} · ${durDays}D`;
         } else if (step.step === "package") {
           subRow = 2; phase = isKeg ? PHASE.package_keg : PHASE.package_can;
-          label = isKeg ? "KEG" : "CAN";
+          label = `${beerName} · ${isKeg ? "KEG" : "CAN"}`;
         }
         blocks.push({ batchId: batch.id, eqIdx, subRow, left, width, phase, label, batch, recipe, step: step.step });
       });
@@ -582,12 +849,10 @@ function GanttChart({ schedule, equipment, recipes, onEditBatch, dayRange = 42 }
       </div>
       {/* Sub-row legend */}
       <div style={{ display: "flex", gap: 16, padding: "6px 12px", background: "#111820", borderTop: `1px solid ${gridLine}`, fontSize: "0.6rem", color: "#64748b" }}>
-        <span>Row 1: <span style={{ color: "#f0b8f4" }}>Fermenting/Aging</span></span>
-        <span>Row 2: <span style={{ color: "#cfe2f3" }}>Testing/Conditioning</span></span>
-        <span>Row 3: <span style={{ color: "#d9ead3" }}>CAN / KEG</span></span>
-        <span style={{ color: "#b4a7d6" }}>◆ Centrifuge</span>
-        <span style={{ color: "#ffffff" }}>◆ <span style={{ color: "#7ba8d4" }}>THC</span></span>
-        <span style={{ marginLeft: "auto" }}>Click blocks to edit</span>
+        <span>Row 1: <span style={{ color: "#f0b8f4" }}>Fermenting</span></span>
+        <span>Row 2: <span style={{ color: "#cfe2f3" }}>Conditioning</span></span>
+        <span>Row 3: <span style={{ color: "#d9ead3" }}>CAN / KEG</span> (on brite row)</span>
+        <span style={{ marginLeft: "auto" }}>All blocks show beer name · Click to edit</span>
       </div>
     </div>
   );
@@ -595,7 +860,7 @@ function GanttChart({ schedule, equipment, recipes, onEditBatch, dayRange = 42 }
 
 // ─── SCHEDULE OPTIMIZER TAB ─────────────────────────────────────────────────────
 
-function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, scenarios, setScenarios, activeScenario, setActiveScenario, sensitivity, setSensitivity }) {
+function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, scenarios, setScenarios, activeScenario, setActiveScenario, sensitivity, setSensitivity, weights, setWeights }) {
   const [editBatch, setEditBatch] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
   const [newRecipe, setNewRecipe] = useState("");
@@ -604,6 +869,7 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
   const [showScenarioSave, setShowScenarioSave] = useState(false);
   const [scenarioName, setScenarioName] = useState("");
   const [compareIdx, setCompareIdx] = useState(null);
+  const [showWeights, setShowWeights] = useState(false);
 
   const findConflicts = useCallback(() => {
     const conflicts = [];
@@ -667,7 +933,7 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
 
   // Auto-schedule handler
   const handleAutoSchedule = () => {
-    const result = autoSchedule(demand, equipment, recipes, schedule, sensitivity);
+    const result = autoSchedule(demand, equipment, recipes, schedule, sensitivity, weights);
     setAutoResult(result);
     if (result.newBatches.length > 0) {
       setSchedule(prev => [...prev, ...result.newBatches]);
@@ -710,6 +976,7 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
           {conflicts.length > 0 && <span style={baseStyles.badge("#ef4444")}>{conflicts.length} conflict{conflicts.length > 1 ? "s" : ""}</span>}
           <button style={{ ...baseStyles.btn(), color: "#d98ae0", borderColor: "#d98ae044" }} onClick={handleAutoSchedule}>⚡ Auto-Schedule</button>
           {schedule.some(b => b.autoScheduled) && <button style={{ ...baseStyles.btn(), color: "#fca5a5", borderColor: "#ef444444" }} onClick={handleClearAuto}>✕ Clear Auto</button>}
+          <button style={{ ...baseStyles.btn(), color: showWeights ? "#c8854a" : "#94a3b8", borderColor: showWeights ? "#c8854a44" : "#2d3748" }} onClick={() => setShowWeights(!showWeights)}>⚙ Weights</button>
           <button style={baseStyles.btn()} onClick={() => setShowScenarioSave(true)}>💾 Save Scenario</button>
           <button style={baseStyles.btn("primary")} onClick={() => setShowAdd(true)}>+ Add Batch</button>
         </div>
@@ -797,15 +1064,57 @@ function ScheduleOptimizer({ schedule, setSchedule, equipment, recipes, demand, 
         </div>
       )}
 
+      {/* Objective Function Weights Editor */}
+      {showWeights && (
+        <div style={{ ...baseStyles.card, borderColor: "#c8854a44", marginBottom: 16 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+            <div style={baseStyles.cardTitle}>⚙ Objective Function Weights</div>
+            <button style={{ ...baseStyles.btn(), fontSize: "0.7rem", padding: "3px 10px" }} onClick={() => setWeights(DEFAULT_WEIGHTS)}>Reset Defaults</button>
+          </div>
+          <div style={{ background: "#0b0f14", borderRadius: 6, padding: "10px 14px", marginBottom: 12, fontSize: "0.75rem", color: "#94a3b8", ...baseStyles.mono }}>
+            Score = (on_time × <span style={{ color: "#81c784" }}>{weights.onTimeDelivery}</span>) + (fv_days × <span style={{ color: "#81c784" }}>{weights.fermUtilization}</span>) - (tank_waste × <span style={{ color: "#fca5a5" }}>{weights.tankSizeFit}</span>) - (brite_conflicts × <span style={{ color: "#fca5a5" }}>{weights.briteConflicts}</span>) + (dryhop_match × <span style={{ color: "#81c784" }}>{weights.dryHopMatch}</span>) + (malt_cluster × <span style={{ color: "#81c784" }}>{weights.ingredientCluster}</span>)
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+            {[
+              { key: "onTimeDelivery", label: "On-Time Delivery", desc: "Points per demand met on time", color: "#81c784", sign: "+" },
+              { key: "fermUtilization", label: "FV Utilization", desc: "Points per fermenter-day used", color: "#81c784", sign: "+" },
+              { key: "tankSizeFit", label: "Tank Size Penalty", desc: "Penalty per BBL wasted capacity", color: "#fca5a5", sign: "−" },
+              { key: "briteConflicts", label: "Brite Conflicts", desc: "Penalty per overlapping brite use", color: "#fca5a5", sign: "−" },
+              { key: "dryHopMatch", label: "Dry-Hop Matching", desc: "Bonus for IPAs in FV4/5/8/9", color: "#81c784", sign: "+" },
+              { key: "ingredientCluster", label: "Ingredient Cluster", desc: "Bonus for same-malt beers in same week", color: "#81c784", sign: "+" },
+            ].map(w => (
+              <div key={w.key} style={{ background: "#111820", border: "1px solid #1e293b", borderRadius: 6, padding: "10px 12px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                  <span style={{ fontSize: "0.8rem", fontWeight: 600, color: "#f8fafc" }}>{w.sign} {w.label}</span>
+                  <input type="number" value={weights[w.key]} onChange={e => setWeights(prev => ({ ...prev, [w.key]: Number(e.target.value) || 0 }))} style={{ ...baseStyles.input, width: 60, textAlign: "right", color: w.color, fontWeight: 700 }} />
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#475569" }}>{w.desc}</div>
+                <input type="range" min="0" max={w.key === "onTimeDelivery" ? 200 : 20} value={weights[w.key]} onChange={e => setWeights(prev => ({ ...prev, [w.key]: Number(e.target.value) }))} style={{ width: "100%", accentColor: w.color, marginTop: 4 }} />
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 8, fontSize: "0.7rem", color: "#475569" }}>The optimizer runs 200 random schedule permutations and keeps the highest-scoring result. Adjust weights to prioritize what matters most to your brewery.</div>
+        </div>
+      )}
+
       {/* Auto-Schedule Results */}
       {autoResult && (
         <div style={{ ...baseStyles.card, borderColor: autoResult.unmetDemand.length > 0 ? "#f59e0b44" : "#22c55e44", marginBottom: 16 }}>
           <div style={baseStyles.cardTitle}>⚡ Auto-Schedule Results</div>
-          <div style={{ display: "flex", gap: 16, marginBottom: autoResult.unmetDemand.length > 0 ? 8 : 0, fontSize: "0.85rem" }}>
+          <div style={{ display: "flex", gap: 16, marginBottom: 8, fontSize: "0.85rem", flexWrap: "wrap" }}>
             <span style={{ color: "#81c784" }}>{autoResult.newBatches.length} batches added</span>
-            <span style={{ color: "#c8854a" }}>{autoResult.totalBbl} BBL scheduled</span>
-            {autoResult.unmetDemand.length > 0 && <span style={{ color: "#fca5a5" }}>{autoResult.unmetDemand.length} demand entries couldn't be met</span>}
+            <span style={{ color: "#c8854a" }}>{autoResult.totalBbl} BBL</span>
+            <span style={{ ...baseStyles.mono, color: "#d98ae0" }}>Score: {Math.round(autoResult.score)}</span>
+            <span style={{ ...baseStyles.mono, color: "#64748b" }}>{autoResult.iterations} iterations</span>
           </div>
+          {autoResult.scoreDetail && (
+            <div style={{ display: "flex", gap: 8, marginBottom: 8, flexWrap: "wrap", fontSize: "0.7rem" }}>
+              <span style={baseStyles.badge("#81c784")}>{autoResult.scoreDetail.metCount} on-time (+{autoResult.scoreDetail.metCount * weights.onTimeDelivery})</span>
+              <span style={baseStyles.badge("#7bafd4")}>{autoResult.scoreDetail.fermDaysUsed} FV-days (+{autoResult.scoreDetail.fermDaysUsed * weights.fermUtilization})</span>
+              <span style={baseStyles.badge("#fca5a5")}>tank waste −{autoResult.scoreDetail.sizePenalty}</span>
+              <span style={baseStyles.badge(autoResult.scoreDetail.conflicts > 0 ? "#ef4444" : "#22c55e")}>{autoResult.scoreDetail.conflicts} brite conflicts</span>
+            </div>
+          )}
           {autoResult.unmetDemand.length > 0 && (
             <div style={{ fontSize: "0.75rem" }}>
               {autoResult.unmetDemand.map((u, i) => {
@@ -942,42 +1251,55 @@ function MaterialOrders({ schedule, recipes, materials, equipment }) {
     schedule.forEach(batch => {
       const recipe = recipes.find(r => r.id === batch.recipeId);
       if (!recipe) return;
-      const brewStart = batch.steps.find(s => s.step === "mash")?.start;
+      const brewStart = batch.steps.find(s => s.step === "ferment")?.start || batch.steps.find(s => s.step === "mash")?.start;
       if (!brewStart) return;
-      recipe.ingredients.forEach(ing => {
-        const totalQty = ing.qtyPerBbl * batch.batchSizeBbl;
-        if (!matNeeds[ing.materialId]) matNeeds[ing.materialId] = [];
-        matNeeds[ing.materialId].push({ batchId: batch.id, recipeName: recipe.name, brewDate: brewStart, qty: totalQty });
-      });
+
+      // Use real NetSuite BOM if available, fall back to placeholder ingredients
+      const realBom = NS_BOMS[recipe.name];
+      if (realBom) {
+        realBom.forEach(ing => {
+          const key = ing.ingredient;
+          if (!matNeeds[key]) matNeeds[key] = { items: [], onHand: ing.onHand, cost: ing.cost, isReal: true };
+          matNeeds[key].items.push({ batchId: batch.id, recipeName: recipe.name, brewDate: brewStart, qty: ing.qty });
+        });
+      } else {
+        recipe.ingredients.forEach(ing => {
+          const totalQty = ing.qtyPerBbl * batch.batchSizeBbl;
+          const mat = materials.find(m => m.id === ing.materialId);
+          const key = mat?.name || ing.materialId;
+          if (!matNeeds[key]) matNeeds[key] = { items: [], onHand: mat?.onHand || 0, cost: mat?.costPerUnit || 0, leadTimeDays: mat?.leadTimeDays || 7, isReal: false };
+          matNeeds[key].items.push({ batchId: batch.id, recipeName: recipe.name, brewDate: brewStart, qty: totalQty });
+        });
+      }
     });
     return matNeeds;
-  }, [schedule, recipes]);
+  }, [schedule, recipes, materials]);
 
   const orders = useMemo(() => {
     const result = [];
-    Object.entries(needs).forEach(([matId, batchNeeds]) => {
-      const mat = materials.find(m => m.id === matId);
-      if (!mat) return;
-      let runningStock = mat.onHand;
-      const sorted = [...batchNeeds].sort((a, b) => a.brewDate.localeCompare(b.brewDate));
+    Object.entries(needs).forEach(([matName, data]) => {
+      let runningStock = data.onHand;
+      const leadTimeDays = data.leadTimeDays || 7;
+      const sorted = [...data.items].sort((a, b) => a.brewDate.localeCompare(b.brewDate));
       sorted.forEach(need => {
         runningStock -= need.qty;
         if (runningStock < 0) {
-          const orderBy = addDays(need.brewDate, -mat.leadTimeDays);
+          const orderBy = addDays(need.brewDate, -leadTimeDays);
           const urgent = orderBy <= todayStr;
           result.push({
-            materialId: matId, materialName: mat.name, unit: mat.unit,
-            qtyNeeded: Math.ceil(-runningStock), brewDate: need.brewDate,
-            orderBy, leadTimeDays: mat.leadTimeDays,
+            materialName: matName,
+            qtyNeeded: Math.round(-runningStock * 1000) / 1000,
+            brewDate: need.brewDate, orderBy, leadTimeDays,
             batchId: need.batchId, recipeName: need.recipeName,
-            urgent, costEst: Math.ceil(-runningStock) * mat.costPerUnit
+            urgent, costEst: Math.round(-runningStock * data.cost * 100) / 100,
+            isReal: data.isReal,
           });
           runningStock = 0;
         }
       });
     });
     return result.sort((a, b) => a.orderBy.localeCompare(b.orderBy));
-  }, [needs, materials]);
+  }, [needs]);
 
   const urgentOrders = orders.filter(o => o.urgent);
   const upcomingOrders = orders.filter(o => !o.urgent);
@@ -1012,7 +1334,7 @@ function MaterialOrders({ schedule, recipes, materials, equipment }) {
               {urgentOrders.map((o, i) => (
                 <tr key={i}>
                   <td style={{ ...baseStyles.td, color: "#fca5a5", fontWeight: 600 }}>{o.materialName}</td>
-                  <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{o.qtyNeeded.toLocaleString()} {o.unit}</td>
+                  <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{o.qtyNeeded.toLocaleString()}</td>
                   <td style={baseStyles.td}>{o.recipeName} <span style={{ color: "#64748b" }}>({o.batchId})</span></td>
                   <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{fmtDate(o.brewDate)}</td>
                   <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{o.leadTimeDays}d</td>
@@ -1042,7 +1364,7 @@ function MaterialOrders({ schedule, recipes, materials, equipment }) {
               {upcomingOrders.map((o, i) => (
                 <tr key={i}>
                   <td style={{ ...baseStyles.td, fontWeight: 500 }}>{o.materialName}</td>
-                  <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{o.qtyNeeded.toLocaleString()} {o.unit}</td>
+                  <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{o.qtyNeeded.toLocaleString()}</td>
                   <td style={{ ...baseStyles.td, ...baseStyles.mono, color: daysBetween(todayStr, o.orderBy) < 3 ? "#f59e0b" : "#e2e8f0" }}>{fmtDate(o.orderBy)}</td>
                   <td style={baseStyles.td}>{o.recipeName} <span style={{ color: "#64748b" }}>({o.batchId})</span></td>
                   <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{fmtDate(o.brewDate)}</td>
@@ -1465,29 +1787,80 @@ function RecipeBrowser({ recipes, materials }) {
         })}
       </div>
 
-      <Modal open={!!selectedRecipe} onClose={() => setSelectedRecipe(null)} title={selectedRecipe?.name} width={550}>
+      <Modal open={!!selectedRecipe} onClose={() => setSelectedRecipe(null)} title={selectedRecipe?.name} width={600}>
         {selectedRecipe && (
           <div>
             <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
               <span style={baseStyles.badge(TYPE_COLORS[selectedRecipe.type]?.border)}>{selectedRecipe.type}</span>
-              <span style={{ ...baseStyles.mono, color: "#94a3b8" }}>{selectedRecipe.style} · {selectedRecipe.bblPerBatch} BBL/batch</span>
+              <span style={{ ...baseStyles.mono, color: "#94a3b8" }}>{selectedRecipe.style} · {selectedRecipe.bblPerBatch} BBL/batch · {selectedRecipe.channel}</span>
             </div>
-            <div style={{ fontWeight: 600, fontSize: "0.85rem", color: "#f8fafc", marginBottom: 8 }}>Ingredients (per BBL)</div>
-            <table style={{ ...baseStyles.table, marginBottom: 16 }}>
-              <thead><tr><th style={baseStyles.th}>Material</th><th style={baseStyles.th}>Qty/BBL</th><th style={baseStyles.th}>Qty/Batch</th></tr></thead>
-              <tbody>
-                {selectedRecipe.ingredients.map(ing => {
-                  const mat = materials.find(m => m.id === ing.materialId);
-                  return (
-                    <tr key={ing.materialId}>
-                      <td style={baseStyles.td}>{mat?.name || ing.materialId}</td>
-                      <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{ing.qtyPerBbl} {mat?.unit}</td>
-                      <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{(ing.qtyPerBbl * selectedRecipe.bblPerBatch).toLocaleString()} {mat?.unit}</td>
+
+            {/* Real NetSuite BOM */}
+            {NS_BOMS[selectedRecipe.name] ? (
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontWeight: 600, fontSize: "0.85rem", color: "#f8fafc", marginBottom: 4 }}>Bill of Materials <span style={{ ...baseStyles.mono, fontSize: "0.65rem", color: "#22c55e" }}>from NetSuite</span></div>
+                <table style={{ ...baseStyles.table, marginBottom: 8 }}>
+                  <thead><tr>
+                    <th style={baseStyles.th}>Ingredient</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right" }}>Qty/Batch</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right" }}>On Hand</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right" }}>Batches</th>
+                    <th style={{ ...baseStyles.th, textAlign: "right" }}>Cost</th>
+                  </tr></thead>
+                  <tbody>
+                    {NS_BOMS[selectedRecipe.name].map((ing, i) => {
+                      const batches = ing.qty > 0 && ing.onHand > 0 ? Math.floor(ing.onHand / ing.qty) : ing.onHand > 0 ? "∞" : 0;
+                      const warn = typeof batches === "number" && batches < 5;
+                      return (
+                        <tr key={i}>
+                          <td style={{ ...baseStyles.td, fontWeight: 500 }}>{ing.ingredient}</td>
+                          <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right" }}>{ing.qty.toFixed(3)}</td>
+                          <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right", color: ing.onHand > 0 ? "#81c784" : "#fca5a5" }}>{ing.onHand.toLocaleString(undefined, { maximumFractionDigits: 1 })}</td>
+                          <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right", fontWeight: 600, color: warn ? "#fca5a5" : "#81c784" }}>{batches}{warn ? " ⚠" : ""}</td>
+                          <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right", color: "#c8854a" }}>${(ing.qty * ing.cost).toFixed(2)}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr>
+                      <td style={{ ...baseStyles.td, fontWeight: 600, color: "#f8fafc" }} colSpan={4}>Total Raw Cost / Batch</td>
+                      <td style={{ ...baseStyles.td, ...baseStyles.mono, textAlign: "right", fontWeight: 700, color: "#c8854a" }}>${NS_BOMS[selectedRecipe.name].reduce((s, i) => s + i.qty * i.cost, 0).toFixed(2)}</td>
                     </tr>
+                  </tbody>
+                </table>
+                {(() => {
+                  const minBatches = Math.min(...NS_BOMS[selectedRecipe.name].filter(i => i.qty > 0).map(i => i.onHand > 0 ? Math.floor(i.onHand / i.qty) : 0));
+                  const bottleneck = NS_BOMS[selectedRecipe.name].find(i => i.qty > 0 && (i.onHand <= 0 || Math.floor(i.onHand / i.qty) === minBatches));
+                  return (
+                    <div style={{ background: minBatches > 0 ? "#22c55e11" : "#ef444411", border: `1px solid ${minBatches > 0 ? "#22c55e33" : "#ef444433"}`, borderRadius: 6, padding: "8px 12px", fontSize: "0.8rem" }}>
+                      <span style={{ fontWeight: 600, color: minBatches > 0 ? "#81c784" : "#fca5a5" }}>
+                        {minBatches > 0 ? `✓ Can brew ${minBatches} batches` : "⚠ Cannot brew — missing ingredients"}
+                      </span>
+                      {bottleneck && <span style={{ color: "#94a3b8" }}> · Bottleneck: {bottleneck.ingredient}</span>}
+                    </div>
                   );
-                })}
-              </tbody>
-            </table>
+                })()}
+              </div>
+            ) : (
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontWeight: 600, fontSize: "0.85rem", color: "#f8fafc", marginBottom: 8 }}>Ingredients <span style={{ ...baseStyles.mono, fontSize: "0.65rem", color: "#64748b" }}>placeholder</span></div>
+                <table style={baseStyles.table}>
+                  <thead><tr><th style={baseStyles.th}>Material</th><th style={baseStyles.th}>Qty/BBL</th><th style={baseStyles.th}>Qty/Batch</th></tr></thead>
+                  <tbody>
+                    {selectedRecipe.ingredients.map(ing => {
+                      const mat = materials.find(m => m.id === ing.materialId);
+                      return (
+                        <tr key={ing.materialId}>
+                          <td style={baseStyles.td}>{mat?.name || ing.materialId}</td>
+                          <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{ing.qtyPerBbl} {mat?.unit}</td>
+                          <td style={{ ...baseStyles.td, ...baseStyles.mono }}>{(ing.qtyPerBbl * selectedRecipe.bblPerBatch).toLocaleString()} {mat?.unit}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
             <div style={{ fontWeight: 600, fontSize: "0.85rem", color: "#f8fafc", marginBottom: 8 }}>Process Steps</div>
             <table style={baseStyles.table}>
               <thead><tr><th style={baseStyles.th}>Step</th><th style={baseStyles.th}>Equipment</th><th style={baseStyles.th}>Duration</th><th style={baseStyles.th}>Clean</th></tr></thead>
@@ -1698,16 +2071,37 @@ const TABS = [
   { id: "netsuite", label: "NetSuite Sync", icon: "🔗" },
 ];
 
+// localStorage helpers
+function loadState(key, fallback) {
+  try { const v = localStorage.getItem("bp_" + key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
+}
+function saveState(key, value) {
+  try { localStorage.setItem("bp_" + key, JSON.stringify(value)); } catch { /* quota exceeded or private mode */ }
+}
+
 export default function BreweryPlanner() {
   const [tab, setTab] = useState("schedule");
   const [recipes] = useState(SAMPLE_RECIPES);
   const [equipment] = useState(SAMPLE_EQUIPMENT);
   const [materials] = useState(SAMPLE_MATERIALS);
-  const [schedule, setSchedule] = useState(SAMPLE_SCHEDULE);
-  const [demand, setDemand] = useState(SAMPLE_DEMAND);
-  const [scenarios, setScenarios] = useState([]);
+  const [schedule, setSchedule] = useState(() => loadState("schedule", SAMPLE_SCHEDULE));
+  const [demand, setDemand] = useState(() => loadState("demand", SAMPLE_DEMAND));
+  const [scenarios, setScenarios] = useState(() => loadState("scenarios", []));
   const [activeScenario, setActiveScenario] = useState(null);
   const [sensitivity, setSensitivity] = useState(1.0);
+  const [weights, setWeights] = useState(() => loadState("weights", DEFAULT_WEIGHTS));
+
+  // Persist on change
+  useEffect(() => { saveState("schedule", schedule); }, [schedule]);
+  useEffect(() => { saveState("demand", demand); }, [demand]);
+  useEffect(() => { saveState("scenarios", scenarios); }, [scenarios]);
+  useEffect(() => { saveState("weights", weights); }, [weights]);
+
+  return (
+    <div style={baseStyles.app}>
+      <style>{fonts}</style>
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #111820; }
         ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 3px; }
@@ -1728,6 +2122,7 @@ export default function BreweryPlanner() {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{ ...baseStyles.mono, color: "#64748b", fontSize: "0.7rem" }}>{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</div>
+          <button style={{ ...baseStyles.btn(), fontSize: "0.7rem", padding: "4px 10px", color: "#64748b" }} onClick={() => { if (confirm("Reset all data to defaults? This clears your saved schedule, demand, and scenarios.")) { localStorage.removeItem("bp_schedule"); localStorage.removeItem("bp_demand"); localStorage.removeItem("bp_scenarios"); window.location.reload(); } }}>↺ Reset</button>
         </div>
       </div>
 
@@ -1742,7 +2137,7 @@ export default function BreweryPlanner() {
 
       {/* Main Content */}
       <div style={baseStyles.main}>
-        {tab === "schedule" && <ScheduleOptimizer schedule={schedule} setSchedule={setSchedule} equipment={equipment} recipes={recipes} demand={demand} scenarios={scenarios} setScenarios={setScenarios} activeScenario={activeScenario} setActiveScenario={setActiveScenario} sensitivity={sensitivity} setSensitivity={setSensitivity} />}
+        {tab === "schedule" && <ScheduleOptimizer schedule={schedule} setSchedule={setSchedule} equipment={equipment} recipes={recipes} demand={demand} scenarios={scenarios} setScenarios={setScenarios} activeScenario={activeScenario} setActiveScenario={setActiveScenario} sensitivity={sensitivity} setSensitivity={setSensitivity} weights={weights} setWeights={setWeights} />}
         {tab === "materials" && <MaterialOrders schedule={schedule} recipes={recipes} materials={materials} equipment={equipment} />}
         {tab === "production" && <ProductionStatus schedule={schedule} equipment={equipment} recipes={recipes} />}
         {tab === "inventory" && <InventoryDashboard materials={materials} schedule={schedule} recipes={recipes} />}
